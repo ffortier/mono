@@ -1,0 +1,6 @@
+site_name: ffortier
+nav:
+  - index.md
+  - rules_scratch.md
+  - typing.md
+theme: cinder
