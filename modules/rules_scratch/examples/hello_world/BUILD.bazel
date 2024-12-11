@@ -1,0 +1,19 @@
+load("@rules_scratch//scratch:defs.bzl", "scratch_binary", "scratch_sprite")
+
+scratch_sprite(
+    name = "cat",
+    srcs = ["sprite.lsp"],
+    costumes = [
+        "scratch-cat.svg",
+    ],
+    extensions = [
+        "@rules_scratch//extensions:std",
+    ],
+)
+
+scratch_binary(
+    name = "hello_world",
+    deps = [
+        ":cat",
+    ],
+)

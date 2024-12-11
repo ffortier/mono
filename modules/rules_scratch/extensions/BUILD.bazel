@@ -1,0 +1,8 @@
+load("@rules_scratch//scratch:defs.bzl", "scratch_extension")
+
+package(default_visibility = ["//visibility:public"])
+
+scratch_extension(
+    name = "std",
+    srcs = glob(["std/*.pl"]),
+)

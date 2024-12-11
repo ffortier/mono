@@ -1,0 +1,17 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+rust_binary(
+    name = "scratch",
+    srcs = ["src/main.rs"],
+    compile_data = glob(["src/*.pl"]),
+    env = {
+        "RUST_BACKTRACE": "full",
+    },
+    deps = [
+        "@crates//:anyhow",
+        "@crates//:clap",
+        "@crates//:ctrlc",
+        "@crates//:scryer-prolog",
+        "@crates//:tokio",
+    ],
+)

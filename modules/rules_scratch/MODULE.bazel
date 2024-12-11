@@ -1,0 +1,44 @@
+module(name = "rules_scratch", version = "0.0.0")
+
+bazel_dep(name = "rules_rust", version = "0.54.1")
+
+crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+
+# crate.annotation(
+#     crate = "scryer-prolog",
+#     compile_data_glob = ["src/**/*.pl"],
+#     build_script_data_glob = ["src/**/*.pl"],
+# )
+
+crate.spec(
+    package = "scryer-prolog",
+    git = "https://github.com/ffortier/scryer-prolog",
+    rev = "c1571bf06394270f912c62ebb94384ff6c67355f",
+    default_features = False,
+    features = ["repl"],
+)
+
+crate.spec(
+    package = "clap",
+    version = "=4.5.21",
+    features = ["derive"],
+)
+
+crate.spec(
+    package = "anyhow",
+    version = "=1.0.94",
+)
+
+crate.spec(
+    package = "tokio",
+    version = "=1.42.0",
+)
+
+crate.spec(
+    package = "ctrlc",
+    version = "=3.4.5",
+)
+
+crate.from_specs()
+
+use_repo(crate, "crates")
