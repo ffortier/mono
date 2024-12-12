@@ -70,7 +70,7 @@ fn parse(file_path: impl AsRef<Path>) -> Result<()> {
 
     match wam.run_query(query) {
         Ok(res) => dbg!(res),
-        Err(msg) => return bail!(msg),
+        Err(msg) => bail!(msg),
     };
 
     Ok(())
