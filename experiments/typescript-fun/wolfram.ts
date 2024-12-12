@@ -28,10 +28,10 @@ type At<Bin extends string, I extends number>
     : never;
 
 type Rule_<Bin extends string> = {
-    [I in Byte]: At<Bin, I> extends One ? Encode<I, '   '> : never
+    [I in Byte]: At<Bin, I> extends One ? Encode<I, `${Zero}${Zero}${Zero}`> : never
 }[Byte];
 
-type Rule<N extends number> = Rule_<Encode<N, '        '>>;
+type Rule<N extends number> = Rule_<Encode<N, `${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}`>>;
 
 type Get<Rule, B0 extends Bit, B1 extends Bit, B2 extends Bit>
     = `${B0}${B1}${B2}` extends Rule ? One : Zero;
