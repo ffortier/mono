@@ -6,7 +6,7 @@
     "commitMessagePrefix": "deps: ",
     "postUpgradeTasks": {
         "commands": [
-            ".github/renovate/post-upgrade.sh --manager {{{manager}}} {{{depName}}}"
+            "./.github/renovate/post-upgrade.sh"
         ],
         "executionMode": "branch"
     },
