@@ -14,5 +14,23 @@
         "fileMatch": [
             "third_party/python/requirements.in"
         ]
-    }
+    },
+    "packageRules": [
+        {
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ],
+            "automerge": true
+        },
+        {
+            "matchDepTypes": [
+                "devDependencies"
+            ],
+            "automerge": true
+        }
+    ],
+    "automergeStrategy": "fast-forward"
 }
