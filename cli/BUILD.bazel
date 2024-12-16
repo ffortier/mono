@@ -8,6 +8,7 @@ rust_binary(
         "@crates//:clap",
         "@crates//:hex",
         "@crates//:reqwest",
+        "@crates//:rustls",
         "@crates//:sha2",
     ],
 )
