@@ -1,4 +1,4 @@
-use std::io::{Read, Write};
+use std::io::Read;
 
 use anyhow::{anyhow, Context, Result};
 use clap::{Parser, Subcommand};
