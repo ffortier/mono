@@ -20,6 +20,12 @@
             "\\bMODULE\\.bazel$"
         ]
     },
+    "bazel": {
+        "fileMatch": [
+            "\\bMODULE\\.bazel$",
+            "\\.bzl$"
+        ]
+    },
     "packageRules": [
         {
             "matchUpdateTypes": [
