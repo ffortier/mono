@@ -1,0 +1,6 @@
+load("@//experiments/os:defs.bzl", "cc_library")
+
+cc_library(
+    name = "walloc",
+    srcs = ["walloc.c"],
+)

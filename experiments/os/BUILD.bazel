@@ -1,0 +1,12 @@
+load(":defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "test",
+    srcs = [
+        "boot.S",
+        "init.c",
+    ],
+    # deps = ["@walloc"],
+)
+
+exports_files(["linker.ld"])

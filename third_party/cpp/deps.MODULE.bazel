@@ -1,0 +1,9 @@
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "walloc",
+    urls = ["https://github.com/wingo/walloc/archive/a93409f5ebd49c875514c5fee30d3b151f7b0882.zip"],
+    sha256 = "857a904f5063b867e1699c9411475a2c155beb6c4b740c7367b20615c3f1531a",
+    strip_prefix = "walloc-a93409f5ebd49c875514c5fee30d3b151f7b0882",
+    build_file = "//third_party/cpp:walloc.BUILD.bazel",
+)
