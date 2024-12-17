@@ -1,6 +1,18 @@
-load("@//experiments/os:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
 
 cc_library(
     name = "walloc",
     srcs = ["walloc.c"],
+    target_compatible_with = [
+        "@platforms//cpu:wasm32",
+    ],
 )
+
+cc_library(
+    name = "lib",
+    hdrs = ["walloc.c"],
+)
+
+exports_files(["walloc.c"])
