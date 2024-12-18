@@ -6,12 +6,13 @@ cc_binary(
         "boot.S",
         "init.c",
     ],
-    deps = [":walloc"],
+    # deps = [":walloc"],
 )
 
 cc_library(
     name = "walloc",
     srcs = ["walloc_wrapper.c"],
+    tags = ["manual"],
     deps = ["@walloc//:lib"],
 )
 
