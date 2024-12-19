@@ -30,7 +30,7 @@ crate.spec(
 
 crate.spec(
     package = "rustls",
-    version = "=0.20.9",
+    version = "=0.23.20",
 )
 
 crate.from_specs()
