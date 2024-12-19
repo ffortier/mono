@@ -26,7 +26,7 @@ jobs:
         "${GITHUB_WORKSPACE}/bin/bazel" build --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
 
   build-darwin-aarch64:
-    runs-on: macos-14-arm64
+    runs-on: macos-14
     
     steps:
     - uses: actions/checkout@v4
