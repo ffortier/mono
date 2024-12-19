@@ -1,4 +1,10 @@
 filegroup(
     name = "srcs",
-    srcs = glob(["*.ts"]),
+    srcs = glob(["src/*.ts"]),
+)
+
+filegroup(
+    name = "docs",
+    srcs = ["mkdocs.yml"] + glob(["docs/**"]),
+    visibility = ["//:__pkg__"],
 )

@@ -1,6 +1,9 @@
-site_name: ffortier
+site_name: ffortier's github page
 nav:
-  - index.md
-  - rules_scratch.md
-  - typing.md
+  - Intro: index.md
+  - Experiments: "*include ./experiments/*/mkdocs.yml"
+
 theme: cinder
+
+plugins:
+  - monorepo
