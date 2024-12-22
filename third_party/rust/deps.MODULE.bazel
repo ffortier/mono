@@ -15,7 +15,7 @@ crate.spec(
 
 crate.spec(
     package = "anyhow",
-    version = "=1.0.94",
+    version = "=1.0.95",
 )
 
 crate.spec(
