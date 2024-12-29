@@ -29,6 +29,16 @@ crate.spec(
 )
 
 crate.spec(
+    package = "thiserror",
+    version = "2.0.9",
+)
+
+crate.spec(
+    package = "termion",
+    version = "4.0.3",
+)
+
+crate.spec(
     package = "rustls",
     version = "=0.23.20",
     default_features = False,

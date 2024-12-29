@@ -1,0 +1,17 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+package(default_visibility = ["//experiments/trex:__subpackages__"])
+
+rust_library(
+    name = "parser",
+    srcs = glob(["src/**/*.rs"]),
+    crate_name = "trex_parser",
+    deps = [
+        "@crates//:thiserror",
+    ],
+)
+
+rust_test(
+    name = "unit_test",
+    crate = ":parser",
+)
