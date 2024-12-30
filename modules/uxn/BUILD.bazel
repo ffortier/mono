@@ -1,0 +1,69 @@
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load(":toolchain.bzl", "uxn_toolchain")
+
+cc_binary(
+    name = "uxnasm",
+    srcs = ["@uxn_sources//:uxnasm"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+cc_binary(
+    name = "uxncli",
+    srcs = ["@uxn_sources//:uxncli"],
+    defines = ["_C99_SOURCE"],  # snprintf
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+toolchain_type(name = "toolchain_type")
+
+supported_platforms = [
+    ("macos", "aarch64"),
+    ("macos", "x86_64"),
+    ("linux", "aarch64"),
+    ("linux", "x86_64"),
+]
+
+[
+    [
+        platform(
+            name = "%s_%s" % (os, cpu),
+            constraint_values = [
+                "@platforms//os:%s" % os,
+                "@platforms//cpu:%s" % cpu,
+            ],
+        ),
+        platform_transition_binary(
+            name = "uxnasm_%s_%s" % (os, cpu),
+            binary = ":uxnasm",
+            tags = ["manual"],
+            target_platform = "%s_%s" % (os, cpu),
+            visibility = ["//visibility:public"],
+        ),
+        platform_transition_binary(
+            name = "uxncli_%s_%s" % (os, cpu),
+            binary = ":uxncli",
+            tags = ["manual"],
+            target_platform = "%s_%s" % (os, cpu),
+            visibility = ["//visibility:public"],
+        ),
+        uxn_toolchain(
+            name = "toolchain_%s_%s_impl" % (os, cpu),
+            assembler = ":uxnasm_%s_%s" % (os, cpu),
+            cli = ":uxncli_%s_%s" % (os, cpu),
+            tags = ["manual"],
+        ),
+        toolchain(
+            name = "toolchain_%s_%s" % (os, cpu),
+            exec_compatible_with = [
+                "@platforms//os:%s" % os,
+                "@platforms//cpu:%s" % cpu,
+            ],
+            toolchain = ":toolchain_%s_%s_impl" % (os, cpu),
+            toolchain_type = ":toolchain_type",
+        ),
+    ]
+    for os, cpu in supported_platforms
+]

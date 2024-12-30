@@ -1,0 +1,219 @@
+( Copyright 2024 Alexey Kutepov <reximkut@gmail.com> )
+
+( Permission is hereby granted, free of charge, to any person obtaining )
+( a copy of this software and associated documentation files (the )
+( "Software"), to deal in the Software without restriction, including )
+( without limitation the rights to use, copy, modify, merge, publish, )
+( distribute, sublicense, and/or sell copies of the Software, and to )
+( permit persons to whom the Software is furnished to do so, subject to )
+( the following conditions: )
+
+( The above copyright notice and this permission notice shall be )
+( included in all copies or substantial portions of the Software. )
+
+( THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, )
+( EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF )
+( MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND )
+( NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE )
+( LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION )
+( OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION )
+( WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. )
+
+|00 @System &vector $2 &expansion $2 &wst $1 &rst $1 &metadata $2 &r $2 &g $2 &b $2 &debug $1 &state $1
+|10 @Console &vector $2 &read $1 &pad $5 &write $1 &error $1
+|20 @Screen &vector $2 &width $2 &height $2 &auto $1 &pad $1 &x $2 &y $2 &addr $2 &pixel $1 &sprite $1
+
+%SIZE { #0a }
+%DEC { #ff ADD }
+%NOT { #00 EQU }
+
+|0100 ( -> )
+@on-reset
+    set-theme   
+    #0050 .Screen/width DEO2
+    #0050 .Screen/height DEO2
+    ;on-screen .Screen/vector DEO2
+    BRK
+
+@on-screen ( -> )
+    ;frame-count LDA #05 GTH ?{
+        ;frame-count LDA INC ;frame-count STA
+        BRK
+    }
+    #00 ;frame-count STA
+
+    next-board
+    flip-board
+    display-board
+    BRK
+
+@set-theme ( -- )
+	#f07f .System/r DEO2
+	#f0d6 .System/g DEO2
+	#f0b2 .System/b DEO2
+	JMP2r
+
+@next-board ( -- )
+    #00 &rows DUP SIZE LTH NOT ?{
+        #00 &columns DUP SIZE LTH NOT ?{
+            DUP2 next-cell
+            INC !&columns
+        }
+        POP INC !&rows
+    }
+JMP2r
+
+@flip-board ( -- )
+    #00 &offset DUP #64 LTH NOT ?{
+        [ DUP #00 SWP ;back-board ADD2 LDA ]
+        [ OVR #00 SWP ;board      ADD2 STA ]
+        INC !&offset
+    }
+JMP2r
+
+@back-board-set-cell ( row col cell -- )
+   ROT ROT board-offset ;back-board ADD2 STA
+JMP2r
+
+@next-cell ( row col -- )
+   DUP2 board-get-cell ?{
+      DUP2 count-nbors #03 EQU ?{
+         #00 back-board-set-cell
+         JMP2r
+      }
+      #01 back-board-set-cell
+      JMP2r
+   }
+   DUP2 count-nbors DUP #02 EQU SWP #03 EQU ORA ?{
+      #00 back-board-set-cell
+      JMP2r
+   }
+   #01 back-board-set-cell
+   JMP2r
+
+@left ( row col -- row (col-1) )
+    DUP ?{ POP SIZE } DEC
+JMP2r
+
+@right ( row col -- row (col+1) )
+    INC DUP SIZE NEQ ?{ POP #00 }
+JMP2r
+
+@up ( row col -- (row-1) col )
+    SWP left SWP
+JMP2r
+
+@down ( row col -- (row+1) col )
+    SWP right SWP
+JMP2r
+
+@count-nbors ( row col -- count )
+    #00 STH
+    DUP2 left       board-get-cell STH ADDr
+    DUP2 left down  board-get-cell STH ADDr
+    DUP2 left up    board-get-cell STH ADDr
+    DUP2 right      board-get-cell STH ADDr
+    DUP2 right down board-get-cell STH ADDr
+    DUP2 right up   board-get-cell STH ADDr
+    DUP2 up         board-get-cell STH ADDr
+    DUP2 down       board-get-cell STH ADDr
+    POP2
+    STHr
+JMP2r
+
+@break-line ( -- )
+    #0a .Console/write DEO
+JMP2r
+
+@cell-to-sprite ( cell -- sprite )
+    ?{ ;unalive JMP2r } ;alive JMP2r
+
+@board-to-screen ( coord -- screen:u16 )
+    #08 MUL #00 SWP JMP2r
+
+@display-cell ( row col -- )
+    DUP2 board-get-cell cell-to-sprite .Screen/addr DEO2
+    board-to-screen .Screen/x DEO2
+    board-to-screen .Screen/y DEO2
+	#01 .Screen/sprite DEO
+    JMP2r
+
+@display-board ( -- )
+    #00 &rows DUP SIZE LTH NOT ?{
+        #00 &columns DUP SIZE LTH NOT ?{
+            DUP2 display-cell
+            INC !&columns
+        }
+        POP INC !&rows
+    }
+JMP2r
+    
+@print-board ( -- )
+    #00 &rows DUP SIZE LTH NOT ?{
+        #00 &columns DUP SIZE LTH NOT ?{
+            DUP2 board-get-cell print-cell
+            INC !&columns
+        }
+        break-line
+        POP INC !&rows
+    }
+JMP2r
+
+@print-cell ( cell -- )
+    ?{ LIT ". .Console/write DEO JMP2r }
+    LIT "* .Console/write DEO
+JMP2r
+
+@board-offset ( row col -- offset:u16 )
+    SWP SIZE MUL ADD #00 SWP
+JMP2r
+
+@board-get-cell ( row col -- cell )
+    board-offset ;board ADD2 LDA
+JMP2r
+
+@print-hello-world-n-times ( n -- )
+    &again DUP #00 EQU ?&over
+        ;hello-word print-text
+        DEC
+        !&again
+    &over
+JMP2r
+
+@print-text
+    &while
+        ( send ) LDAk .Console/write DEO
+        ( loop ) INC2 LDAk ?&while
+    POP2
+JMP2r
+
+@hello-word "Hello 20 "World! 0a 00
+
+@frame-count $1
+
+@board
+    00 01 00 00 00 00 00 00 00 00
+    00 00 01 00 00 00 00 00 00 00
+    01 01 01 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+@back-board
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+@alive
+    ff ff ff ff ff ff ff ff
+@unalive
+    00 00 00 00 00 00 00 00

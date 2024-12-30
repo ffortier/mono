@@ -1,0 +1,23 @@
+filegroup(
+    name = "uxnasm",
+    srcs = ["src/uxnasm.c"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "uxncli",
+    srcs = [
+        "src/devices/console.c",
+        "src/devices/console.h",
+        "src/devices/datetime.c",
+        "src/devices/datetime.h",
+        "src/devices/file.c",
+        "src/devices/file.h",
+        "src/devices/system.c",
+        "src/devices/system.h",
+        "src/uxn.c",
+        "src/uxn.h",
+        "src/uxncli.c",
+    ],
+    visibility = ["//visibility:public"],
+)
