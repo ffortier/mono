@@ -1,4 +1,5 @@
 load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
+load("@bazel_skylib//rules:native_binary.bzl", "native_test")
 
 filegroup(
     name = "srcs",
@@ -15,4 +16,9 @@ deno_binary(
     name = "typescript-fun",
     main = "main.ts",
     deps = [":srcs"],
+)
+
+native_test(
+    name = "test",
+    src = "typescript-fun",
 )
