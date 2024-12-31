@@ -1,4 +1,4 @@
-import { Sized } from './num.js'
+import { Sized } from './num.ts'
 
 type One = '#'
 type Zero = ' '
@@ -31,7 +31,7 @@ type Rule_<Bin extends string> = {
     [I in Byte]: At<Bin, I> extends One ? Encode<I, `${Zero}${Zero}${Zero}`> : never
 }[Byte];
 
-type Rule<N extends number> = Rule_<Encode<N, `${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}`>>;
+export type Rule<N extends number> = Rule_<Encode<N, `${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}${Zero}`>>;
 
 type Get<Rule, B0 extends Bit, B1 extends Bit, B2 extends Bit>
     = `${B0}${B1}${B2}` extends Rule ? One : Zero;
@@ -40,13 +40,5 @@ type Wolfram_<Rule, S extends string, Result extends string>
     = S extends ChopBlock<infer B0, infer B1, infer B2, infer Rest> ? Wolfram_<Rule, `${B1}${B2}${Rest}`, `${Result}${Get<Rule, B0, B1, B2>}`>
     : Result;
 
-type Wolfram<Rule, S extends string> = Wolfram_<Rule, `${Zero}${S}${Zero}`, ''>;
+export type Wolfram<Rule, S extends string> = Wolfram_<Rule, `${Zero}${S}${Zero}`, ''>;
 
-type Init = '        #        ';
-type A = Wolfram<Rule<90>, Init>;
-type B = Wolfram<Rule<90>, A>;
-type C = Wolfram<Rule<90>, B>;
-type D = Wolfram<Rule<90>, C>;
-type E = Wolfram<Rule<90>, D>;
-type F = Wolfram<Rule<90>, E>;
-type G = Wolfram<Rule<90>, F>;

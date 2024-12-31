@@ -8,7 +8,7 @@ http_archive(
 )
 
 BUILD_FILE_CONTENT = """
-load("@aspect_rules_deno//deno:toolchain.bzl", deno_toolchain)
+load("@aspect_rules_deno//deno:toolchain.bzl", "deno_toolchain")
 
 deno_toolchain(
     name = "{repo_name}",
