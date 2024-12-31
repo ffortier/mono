@@ -1,0 +1,34 @@
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "aspect_rules_deno",
+    sha256 = "cfda7aeb308082a4525f391b66e81d4f15bd05c3f0a5131e4645e74ea1e32760",
+    strip_prefix = "rules_deno-0.3.0",
+    url = "https://github.com/aspect-build/rules_deno/archive/refs/tags/v0.3.0.tar.gz",
+)
+
+BUILD_FILE_CONTENT = """
+load("@aspect_rules_deno//deno:toolchain.bzl", deno_toolchain)
+
+deno_toolchain(
+    name = "{repo_name}",
+    target_tool = "deno",
+    visibility = ["//visibility:public"],
+)
+"""
+
+http_archive(
+    name = "deno_aarch64_apple_darwin",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.1.4/deno-aarch64-apple-darwin.zip"],
+    sha256 = "65efe137ee28846427ae7b6c5135439744065ad59ccb3c8cd19e69af066e2db0",
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_apple_darwin"),
+)
+
+http_archive(
+    name = "deno_x86_64_unknown_linux_gnu",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.1.4/deno-x86_64-unknown-linux-gnu.zip"],
+    sha256 = "54a81939cccb2af114c4d0a68a554cf4a04b1f08728e70f663f83781de19d785",
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_x86_64_unknown_linux_gnu"),
+)
+
+register_toolchains("//third_party/deno:all")
