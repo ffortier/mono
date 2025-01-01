@@ -23,7 +23,7 @@ jobs:
 
     - name: Build
       run: |
-        "${GITHUB_WORKSPACE}/bin/bazel" build --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
+        "${GITHUB_WORKSPACE}/bin/bazel" run --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} :mkdocs -- build
 
   build-darwin-aarch64:
     runs-on: macos-14
@@ -42,6 +42,16 @@ jobs:
       run: |
         "${GITHUB_WORKSPACE}/bin/bazel" test --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
 
-    - name: Build
-      run: |
-        "${GITHUB_WORKSPACE}/bin/bazel" build --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
+  deploy:
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+    runs-on: ubuntu-24.04
+    needs: build-linux-x86_64
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
