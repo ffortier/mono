@@ -56,6 +56,7 @@ jobs:
       url: ${{steps.deployment.outputs.page_url}}
     runs-on: ubuntu-24.04
     needs: build-linux-x86_64
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
