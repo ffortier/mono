@@ -3,6 +3,14 @@ bazel_dep(name = "aspect_bazel_lib", version = "2.10.0")
 bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "rules_multirun", version = "0.10.0")
 bazel_dep(name = "rules_shell", version = "0.3.0")
+bazel_dep(name = "uxn")
+
+local_path_override(
+    module_name = "uxn",
+    path = "modules/uxn",
+)
+
+register_toolchains("@uxn//:all")
 
 include("//third_party/rust:toolchains.MODULE.bazel")
 include("//third_party/rust:deps.MODULE.bazel")

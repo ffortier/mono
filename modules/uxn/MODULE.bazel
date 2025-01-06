@@ -1,0 +1,15 @@
+module(name = "uxn")
+
+bazel_dep(name = "rules_cc", version = "0.0.9")
+bazel_dep(name = "bazel_skylib", version = "1.5.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.5.1")
+bazel_dep(name = "platforms", version = "0.0.8")
+bazel_dep(name = "rules_java", version = "8.6.3")
+
+uxn = use_extension(":extension.bzl", "uxn")
+uxn.sources(
+    sha256 = "af8b68ad4d64f8b40ff524b3cfbb05fceb5355ffb661f541d5cd7bbb3815c0c1",
+    strip_prefix = "uxn-e7c25fad05850f0e577fc83a140405ca6ccd93c2",
+    urls = ["https://git.sr.ht/~rabbits/uxn/archive/e7c25fad05850f0e577fc83a140405ca6ccd93c2.tar.gz"],
+)
+use_repo(uxn, "uxn_sources")

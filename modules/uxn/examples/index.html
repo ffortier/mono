@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="importmap">
+        {
+            "imports": {
+                "uxn5": "./node_modules/uxn5/uxn5.js"
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <div id="screen" style="position: relative;">
+        <canvas id="bgcanvas" width="100" height="100"></canvas>
+        <canvas id="fgcanvas" width="100" height="100"></canvas>
+    </div>
+    <pre id="console_out"></pre>
+    <pre id="console_err"></pre>
+    <input type="text" id="console_input" />
+    <script type="module">
+        import { rom as gol } from "./gol.js";
+        import { rom as hello } from "./hello.js";
+        import { run } from './app.js';
+
+        run(hello);
+
+        //setTimeout(() => run(gol), 1000);
+    </script>
+</body>
+
+</html>

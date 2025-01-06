@@ -1,0 +1,10 @@
+load("@uxn//:defs.bzl", "uxn_binary")
+
+[
+    uxn_binary(
+        name = tal_file.removesuffix(".tal"),
+        srcs = [tal_file],
+        out = "%s.rom" % tal_file.removesuffix(".tal"),
+    )
+    for tal_file in glob(["*.tal"])
+]

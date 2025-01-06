@@ -2,6 +2,7 @@ site_name: ffortier's github page
 nav:
   - Intro: index.md
   - Experiments: "*include ./experiments/*/mkdocs.yml"
+  - Modules: "*include ./modules/*/mkdocs.yml"
 
 theme: cinder
 
