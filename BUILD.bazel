@@ -1,3 +1,5 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+
 # mkdocs wrapper because mkdocs-monorepo-plugin is not able to process symlinks properly
 sh_binary(
     name = "mkdocs",
