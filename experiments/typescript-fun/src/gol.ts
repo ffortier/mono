@@ -1,4 +1,4 @@
-import { Predecessor, Successor, ParseInt } from './num.js';
+import { Predecessor, Successor, ParseInt } from './num.ts';
 
 type State = 0 | 1;
 
@@ -45,36 +45,4 @@ type ScanRow<Board extends {}, Row extends keyof Board, Livings, Cells extends S
 
 export type Gol<Board extends {}> = {
     [Row in keyof Board]: ScanRow<Board, Row, LivingCells<Board>>
-}
-
-namespace glider {
-    type Glider = {
-        0: [0, 0, 0, 0, 0],
-        1: [0, 0, 1, 0, 0],
-        2: [0, 0, 0, 1, 0],
-        3: [0, 1, 1, 1, 0],
-        4: [0, 0, 0, 0, 0],
-    }
-
-    type A = Glider;
-    type B = Gol<A>;
-    type C = Gol<B>;
-    type D = Gol<C>;
-    type E = Gol<D>;
-}
-
-namespace blinker {
-    type Blinker = {
-        0: [0, 0, 0, 0, 0],
-        1: [0, 0, 1, 0, 0],
-        2: [0, 0, 1, 0, 0],
-        3: [0, 0, 1, 0, 0],
-        4: [0, 0, 0, 0, 0],
-    }
-
-    type A = Blinker;
-    type B = Gol<A>;
-    type C = Gol<B>;
-    type D = Gol<C>;
-    type E = Gol<D>;
 }

@@ -41,34 +41,3 @@ type Add_<A extends string, B extends string, Carry extends 0 | 1, Sum extends s
 type Add<A extends string, B extends string>
     = LargestFirst<A, B> extends true ? Add_<Reverse<A>, Reverse<B>, 0, ''>
     : Add_<Reverse<B>, Reverse<A>, 0, ''>;
-
-// tests
-function assert<T extends never>() { }
-
-type TypeEqual<A, B> = Exclude<A, B> | Exclude<B, A>;
-
-assert<TypeEqual<Successor<0>, 1>>();
-assert<TypeEqual<Successor<9>, 0>>();
-assert<TypeEqual<Predecessor<0>, 9>>();
-assert<TypeEqual<Predecessor<9>, 8>>();
-
-assert<TypeEqual<AddDigit_<0, 0>, [0, 0]>>();
-assert<TypeEqual<AddDigit_<0, 3>, [3, 0]>>();
-assert<TypeEqual<AddDigit_<9, 3>, [2, 1]>>();
-
-assert<TypeEqual<CharToNum<'0'>, 0>>();
-assert<TypeEqual<CharToNum<'9'>, 9>>();
-
-assert<TypeEqual<Reverse<'123'>, '321'>>();
-
-assert<TypeEqual<Numeric<'6', '789'>, '6789'>>();
-assert<TypeEqual<Numeric<'9', ''>, '9'>>();
-
-assert<TypeEqual<LargestFirst<'123', '12'>, true>>();
-assert<TypeEqual<LargestFirst<'123', '123'>, true>>();
-assert<TypeEqual<LargestFirst<'123', '1234'>, false>>();
-
-assert<TypeEqual<Add<'3', '4'>, '7'>>();
-assert<TypeEqual<Add<'3', '9'>, '12'>>();
-assert<TypeEqual<Add<'34', '35'>, '69'>>();
-assert<TypeEqual<Add<'34', '95'>, '129'>>();

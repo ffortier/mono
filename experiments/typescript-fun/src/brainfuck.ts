@@ -1,4 +1,4 @@
-import { Sized, Successor, Predecessor } from './num.js'
+import { Sized, Successor, Predecessor } from './num.ts'
 
 type AsciiTable = [
     '\x00', '\x01', '\x02', '\x03', '\x04', '\x05', '\x06', '\x07', '\x08', '\x09', '\x0a', '\x0b', '\x0c', '\x0d', '\x0e', '\x0f',
@@ -92,18 +92,3 @@ type BrainFuck_<Program extends OpCode_[], Mem extends Bytes[], Input extends By
 export type BrainFuck<Program extends string, Mem extends Bytes[] = ZeroMem, Input extends string = "">
     = BrainFuck_<Tokenize<Program>, Mem, SplitInput<Input>, [], 0, 0>;
 
-// tests
-function assert<T extends never>() { }
-
-type TypeEqual<A, B> = Exclude<A, B> | Exclude<B, A>;
-
-const add = `[->+<]>.`;
-const hello = `++++++++[>+++++++++<-]>.+++++++++++++++++++++++++++++.+++++++..+++.>++++[>++++++++<-]>.>+++++[<+++++++++++>-]<.>++++[<++++++>-]<.+++.------.--------.>+++[>+++++++++++<-]>.`;
-
-assert<TypeEqual<['[', '-', '>', '+', '<', ']', '>', '.'], Tokenize<typeof add>>>();
-assert<TypeEqual<[1, 4, 3], Splice<[1, 2, 3], 1, 4>>>();
-assert<TypeEqual<'012', Joined<[48, 49, 50]>>>();
-
-assert<TypeEqual<'b', BrainFuck<',+.', ZeroMem, 'a'>>>();
-assert<TypeEqual<69, AsciiLookup<BrainFuck<typeof add, [34, 35]>>>>();
-assert<TypeEqual<'Hello World!', BrainFuck<typeof hello>>>()

@@ -1,3 +1,5 @@
+load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
+
 filegroup(
     name = "srcs",
     srcs = glob(["src/*.ts"]),
@@ -7,4 +9,10 @@ filegroup(
     name = "docs",
     srcs = ["mkdocs.yml"] + glob(["docs/**"]),
     visibility = ["//:__pkg__"],
+)
+
+deno_binary(
+    name = "typescript-fun",
+    main = "main.ts",
+    deps = [":srcs"],
 )

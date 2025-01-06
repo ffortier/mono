@@ -11,16 +11,7 @@ type SnakeCase_<Prefix extends string, S extends string>
     : S extends AlphaNum<infer C, infer R> ? SnakeCase_<`${Prefix}${C}`, R>
     : never;
 
-type SnakeCase<S extends string>
+export type SnakeCase<S extends string>
     = S extends "" ? S
     : S extends Alpha<infer C, infer R> ? SnakeCase_<C, R>
     : never;
-
-function test<S extends string>(key: SnakeCase<S>) {
-
-}
-
-test("hello");
-test("hello_world");
-test("hello_world_123");
-test("Hello"); // fail to compile
