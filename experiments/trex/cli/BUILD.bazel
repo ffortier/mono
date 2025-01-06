@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+rust_binary(
+    name = "cli",
+    srcs = ["src/main.rs"],
+    deps = [
+        "//experiments/trex/parser",
+        "@crates//:clap",
+        "@crates//:termion",
+        "@crates//:thiserror",
+    ],
+)
