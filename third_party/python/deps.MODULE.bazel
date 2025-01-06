@@ -1,0 +1,24 @@
+bazel_dep(name = "rules_python", version = "1.0.0")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+
+python.toolchain(
+    python_version = "3.13",
+)
+
+uv = use_extension("@rules_python//python/uv:extensions.bzl", "uv")
+uv.toolchain(uv_version = "0.4.25")
+use_repo(uv, "uv_toolchains")
+
+register_toolchains("@uv_toolchains//:all")
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+pip.parse(
+    hub_name = "pip",
+    python_version = "3.13",
+    requirements_lock = "//third_party/python:requirements.txt",
+    experimental_index_url_overrides = {
+        "mkdocs": "http://127.0.0.1:6969/pip/",
+    },
+)
+use_repo(pip, "pip")

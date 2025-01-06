@@ -1,0 +1,6 @@
+bazel_dep(name = "rules_scratch", version = "0.0.0")
+
+local_path_override(module_name = "rules_scratch", path = "modules/rules_scratch")
+
+include("//third_party/rust:deps.MODULE.bazel")
+include("//third_party/python:deps.MODULE.bazel")
