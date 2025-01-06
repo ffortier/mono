@@ -47,7 +47,7 @@
             ],
             "matchStringsStrategy": "any",
             "matchStrings": [
-                "crate\\.spec\\([^)]*?\\bpackage[\\s\\n]*=[\\s\\n]*?\"(?<depName>[^\"]+)\"[^)]*?\\bversion[\\s\\n]*=[\\s\\n]*?\"(?<currentValue>[^\"]+)\"",
+                "crate\\.spec\\([^)]*?\\bpackage[\\s\\n]*=[\\s\\n]*?\"(?<depName>[^\"]+)\"[^)]*?\\bversion[\\s\\n]*=[\\s\\n]*?\"(?<currentValue>[^\"]+)\""
             ]
         }
     ]
