@@ -4,6 +4,10 @@ rust_binary(
     name = "cli",
     srcs = glob(["src/**"]),
     deps = [
+        "@crates//:anyhow",
         "@crates//:clap",
+        "@crates//:hex",
+        "@crates//:reqwest",
+        "@crates//:sha2",
     ],
 )
