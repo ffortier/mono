@@ -15,6 +15,11 @@
             "third_party/python/requirements.in"
         ]
     },
+    "bazel-module": {
+        "fileMatch": [
+            "\\bMODULE\\.bazel$"
+        ]
+    },
     "packageRules": [
         {
             "matchUpdateTypes": [
@@ -32,5 +37,18 @@
             "automerge": true
         }
     ],
-    "automergeStrategy": "fast-forward"
+    "automergeStrategy": "fast-forward",
+    "customManagers": [
+        {
+            "customType": "regex",
+            "datasourceTemplate": "crate",
+            "fileMatch": [
+                "\\bMODULE\\.bazel$"
+            ],
+            "matchStringsStrategy": "any",
+            "matchStrings": [
+                "crate\\.spec\\([^)]*?\\bpackage[\\s\\n]*=[\\s\\n]*?\"(?<depName>[^\"]+)\"[^)]*?\\bversion[\\s\\n]*=[\\s\\n]*?\"(?<currentValue>[^\"]+)\"",
+            ]
+        }
+    ]
 }
