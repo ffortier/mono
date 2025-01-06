@@ -1,2 +1,3 @@
 include("//third_party/rust:deps.MODULE.bazel")
 include("//third_party/python:deps.MODULE.bazel")
+include("//third_party/cpp:llvm.MODULE.bazel")
