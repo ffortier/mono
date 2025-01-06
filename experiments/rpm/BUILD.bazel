@@ -1,0 +1,13 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+rust_binary(
+    name = "rpm",
+    srcs = ["main.rs"],
+    env = {
+        "RUST_BACKTRACE": "1",
+    },
+    deps = [
+        "@crates//:byteorder",
+        "@crates//:flate2",
+    ],
+)
