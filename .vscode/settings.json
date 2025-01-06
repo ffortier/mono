@@ -5,5 +5,12 @@
     "rust-analyzer.linkedProjects": [
         "rust-project.json"
     ],
-    "cmake.ignoreCMakeListsMissing": true
+    "cmake.ignoreCMakeListsMissing": true,
+    "java.project.referencedLibraries": [
+        "external/rules_jvm_external++maven+*/file/**/*.jar"
+    ],
+    "java.project.sourcePaths": [
+        "experiments/jasm/src/main/java",
+        "experiments/jasm/src/test/java"
+    ]
 }
