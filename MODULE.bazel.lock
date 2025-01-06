@@ -10326,7 +10326,7 @@
     },
     "@@uxn+//:extension.bzl%uxn": {
       "general": {
-        "bzlTransitiveDigest": "J94mHtlt4pEaNC4LyQwGxu1kn/doTZc9wVnS48e/pW0=",
+        "bzlTransitiveDigest": "aNOGLnQmItMv1cykf4sqhFFBJO5wFo5QBgQxrg/RIAg=",
         "usagesDigest": "mITr/jTD/jLOB7tSMnglBykqMSjicvxanX3ABmcJJRk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -10340,7 +10340,7 @@
               ],
               "strip_prefix": "uxn-e7c25fad05850f0e577fc83a140405ca6ccd93c2",
               "sha256": "af8b68ad4d64f8b40ff524b3cfbb05fceb5355ffb661f541d5cd7bbb3815c0c1",
-              "build_file": "@@uxn+//:BUILD.uxn.bazel"
+              "build_file": "@@uxn+//:uxn.BUILD.bazel"
             }
           }
         },

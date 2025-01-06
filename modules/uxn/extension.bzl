@@ -15,7 +15,7 @@ def _impl(mctx):
         urls = sources.urls,
         strip_prefix = sources.strip_prefix,
         sha256 = sources.sha256,
-        build_file = ":BUILD.uxn.bazel",
+        build_file = ":uxn.BUILD.bazel",
     )
 
 uxn = module_extension(
