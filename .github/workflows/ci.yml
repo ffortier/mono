@@ -17,16 +17,10 @@ jobs:
         mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
         chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
 
-    - name: info
-      run : |
-        which clang
-        llvm-config --version
-        llvm-config --prefix
-        llvm-config --bindir
-    # - name: Test
-    #   run: |
-    #     "${GITHUB_WORKSPACE}/bin/bazel" test --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
+    - name: Test
+      run: |
+        "${GITHUB_WORKSPACE}/bin/bazel" test --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
 
-    # - name: Build
-    #   run: |
-    #     "${GITHUB_WORKSPACE}/bin/bazel" build --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
+    - name: Build
+      run: |
+        "${GITHUB_WORKSPACE}/bin/bazel" build --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
