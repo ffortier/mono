@@ -1,0 +1,14 @@
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven.install(
+    artifacts = [
+        "org.ow2.asm:asm:9.7.1",
+        "org.ow2.asm:asm-util:9.7.1",
+    ],
+    fetch_sources = True,
+    fetch_javadoc = True,
+    fail_if_repin_required = True,
+    lock_file = "//third_party/java:maven_install.json",
+)
+
+use_repo(maven, "maven")
