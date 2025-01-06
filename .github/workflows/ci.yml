@@ -25,6 +25,11 @@ jobs:
       run: |
         "${GITHUB_WORKSPACE}/bin/bazel" run --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} :mkdocs -- build
 
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: site/
+
   build-darwin-aarch64:
     runs-on: macos-14
     
