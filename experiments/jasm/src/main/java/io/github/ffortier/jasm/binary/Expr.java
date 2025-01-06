@@ -1,7 +1,6 @@
 package io.github.ffortier.jasm.binary;
 
 import io.github.ffortier.jasm.WebAssemblyOpcode;
-import io.github.ffortier.jasm.binary.Instruction;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
