@@ -26,7 +26,8 @@ crate.spec(
 crate.spec(
     package = "reqwest",
     version = "=0.12.9",
-    features = ["blocking"],
+    default_features = False,
+    features = ["blocking", "rustls-tls", "http2", "charset"],
 )
 
 crate.spec(
@@ -42,6 +43,11 @@ crate.spec(
 crate.spec(
     package = "hex",
     version = "=0.4.3",
+)
+
+crate.spec(
+    package = "rustls",
+    version = "=0.20.9",
 )
 
 crate.from_specs()
