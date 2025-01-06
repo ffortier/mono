@@ -6,14 +6,12 @@ compile_pip_requirements_3_13(
     name = "requirements",
     src = ":requirements.in",
     requirements_txt = "requirements_lock.txt",
-    tags = ["manual"],
 )
 
 compile_pip_requirements_3_9(
     name = "requirements_3_9",
     src = ":requirements.in",
     requirements_txt = "requirements_3_9_lock.txt",
-    tags = ["manual"],
 )
 
 py_console_script_binary(
