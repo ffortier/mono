@@ -15,3 +15,9 @@ java_binary(
     main_class = "io.github.ffortier.jasm.Main",
     runtime_deps = [":main"],
 )
+
+filegroup(
+    name = "docs",
+    srcs = ["mkdocs.yml"] + glob(["docs/**"]),
+    visibility = ["//:__pkg__"],
+)

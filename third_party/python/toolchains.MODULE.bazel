@@ -4,7 +4,14 @@ python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 
 python.toolchain(
     python_version = "3.13",
+    is_default = True,
 )
+
+python.toolchain(
+    python_version = "3.9",
+)
+
+use_repo(python, "python_versions", "python_3_13", "python_3_9")
 
 uv = use_extension("@rules_python//python/uv:extensions.bzl", "uv")
 uv.toolchain(uv_version = "0.4.25")
@@ -19,4 +26,10 @@ pip.parse(
     requirements_lock = "//third_party/python:requirements_lock.txt",
 )
 
-use_repo(pip, "pip")
+pip.parse(
+    hub_name = "pip_3_9",
+    python_version = "3.9",
+    requirements_lock = "//third_party/python:requirements_3_9_lock.txt",
+)
+
+use_repo(pip, "pip", "pip_3_9")
