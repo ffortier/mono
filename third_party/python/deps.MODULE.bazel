@@ -17,8 +17,6 @@ pip.parse(
     hub_name = "pip",
     python_version = "3.13",
     requirements_lock = "//third_party/python:requirements.txt",
-    experimental_index_url_overrides = {
-        "mkdocs": "http://127.0.0.1:6969/pip/",
-    },
 )
+
 use_repo(pip, "pip")
