@@ -1,19 +1,29 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("@rules_jvm_external//:defs.bzl", "artifact")
 
+package(default_visibility = [":__subpackages__"])
+
 java_library(
     name = "main",
-    srcs = glob(["src/main/java/**"]),
+    srcs = glob(["src/main/java/io/github/ffortier/jasm/core/**"]),
     deps = [
         artifact("org.ow2.asm:asm"),
         artifact("org.ow2.asm:asm-util"),
+        artifact("org.slf4j:slf4j-api"),
     ],
 )
 
 java_binary(
     name = "jasm",
-    main_class = "io.github.ffortier.jasm.Main",
-    runtime_deps = [":main"],
+    srcs = glob(["src/main/java/io/github/ffortier/jasm/cli/**"]),
+    main_class = "io.github.ffortier.jasm.cli.Main",
+    runtime_deps = [
+        artifact("ch.qos.logback:logback-classic:1.5.16"),
+    ],
+    deps = [
+        ":main",
+        artifact("info.picocli:picocli:4.7.6"),
+    ],
 )
 
 filegroup(

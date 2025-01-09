@@ -1,0 +1,26 @@
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_java//java:defs.bzl", "java_binary")
+
+cc_binary(
+    name = "adder",
+    srcs = ["adder.c"],
+    linkopts = ["-Wl,--no-entry"],
+    tags = ["manual"],
+)
+
+platform_transition_binary(
+    name = "adder_wasm32",
+    basename = "adder.wasm",
+    binary = ":adder",
+    target_platform = "@toolchains_llvm//platforms:wasm32",
+)
+
+java_binary(
+    name = "adder_jit",
+    srcs = glob(["src/main/java/**"]),
+    args = ["$(rootpath :adder_wasm32)"],
+    data = [":adder_wasm32"],
+    main_class = "io.github.ffortier.jasm.examples.adder.Main",
+    deps = ["//experiments/jasm:main"],
+)

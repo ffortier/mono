@@ -10,6 +10,7 @@
         "external/rules_jvm_external++maven+*/file/**/*.jar"
     ],
     "java.project.sourcePaths": [
+        "experiments/jasm/examples/adder/src/main/java",
         "experiments/jasm/src/main/java",
         "experiments/jasm/src/test/java"
     ]

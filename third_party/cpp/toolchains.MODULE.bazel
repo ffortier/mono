@@ -1,10 +1,20 @@
 bazel_dep(name = "toolchains_llvm", version = "1.2.0")
 bazel_dep(name = "rules_cc", version = "0.1.0")
 
+git_override(
+    module_name = "toolchains_llvm",
+    remote = "https://github.com/bazel-contrib/toolchains_llvm",
+    commit = "361f5ab",
+)
+
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 
 llvm.toolchain(
     llvm_version = "17.0.6",
+    stdlib = {
+        "wasm32": "none",
+        "wasm64": "none",
+    },
 )
 
 llvm.sysroot(
@@ -15,6 +25,11 @@ llvm.sysroot(
 llvm.sysroot(
     label = "@sysroot_darwin_universal//:sysroot",
     targets = ["darwin-x86_64", "darwin-aarch64"],
+)
+
+llvm.sysroot(
+    label = "@//third_party/cpp/empty",
+    targets = ["wasm32", "wasm64"],
 )
 
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")

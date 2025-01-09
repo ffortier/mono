@@ -3,6 +3,7 @@ bazel_dep(name = "aspect_bazel_lib", version = "2.10.0")
 bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "rules_multirun", version = "0.10.0")
 bazel_dep(name = "rules_shell", version = "0.3.0")
+bazel_dep(name = "protobuf", version = "29.2")
 bazel_dep(name = "uxn")
 
 local_path_override(
