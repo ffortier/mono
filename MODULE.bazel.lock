@@ -10404,7 +10404,7 @@
     },
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "0h1lXw4EN6GmWnC06ihGpJry8JCLDY3Ot55/ifdkV8Y=",
+        "bzlTransitiveDigest": "4JokbTTidIfiDUSNAokRdOo+Ync0P7yQP4eAdumjEpk=",
         "usagesDigest": "NsZ7UYqi37FanLkOfXMJQqc/jJMa1tDSvb4U8e3qKbI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -10434,6 +10434,7 @@
               "absolute_paths": false,
               "archive_flags": {},
               "compile_flags": {},
+              "conly_flags": {},
               "coverage_compile_flags": {},
               "coverage_link_flags": {},
               "cxx_builtin_include_directories": {},
