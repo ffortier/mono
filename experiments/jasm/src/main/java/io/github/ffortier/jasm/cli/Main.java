@@ -1,22 +1,7 @@
 package io.github.ffortier.jasm.cli;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-
-// import org.objectweb.asm.*;
-// import org.objectweb.asm.util.ASMifier;
-// import org.objectweb.asm.util.TraceClassVisitor;
-
-import io.github.ffortier.jasm.core.binary.WebAssembly;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
-
-import java.lang.reflect.InvocationTargetException;
 
 @Command(name = "jasm", description = "Jasm is a tool to cross-compile Web Assembly to the JVM just for fun")
 public class Main {

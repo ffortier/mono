@@ -2,9 +2,6 @@ package io.github.ffortier.jasm.cli;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -12,8 +9,6 @@ import java.util.stream.IntStream;
 
 import io.github.ffortier.jasm.core.binary.Export;
 import io.github.ffortier.jasm.core.binary.ExportDesc;
-import io.github.ffortier.jasm.core.binary.Func;
-import io.github.ffortier.jasm.core.binary.ValType;
 import io.github.ffortier.jasm.core.binary.WebAssembly;
 import io.github.ffortier.jasm.core.binary.WebAssemblyModule;
 import picocli.CommandLine.Command;

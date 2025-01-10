@@ -55,6 +55,19 @@
             "matchStrings": [
                 "crate\\.spec\\([^)]*?\\bpackage[\\s\\n]*=[\\s\\n]*?\"(?<depName>[^\"]+)\"[^)]*?\\bversion[\\s\\n]*=[\\s\\n]*?\"(?<currentValue>[^\"]+)\""
             ]
+        },
+        {
+            "customType": "regex",
+            "datasourceTemplate": "maven",
+            "fileMatch": [
+                "\\bMODULE\\.bazel$"
+            ],
+            "matchStringsStrategy": "recursive",
+            "matchStrings": [
+                "maven\\.install\\(([^)]*)\\)",
+                "artifacts\\s+=\\s+\\[([^]]*)]",
+                "\"(?<depName>[^:\"]+:[^:\"]+):(?<currentValue>[^:\"]+)\""
+            ]
         }
     ]
 }
