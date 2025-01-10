@@ -19,15 +19,15 @@ deno_toolchain(
 
 http_archive(
     name = "deno_aarch64_apple_darwin",
-    urls = ["https://github.com/denoland/deno/releases/download/v2.1.4/deno-aarch64-apple-darwin.zip"],
-    sha256 = "65efe137ee28846427ae7b6c5135439744065ad59ccb3c8cd19e69af066e2db0",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.1.5/deno-aarch64-apple-darwin.zip"],
+    sha256 = "7385b6bc48f0579d6740c9216b16263c2313fef84f9681607a34d2618e6b8a90",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_apple_darwin"),
 )
 
 http_archive(
     name = "deno_x86_64_unknown_linux_gnu",
-    urls = ["https://github.com/denoland/deno/releases/download/v2.1.4/deno-x86_64-unknown-linux-gnu.zip"],
-    sha256 = "54a81939cccb2af114c4d0a68a554cf4a04b1f08728e70f663f83781de19d785",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.1.5/deno-x86_64-unknown-linux-gnu.zip"],
+    sha256 = "be98731286849f2afd5defd7a07a4b0864beb3f12652a6db97ec46f9e3d9721c",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_x86_64_unknown_linux_gnu"),
 )
 
