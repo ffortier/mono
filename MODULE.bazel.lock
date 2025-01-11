@@ -10389,7 +10389,7 @@
     },
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "4JokbTTidIfiDUSNAokRdOo+Ync0P7yQP4eAdumjEpk=",
+        "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
         "usagesDigest": "NsZ7UYqi37FanLkOfXMJQqc/jJMa1tDSvb4U8e3qKbI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
