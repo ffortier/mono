@@ -43,9 +43,9 @@ def _impl(module_ctx):
         http_archive(
             name = "sysroot_darwin_universal",
             build_file_content = _SYSROOT_DARWIN_BUILD_FILE,
-            sha256 = "11870a4a3d382b78349861081264921bb883440a7e0b3dd4a007373d87324a38",
-            strip_prefix = "sdk-macos-11.3-ccbaae84cc39469a6792108b24480a4806e09d59/root",
-            urls = ["https://github.com/hexops-graveyard/sdk-macos-11.3/archive/ccbaae84cc39469a6792108b24480a4806e09d59.tar.gz"],
+            sha256 = "987d41a68008c59f1128d436ed75ac923db3040db46b668cafb6b4fbbcf47bf4",
+            strip_prefix = "sdk-macos-13.3-1615cd09b3a42ae590e05e63251a0e9fbc47bab5/root",
+            urls = ["https://github.com/hexops-graveyard/sdk-macos-13.3/archive/1615cd09b3a42ae590e05e63251a0e9fbc47bab5.tar.gz"],
         )
 
         for install in mod.tags.install:
