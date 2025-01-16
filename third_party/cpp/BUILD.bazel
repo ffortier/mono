@@ -1,0 +1,10 @@
+# Not a full fledge toolchain, but required to establish i386-kernel as a legit platform
+toolchain(
+    name = "cc-toolchain-i386-kernel",
+    target_compatible_with = [
+        "@platforms//cpu:i386",
+        "@platforms//os:none",
+    ],
+    toolchain = "@llvm_toolchain//:cc-clang-x86_64-linux",
+    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)

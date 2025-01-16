@@ -1,6 +1,6 @@
 load("@rules_cc//cc:defs.bzl", _cc_binary = "cc_binary", _cc_library = "cc_library")
 
-def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, **kwargs):
+def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, target_compatible_with, **kwargs):
     if not features:
         features = []
     if not copts:
@@ -9,6 +9,11 @@ def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, *
         additional_linker_inputs = []
     if not linkopts:
         linkopts = []
+    if not target_compatible_with:
+        target_compatible_with = [
+            "@platforms//os:none",
+            "@platforms//cpu:i386",
+        ]
 
     _cc_binary(
         name = name,
@@ -36,14 +41,20 @@ def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, *
             "-z",
             "notext",
         ],
+        target_compatible_with = target_compatible_with,
         **kwargs
     )
 
-def _cc_library_impl(name, features, copts, **kwargs):
+def _cc_library_impl(name, features, copts, target_compatible_with, **kwargs):
     if not features:
         features = []
     if not copts:
         copts = []
+    if not target_compatible_with:
+        target_compatible_with = [
+            "@platforms//os:none",
+            "@platforms//cpu:i386",
+        ]
 
     _cc_library(
         name = name,
@@ -57,6 +68,7 @@ def _cc_library_impl(name, features, copts, **kwargs):
             "-macos_default_link_flags",
             "-macos_minimum_os",
         ],
+        target_compatible_with = target_compatible_with,
         **kwargs
     )
 

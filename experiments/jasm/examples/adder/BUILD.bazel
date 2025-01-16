@@ -22,5 +22,5 @@ java_binary(
     args = ["$(rootpath :adder_wasm32)"],
     data = [":adder_wasm32"],
     main_class = "io.github.ffortier.jasm.examples.adder.Main",
-    deps = ["//experiments/jasm:main"],
+    deps = ["//experiments/jasm:core"],
 )

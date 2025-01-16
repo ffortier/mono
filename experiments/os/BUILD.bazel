@@ -1,3 +1,5 @@
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
+load("//third_party/nasm:defs.bzl", "nasm_binary")
 load(":defs.bzl", "cc_binary", "cc_library")
 
 cc_binary(
@@ -17,3 +19,17 @@ cc_library(
 )
 
 exports_files(["linker.ld"])
+
+nasm_binary(
+    name = "boot",
+    srcs = ["boot.asm"],
+)
+
+platform_transition_filegroup(
+    name = "bin",
+    srcs = [
+        ":boot",
+        ":test",
+    ],
+    target_platform = "//platforms:i386-kernel",
+)

@@ -8,6 +8,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 public class WebAssembly {
     private static final byte[] WASM_HEADER = { 0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00 };
@@ -33,24 +36,14 @@ public class WebAssembly {
     }
 
     public static WebAssemblyModule compile(BufferedInputStream in) throws IOException {
-        readWasmHeader(in);
-
         final var moduleBuilder = WebAssemblyModule.builder();
+        final var functionSection = new AtomicReference<Section.FunctionSection>();
+        final var codeSection = new AtomicReference<Section.CodeSection>();
 
-        Section.FunctionSection functionSection = null;
-        Section.CodeSection codeSection = null;
-
-        while (true) {
-            switch (Section.read(in).orElse(null)) {
-                case null -> {
-                    if (functionSection != null && codeSection != null) {
-                        moduleBuilder.funcs(buildFuncs(codeSection, functionSection));
-                    }
-
-                    return moduleBuilder.build();
-                }
+        readSections(in, section -> {
+            switch (section) {
                 case Section.CodeSection _codeSection -> {
-                    codeSection = _codeSection;
+                    codeSection.set(_codeSection);
                 }
                 case Section.DataSection dataSection -> {
                     moduleBuilder.data(dataSection.data());
@@ -62,7 +55,7 @@ public class WebAssembly {
                     moduleBuilder.exports(exportSection.exports());
                 }
                 case Section.FunctionSection _functionSection -> {
-                    functionSection = _functionSection;
+                    functionSection.set(_functionSection);
                 }
                 case Section.GlobalSection globalSection -> {
                     moduleBuilder.globals(globalSection.globals());
@@ -89,7 +82,37 @@ public class WebAssembly {
                     // ignored
                 }
             }
+        });
+
+        if (functionSection.get() != null && codeSection.get() != null) {
+            moduleBuilder.funcs(buildFuncs(codeSection.get(), functionSection.get()));
         }
+
+        return moduleBuilder.build();
+    }
+
+    public static void readSections(Path p, Consumer<? super Section> consumer) throws IOException {
+        try (final var in = Files.newInputStream(p)) {
+            readSections(in, consumer);
+        }
+    }
+
+    public static void readSections(InputStream in, Consumer<? super Section> consumer) throws IOException {
+        try (final var buf = new BufferedInputStream(in)) {
+            readSections(buf, consumer);
+        }
+    }
+
+    public static void readSections(BufferedInputStream in, Consumer<? super Section> consumer) throws IOException {
+        readWasmHeader(in);
+
+        Optional<Section> section;
+
+        do {
+            section = Section.read(in);
+
+            section.ifPresent(consumer);
+        } while (section.isPresent());
     }
 
     private static List<Func> buildFuncs(Section.CodeSection codeSection, Section.FunctionSection functionSection) {
