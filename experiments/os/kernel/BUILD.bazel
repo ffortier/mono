@@ -1,0 +1,31 @@
+load("//experiments/os:defs.bzl", "cc_binary", "cc_library")
+load("//third_party/nasm:defs.bzl", "nasm_library")
+
+package(default_visibility = ["//experiments/os:__subpackages__"])
+
+nasm_library(
+    name = "kernel_asm",
+    srcs = ["kernel.asm"],
+)
+
+cc_library(
+    name = "kernel_o",
+    srcs = [":kernel_asm"],
+)
+
+cc_binary(
+    name = "kernel_elf",
+    deps = [":kernel_o"],
+)
+
+genrule(
+    name = "kernel",
+    srcs = [":kernel_elf"],
+    outs = ["kernel.bin"],
+    cmd = "$(execpath @llvm_toolchain_llvm//:objcopy) -O binary $< $@",
+    target_compatible_with = [
+        "@platforms//os:none",
+        "@platforms//cpu:i386",
+    ],
+    tools = ["@llvm_toolchain_llvm//:objcopy"],
+)

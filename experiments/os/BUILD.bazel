@@ -1,35 +1,37 @@
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
-load("//third_party/nasm:defs.bzl", "nasm_binary")
-load(":defs.bzl", "cc_binary", "cc_library")
-
-cc_binary(
-    name = "test",
-    srcs = [
-        "boot.S",
-        "init.c",
-    ],
-    # deps = [":walloc"],
-)
-
-cc_library(
-    name = "walloc",
-    srcs = ["walloc_wrapper.c"],
-    tags = ["manual"],
-    deps = ["@walloc//:lib"],
-)
-
-exports_files(["linker.ld"])
-
-nasm_binary(
-    name = "boot",
-    srcs = ["boot.asm"],
-)
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 platform_transition_filegroup(
     name = "bin",
     srcs = [
-        ":boot",
-        ":test",
+        "//experiments/os/boot",
+        "//experiments/os/kernel",
     ],
     target_platform = "//platforms:i386-kernel",
 )
+
+sh_binary(
+    name = "qemu",
+    srcs = ["qemu.sh"],
+    args = ["$(rootpath :os)"],
+    data = [":os"],
+)
+
+py_binary(
+    name = "assembler",
+    srcs = ["assembler.py"],
+)
+
+genrule(
+    name = "os",
+    srcs = [
+        ":bin",
+        "README.md",
+    ],
+    outs = ["os.bin"],
+    cmd = "$(execpath :assembler) -o $@ $(SRCS)",
+    tools = [":assembler"],
+)
+
+exports_files(["linker.ld"])

@@ -6,5 +6,7 @@
       bazel-buildtools 
       python313
       git
+      qemu
+      deno
     ];
   }

@@ -1,0 +1,8 @@
+load("//third_party/nasm:defs.bzl", "nasm_binary")
+
+package(default_visibility = ["//experiments/os:__subpackages__"])
+
+nasm_binary(
+    name = "boot",
+    srcs = ["boot.asm"],
+)

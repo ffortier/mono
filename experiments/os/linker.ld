@@ -15,6 +15,10 @@ SECTIONS
 		*(.rodata)
 	}
 	.bss ALIGN(4096) : {
+		*(COMMON)
 		*(.bss)
+	}
+	.asm ALIGN(4096) : {
+		*(.asm)
 	}
 }

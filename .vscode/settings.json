@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "*.pl": "prolog"
+        "*.pl": "prolog",
+        "*.asm": "nasm"
     },
     "rust-analyzer.linkedProjects": [
         "rust-project.json"
@@ -13,5 +14,6 @@
         "experiments/jasm/examples/adder/src/main/java",
         "experiments/jasm/src/main/java",
         "experiments/jasm/src/test/java"
-    ]
+    ],
+    "deno.enable": true
 }
