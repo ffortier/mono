@@ -1,6 +1,10 @@
 [BITS 32]
 
+section .kernel
+
 global _start
+
+extern kernel_main
 
 CODE_SEG equ 0x08
 DATA_SEG equ 0x10
@@ -19,7 +23,7 @@ _start:
     or al, 2
     out 0x92, al
 
-db "Hello World",0
+    call kernel_main
     jmp $
 
 times 512-($ - $$) db 0

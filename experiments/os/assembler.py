@@ -34,9 +34,9 @@ def main(args: Namespace):
         for file in files:
             transfer(file, output)
 
-        assert output.tell() < 51200
+        assert output.tell() < 512 * 101
 
-        output.write(bytes([0] * (51200 - output.tell())))
+        output.write(bytes([0] * (512 * 101 - output.tell())))
 
 
 if __name__ == "__main__":

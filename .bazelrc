@@ -12,6 +12,6 @@ common --tool_java_runtime_version=remotejdk_21
 common --java_language_version=21
 common --java_runtime_version=remotejdk_21
 
-common --incompatible_autoload_externally=""
+common --incompatible_autoload_externally="@rules_python"
 
 run:qemu --run_under="qemu-system-x86_64 -hda"

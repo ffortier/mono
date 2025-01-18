@@ -61,31 +61,33 @@ load32:
     mov eax, 1
     mov ecx, 100
     mov edi, 0x00100000
+
     call ata_lba_read
+
     jmp CODE_SEG:0x00100000
 
 ata_lba_read:       ; https://wiki.osdev.org/ATA_read/write_sectors
     mov ebx, eax
     
     shr eax, 24
-    or eax, 0xe0
-    mov dx, 0x1f6
+    or eax, 0xE0
+    mov dx, 0x1F6
     out dx, al
 
     mov eax, ecx
-    mov dx, 0x1f2
+    mov dx, 0x1F2
     out dx, al
 
     mov eax, ebx
-    mov dx, 0x1f3
+    mov dx, 0x1F3
     out dx, al
-    
-    mov dx, 0x1f4
+
+    mov dx, 0x1F4
     mov eax, ebx
     shr eax, 8
     out dx, al
 
-    mov dx, 0x1f5
+    mov dx, 0x1F5
     mov eax, ebx
     shr eax, 16
     out dx, al
@@ -93,25 +95,24 @@ ata_lba_read:       ; https://wiki.osdev.org/ATA_read/write_sectors
     mov dx, 0x1f7
     mov al, 0x20
     out dx, al
-
 .next:
     push ecx
+
 .again:
     mov dx, 0x1f7
     in al, dx
-    test al, 0
+    test al, 8
     jz .again
 
     mov ecx, 256
-    mov dx, 0x1f0
+    mov dx, 0x1F0
     rep insw
     pop ecx
     loop .next
+
     ret
 
 
 
 times 510-($ - $$) db 0
 dw 0xaa55
-
-buffer:

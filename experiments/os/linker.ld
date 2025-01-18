@@ -6,6 +6,7 @@ SECTIONS
 
 	.text : {
 		*(multiboot)
+		*(.kernel)
 		*(.text)
 	}
 	.data ALIGN(4096) : {

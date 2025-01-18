@@ -10,7 +10,13 @@ nasm_library(
 
 cc_library(
     name = "kernel_o",
-    srcs = [":kernel_asm"],
+    srcs = [
+        "kernel.c",
+        ":kernel_asm",
+    ],
+    hdrs = [
+        "kernel.h",
+    ],
 )
 
 cc_binary(
