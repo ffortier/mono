@@ -20,7 +20,7 @@ deno_toolchain(
 http_archive(
     name = "deno_aarch64_apple_darwin",
     urls = ["https://github.com/denoland/deno/releases/download/v2.1.6/deno-aarch64-apple-darwin.zip"],
-    sha256 = "fafe869cd9c6796f89c4fea7b0de7379892ae2cb0fda3233a4893040cf6ca6da",
+    sha256 = "c6c6ce0cf67e6de7d2064033c654d9d739eb1820a4f88bccaf8f8b61f16a15b5",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_apple_darwin"),
 )
 
