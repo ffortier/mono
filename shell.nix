@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
   pkgs.mkShell {
     nativeBuildInputs = with pkgs.buildPackages; [ 
-      coreutils 
+      coreutils
       bazelisk 
       bazel-buildtools 
       python313
@@ -9,6 +9,5 @@
       qemu
       deno
       vim
-      gedit
     ];
   }
