@@ -31,4 +31,12 @@ http_archive(
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_x86_64_unknown_linux_gnu"),
 )
 
+http_archive(
+    name = "deno_aarch64_unknown_linux_gnu",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.1.6/deno-aarch64-unknown-linux-gnu.zip"],
+    #sha256 = "8cd5433baf9642380110b1f1ee03f4740aa8d2b470953e5cb40de1bbc9fcbd5d",
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_unknown_linux_gnu"),
+)
+
 register_toolchains("//third_party/deno:all")
+

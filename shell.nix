@@ -8,5 +8,7 @@
       git
       qemu
       deno
+      vim
+      gedit
     ];
   }

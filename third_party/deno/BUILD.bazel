@@ -9,6 +9,16 @@ toolchain(
 )
 
 toolchain(
+    name = "deno_aarch64_unknown_linux_gnu",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:aarch64",
+    ],
+    toolchain = "@deno_aarch64_unknown_linux_gnu",
+    toolchain_type = "@aspect_rules_deno//deno:toolchain_type",
+)
+
+toolchain(
     name = "deno_x86_64_unknown_linux_gnu",
     exec_compatible_with = [
         "@platforms//os:linux",
@@ -17,3 +27,4 @@ toolchain(
     toolchain = "@deno_x86_64_unknown_linux_gnu",
     toolchain_type = "@aspect_rules_deno//deno:toolchain_type",
 )
+
