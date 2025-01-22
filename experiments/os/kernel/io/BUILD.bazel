@@ -1,0 +1,20 @@
+load("//experiments/os:defs.bzl", "cc_library")
+load("//third_party/nasm:defs.bzl", "nasm_library")
+
+nasm_library(
+    name = "io_asm",
+    srcs = ["io.asm"],
+)
+
+cc_library(
+    name = "io",
+    srcs = [
+        "io.c",
+        "io_asm",
+    ],
+    hdrs = ["io.h"],
+    visibility = ["//experiments/os/kernel:__subpackages__"],
+    deps = [
+        "//experiments/os/kernel/memory",
+    ],
+)

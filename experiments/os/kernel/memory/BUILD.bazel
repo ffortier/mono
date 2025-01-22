@@ -1,0 +1,11 @@
+load("//experiments/os:defs.bzl", "cc_library")
+
+cc_library(
+    name = "memory",
+    srcs = [
+        "heap.c",
+        "memset.c",
+    ],
+    hdrs = ["memory.h"],
+    visibility = ["//experiments/os/kernel:__subpackages__"],
+)

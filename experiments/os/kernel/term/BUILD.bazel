@@ -1,0 +1,8 @@
+load("//experiments/os:defs.bzl", "cc_library")
+
+cc_library(
+    name = "term",
+    srcs = ["term.cc"],
+    hdrs = ["term.hh"],
+    visibility = ["//experiments/os/kernel:__subpackages__"],
+)

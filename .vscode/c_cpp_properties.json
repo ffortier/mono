@@ -5,14 +5,13 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "defines": [],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
             ],
             "compilerPath": "external/toolchains_llvm++llvm+llvm_toolchain_llvm/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-arm64",
+            "intelliSenseMode": "linux-clang-x86",
             "compileCommands": "compile_commands.json"
         }
     ],

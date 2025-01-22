@@ -15,5 +15,6 @@
         "experiments/jasm/src/main/java",
         "experiments/jasm/src/test/java"
     ],
-    "deno.enable": true
+    "deno.enable": true,
+    "nasm.outputFormat": "elf32"
 }

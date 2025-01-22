@@ -11,11 +11,16 @@ nasm_library(
 cc_library(
     name = "kernel_o",
     srcs = [
-        "kernel.c",
+        "kernel.cc",
         ":kernel_asm",
     ],
-    hdrs = [
-        "kernel.h",
+    hdrs = ["kernel.hh"],
+    deps = [
+        # ":hello",
+        "//experiments/os/kernel/idt",
+        "//experiments/os/kernel/io",
+        "//experiments/os/kernel/memory",
+        "//experiments/os/kernel/term",
     ],
 )
 

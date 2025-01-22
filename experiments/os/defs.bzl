@@ -1,10 +1,12 @@
 load("@rules_cc//cc:defs.bzl", _cc_binary = "cc_binary", _cc_library = "cc_library")
 
-def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, target_compatible_with, **kwargs):
+def _cc_binary_impl(name, features, copts, additional_linker_inputs, deps, linkopts, target_compatible_with, **kwargs):
     if not features:
         features = []
     if not copts:
         copts = []
+    if not deps:
+        deps = []
     if not additional_linker_inputs:
         additional_linker_inputs = []
     if not linkopts:
@@ -14,6 +16,8 @@ def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, t
             "@platforms//os:none",
             "@platforms//cpu:i386",
         ]
+
+    additional_deps = ["//experiments/os/nostd"] if native.package_name() != "experiments/os/nostd" else []
 
     _cc_binary(
         name = name,
@@ -25,6 +29,8 @@ def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, t
         copts = copts + [
             "--target=i386-none-elf",
             "-ffreestanding",
+            "-Iexperiments/os",
+            "-DNOSTD",
         ],
         features = features + [
             "-default_link_flags",
@@ -41,26 +47,33 @@ def _cc_binary_impl(name, features, copts, additional_linker_inputs, linkopts, t
             "-z",
             "notext",
         ],
+        deps = deps + additional_deps,
         target_compatible_with = target_compatible_with,
         **kwargs
     )
 
-def _cc_library_impl(name, features, copts, target_compatible_with, **kwargs):
+def _cc_library_impl(name, features, copts, target_compatible_with, deps, **kwargs):
     if not features:
         features = []
     if not copts:
         copts = []
+    if not deps:
+        deps = []
     if not target_compatible_with:
         target_compatible_with = [
             "@platforms//os:none",
             "@platforms//cpu:i386",
         ]
 
+    additional_deps = ["//experiments/os/nostd"] if native.package_name() != "experiments/os/nostd" else []
+
     _cc_library(
         name = name,
         copts = copts + [
             "--target=i386-none-elf",
             "-ffreestanding",
+            "-Iexperiments/os",
+            "-DNOSTD",
         ],
         features = features + [
             "-default_link_flags",
@@ -68,6 +81,7 @@ def _cc_library_impl(name, features, copts, target_compatible_with, **kwargs):
             "-macos_default_link_flags",
             "-macos_minimum_os",
         ],
+        deps = deps + additional_deps,
         target_compatible_with = target_compatible_with,
         **kwargs
     )

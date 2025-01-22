@@ -1,0 +1,9 @@
+load("//experiments/os:defs.bzl", "cc_library")
+
+cc_library(
+    name = "nostd",
+    hdrs = [
+        "types.h",
+    ],
+    visibility = ["//experiments/os:__subpackages__"],
+)
