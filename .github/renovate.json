@@ -68,6 +68,19 @@
                 "artifacts\\s+=\\s+\\[([^]]*)]",
                 "\"(?<depName>[^:\"]+:[^:\"]+):(?<currentValue>[^:\"]+)\""
             ]
+        },
+        {
+            "customType": "regex",
+            "datasourceTemplate": "git-refs",
+            "depNameTemplate": "nixpkgs",
+            "packageNameTemplate": "https://github.com/NixOS/nixpkgs",
+            "versioningTemplate": "nixpkgs",
+            "fileMatch": [
+                "\bshell\\.nix$"
+            ],
+            "matchStrings":[
+                "https:\\/\\/github\\.com\\/NixOS\\/nixpkgs\\/archive\\/(?<currentValue>[a-z0-9-.]+)\\.tar\\.gz"
+            ]
         }
     ]
 }
