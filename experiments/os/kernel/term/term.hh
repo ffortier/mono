@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nostd/types.h"
+#include "kernel/nostd/nostd.hh"
 
 class console {
  private:
@@ -18,8 +18,11 @@ class console {
         color(15),
         cursor(0) {}
 
-  console(console&) = delete;
+  console(const console&) = delete;
   console(console&&) = delete;
+
+  console& operator=(const console&) = delete;
+  console& operator=(console&&) = delete;
 
   static console& get();
 

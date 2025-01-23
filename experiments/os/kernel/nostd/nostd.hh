@@ -12,14 +12,14 @@ typedef signed long int int32_t;
 typedef signed long long int int64_t;
 typedef uint32_t uintptr_t;
 typedef int32_t intptr_t;
-#if !defined(__cplusplus)
-typedef char bool;
-#endif
-#define true 1
-#define false 0
-#define NULL 0
+
+extern "C" {
+void *memset(void *ptr, int value, size_t num);
+}
+
 #else
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 #endif

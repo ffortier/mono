@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nostd/types.h"
+#include "kernel/nostd/nostd.hh"
 
 #define IDT_COUNT 512
 
@@ -18,7 +18,9 @@ typedef struct {
 } __attribute__((packed)) idtr_desc;
 
 void idt_init(void);
-void idt_set(size_t interrupt_number, void* callback);
+void idt_set(size_t interrupt_number, void (*callback)(void));
 
+extern "C" {
 void enable_interrupts(void);
 void disable_interrupts(void);
+}

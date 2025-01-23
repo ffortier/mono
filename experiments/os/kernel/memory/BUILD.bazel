@@ -1,11 +1,22 @@
-load("//experiments/os:defs.bzl", "cc_library")
+load("//experiments/os/kernel:defs.bzl", "cc_library")
 
 cc_library(
-    name = "memory",
-    srcs = [
-        "heap.c",
-        "memset.c",
-    ],
-    hdrs = ["memory.h"],
+    name = "heap",
+    srcs = ["heap.cc"],
+    hdrs = ["heap.hh"],
     visibility = ["//experiments/os/kernel:__subpackages__"],
+    deps = [
+        "//experiments/os/kernel/nostd",
+    ],
+)
+
+cc_library(
+    name = "allocator",
+    srcs = ["allocator.cc"],
+    hdrs = ["allocator.hh"],
+    visibility = ["//experiments/os/kernel:__subpackages__"],
+    deps = [
+        ":heap",
+        "//experiments/os/kernel/nostd",
+    ],
 )

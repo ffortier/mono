@@ -1,5 +1,5 @@
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
-load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:py_binary.bzl", "py_binary")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 package(features = ["export-module"])
@@ -35,5 +35,3 @@ genrule(
     cmd = "$(execpath :assembler) -o $@ $(SRCS)",
     tools = [":assembler"],
 )
-
-exports_files(["linker.ld"])

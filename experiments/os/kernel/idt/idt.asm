@@ -3,11 +3,9 @@ section .asm
 global enable_interrupts
 global disable_interrupts
 global idt_load
-global int_20
 global int_21
 global no_interrupt
 
-extern int20_handler
 extern int21_handler
 extern no_interrupt_handler
 

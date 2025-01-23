@@ -1,0 +1,8 @@
+load("//experiments/os/kernel:defs.bzl", "cc_library")
+
+cc_library(
+    name = "nostd",
+    srcs = ["nostd.cc"],
+    hdrs = ["nostd.hh"],
+    visibility = ["//experiments/os:__subpackages__"],
+)

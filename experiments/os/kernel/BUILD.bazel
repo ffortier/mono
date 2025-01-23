@@ -1,7 +1,9 @@
-load("//experiments/os:defs.bzl", "cc_binary", "cc_library")
+load("//experiments/os/kernel:defs.bzl", "cc_binary", "cc_library")
 load("//third_party/nasm:defs.bzl", "nasm_library")
 
 package(default_visibility = ["//experiments/os:__subpackages__"])
+
+exports_files(["linker.ld"])
 
 nasm_library(
     name = "kernel_asm",
@@ -19,8 +21,10 @@ cc_library(
         # ":hello",
         "//experiments/os/kernel/idt",
         "//experiments/os/kernel/io",
-        "//experiments/os/kernel/memory",
+        "//experiments/os/kernel/memory:heap",
+        "//experiments/os/kernel/memory:allocator",
         "//experiments/os/kernel/term",
+        "//experiments/os/kernel/nostd",
     ],
 )
 

@@ -1,4 +1,4 @@
-load("//experiments/os:defs.bzl", "cc_library")
+load("//experiments/os/kernel:defs.bzl", "cc_library")
 load("//third_party/nasm:defs.bzl", "nasm_library")
 
 nasm_library(
@@ -9,12 +9,12 @@ nasm_library(
 cc_library(
     name = "io",
     srcs = [
-        "io.c",
+        "io.cc",
         "io_asm",
     ],
-    hdrs = ["io.h"],
+    hdrs = ["io.hh"],
     visibility = ["//experiments/os/kernel:__subpackages__"],
     deps = [
-        "//experiments/os/kernel/memory",
+        "//experiments/os/kernel/nostd",
     ],
 )
