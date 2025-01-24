@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef NOSTD
-typedef unsigned long int size_t;
+typedef unsigned int size_t;
 typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;
 typedef unsigned long int uint32_t;
@@ -15,11 +15,19 @@ typedef int32_t intptr_t;
 
 extern "C" {
 void *memset(void *ptr, int value, size_t num);
+__extension__ typedef int __guard __attribute__((mode(__DI__)));
+int __cxa_guard_acquire(__guard *);
+void __cxa_guard_release(__guard *);
+void __cxa_guard_abort(__guard *);
 }
 
+inline void *operator new(size_t, void *p) noexcept { return p; }
+inline void *operator new[](size_t, void *p) noexcept { return p; }
+inline void operator delete(void *, void *) noexcept {};
+inline void operator delete[](void *, void *) noexcept {};
+
 #else
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
 #endif

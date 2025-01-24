@@ -20,3 +20,28 @@ cc_library(
         "//experiments/os/kernel/nostd",
     ],
 )
+
+cc_test(
+    name = "allocator_test",
+    srcs = ["allocator_test.cc"],
+    copts = [
+        "-Iexperiments/os",
+    ],
+    deps = [
+        ":allocator",
+        ":heap",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "heap_test",
+    srcs = ["heap_test.cc"],
+    copts = [
+        "-Iexperiments/os",
+    ],
+    deps = [
+        ":heap",
+        "@googletest//:gtest_main",
+    ],
+)

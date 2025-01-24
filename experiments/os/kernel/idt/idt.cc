@@ -40,7 +40,7 @@ void idt_set(size_t interrupt_number, void (*callback)(void)) {
 extern "C" void no_interrupt_handler(void) { outb(0x20, 0x20); }
 
 extern "C" void int21_handler(void) {
-  console::get().write_chars("key pressed\n");
+  term::get().write_chars("key pressed\n");
 
   outb(0x20, 0x20);
 }

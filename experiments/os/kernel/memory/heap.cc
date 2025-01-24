@@ -1,69 +1,57 @@
-// #include "memory.h"
+#include "heap.hh"
 
-// typedef struct block_node {
-//   void* ptr;
-//   struct block_node* next;
-// } block_node;
+heap* heap::kernel() {
+  static heap kernel_heap{0x00007e00, 0x0100000, 100 * 1024 * 1024, 4096};
 
-// #define BASE 0x01000000
-// #define BLOCK_SIZE 4096
-// #define HEAP_SIZE (1024 * 1024 * 100)
-// #define BLOCK_COUNT (HEAP_SIZE / BLOCK_SIZE)
-// #define HEAP_BASE \
-//   heap_align(BASE + sizeof(block_node) * BLOCK_COUNT, BLOCK_SIZE)
+  return &kernel_heap;
+}
 
-// block_node* all_blocks;
-// block_node* free_list = 0;
+heap::heap(uintptr_t table_addr, uintptr_t base_addr, size_t mem_size,
+           size_t block_size)
+    : _table_addr{reinterpret_cast<heap::block*>(table_addr)},
+      _base_addr{reinterpret_cast<uint8_t*>(base_addr)},
+      _mem_size{mem_size},
+      _block_size{block_size} {
+  _block_count = mem_size / block_size;
 
-// static uintptr_t heap_align(uintptr_t p, size_t block_size) {
-//   int res = p % block_size;
+  memset(_table_addr, 0, _block_count * sizeof(heap::block));
+}
 
-//   if (res == 0) {
-//     return res;
-//   }
+void* heap::malloc(size_t s) {
+  auto required_blocks =
+      s % _block_size == 0 ? s / _block_size : s / _block_size + 1;
 
-//   return res + (block_size - res);
-// }
+  size_t count = 0;
 
-// static block_node* heap_create(block_node* all_blocks, size_t block_count,
-//                                size_t block_size, uintptr_t base) {
-//   for (int i = 0; i < block_count - 1; i++) {
-//     all_blocks[i].ptr = (void*)base;
-//     all_blocks[i].next = &all_blocks[i + 1];
-//     base += block_size;
-//   }
+  for (auto i = 0; i < _block_count; i++) {
+    if (_table_addr[i] == heap::block::FREE) {
+      if (++count == required_blocks) {
+        for (auto j = i - count + 1; j < i; j++) {
+          _table_addr[j] = heap::block::NEXT;
+        }
 
-//   return &all_blocks[0];
-// }
+        _table_addr[i] = heap::block::END;
 
-// void heap_init(void) {
-//   all_blocks = (block_node*)BASE;
+        return &_base_addr[(i - count + 1) * 4096];
+      }
 
-//   free_list = heap_create(all_blocks, BLOCK_COUNT, BLOCK_SIZE, HEAP_BASE);
-// }
+      continue;
+    }
+    count = 0;
+  }
 
-// void* kmalloc(size_t s) {
-//   if (!free_list) {
-//     while (true) { /* panic */
-//     }
-//   }
+  return nullptr;
+}
 
-//   block_node* node = free_list;
-//   free_list = node->next;
-//   node->next = NULL;
-//   return node->ptr;
-// }
+void heap::free(void* ptr) {
+  if (!ptr) return;
 
-// void kfree(void* ptr) {
-//   if (!ptr) return;
-//   uintptr_t ptr_value = (uintptr_t)ptr;
-//   int index = (ptr_value - HEAP_BASE) / BLOCK_SIZE;
+  // TODO: Check range
+  auto start = (reinterpret_cast<uint8_t*>(ptr) - _base_addr) / _block_size;
 
-//   if (index >= BLOCK_COUNT || all_blocks[index].next) {
-//     while (true) { /* panic */
-//     }
-//   }
+  while (_table_addr[start] != heap::block::END) {
+    _table_addr[start++] = heap::block::FREE;
+  }
 
-//   all_blocks[index].next = free_list;
-//   free_list = &all_blocks[index];
-// }
+  _table_addr[start] = heap::block::FREE;
+}

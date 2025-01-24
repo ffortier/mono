@@ -2,7 +2,7 @@
 
 #include "kernel/nostd/nostd.hh"
 
-class console {
+class term {
  private:
   volatile uint16_t* video_mem;
   size_t width;
@@ -11,20 +11,20 @@ class console {
   uint16_t color;
 
  public:
-  constexpr console(uint16_t* video_mem, size_t width, size_t height) noexcept
+  constexpr term(uint16_t* video_mem, size_t width, size_t height) noexcept
       : video_mem(video_mem),
         width(width),
         height(height),
-        color(15),
-        cursor(0) {}
+        cursor(0),
+        color(15) {}
 
-  console(const console&) = delete;
-  console(console&&) = delete;
+  term(const term&) = delete;
+  term(term&&) = delete;
 
-  console& operator=(const console&) = delete;
-  console& operator=(console&&) = delete;
+  term& operator=(const term&) = delete;
+  term& operator=(term&&) = delete;
 
-  static console& get();
+  static term& get();
 
   inline void set_color(uint8_t color) {
     this->color = static_cast<uint16_t>(color) << 8;

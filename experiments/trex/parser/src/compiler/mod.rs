@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use crate::parser::Token;
 
 pub struct Automaton<'a> {

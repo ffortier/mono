@@ -7,3 +7,6 @@ http_archive(
     strip_prefix = "walloc-a93409f5ebd49c875514c5fee30d3b151f7b0882",
     build_file = "//third_party/cpp:walloc.BUILD.bazel",
 )
+
+bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "glog", version = "0.7.1")

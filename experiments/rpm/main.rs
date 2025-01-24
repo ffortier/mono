@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use byteorder::ReadBytesExt;
 use std::{
     collections::VecDeque,
