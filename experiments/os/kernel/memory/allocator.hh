@@ -38,7 +38,7 @@ class allocator {
 
       mem = _base + index * _heap->block_size();
     } else {
-      mem = _heap->malloc(sizeof(T));
+      mem = _heap->malloc<T>(1);
     }
 
     return new (mem) T(args...);

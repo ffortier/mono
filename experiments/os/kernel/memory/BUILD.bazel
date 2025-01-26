@@ -1,4 +1,5 @@
 load("//experiments/os/kernel:defs.bzl", "cc_library")
+load("//third_party/nasm:defs.bzl", "nasm_library")
 
 cc_library(
     name = "heap",
@@ -7,6 +8,18 @@ cc_library(
     visibility = ["//experiments/os/kernel:__subpackages__"],
     deps = [
         "//experiments/os/kernel/nostd",
+    ],
+)
+
+cc_test(
+    name = "heap_test",
+    srcs = ["heap_test.cc"],
+    copts = [
+        "-Iexperiments/os",
+    ],
+    deps = [
+        ":heap",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -34,14 +47,21 @@ cc_test(
     ],
 )
 
-cc_test(
-    name = "heap_test",
-    srcs = ["heap_test.cc"],
-    copts = [
-        "-Iexperiments/os",
+nasm_library(
+    name = "paging_asm",
+    srcs = ["paging.asm"],
+)
+
+cc_library(
+    name = "paging",
+    srcs = [
+        "paging.cc",
+        ":paging_asm",
     ],
+    hdrs = ["paging.hh"],
+    visibility = ["//experiments/os/kernel:__subpackages__"],
     deps = [
         ":heap",
-        "@googletest//:gtest_main",
+        "//experiments/os/kernel/nostd",
     ],
 )

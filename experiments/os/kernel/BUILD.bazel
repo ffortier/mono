@@ -23,7 +23,9 @@ cc_library(
         "//experiments/os/kernel/io",
         "//experiments/os/kernel/memory:heap",
         "//experiments/os/kernel/memory:allocator",
+        "//experiments/os/kernel/memory:paging",
         "//experiments/os/kernel/term",
+        "//experiments/os/kernel/disk",
         "//experiments/os/kernel/nostd",
     ],
 )

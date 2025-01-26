@@ -10,8 +10,7 @@ typedef signed char int8_t;
 typedef signed short int int16_t;
 typedef signed long int int32_t;
 typedef signed long long int int64_t;
-typedef uint32_t uintptr_t;
-typedef int32_t intptr_t;
+typedef unsigned int uintptr_t;
 
 extern "C" {
 void *memset(void *ptr, int value, size_t num);
@@ -31,3 +30,5 @@ inline void operator delete[](void *, void *) noexcept {};
 #include <cstdint>
 #include <cstring>
 #endif
+
+void panic(int err, const char *msg);

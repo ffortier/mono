@@ -13,8 +13,8 @@ TEST(heap, malloc) {
   EXPECT_EQ(table[0], static_cast<char>(heap::block::FREE));
   EXPECT_EQ(table[1], static_cast<char>(heap::block::FREE));
 
-  char* v1 = reinterpret_cast<char*>(test_heap.malloc(20));
-  char* v2 = reinterpret_cast<char*>(test_heap.malloc(20));
+  char* v1 = test_heap.malloc<char>(20);
+  char* v2 = test_heap.malloc<char>(20);
 
   v1[0] = '1';
   v1[1] = '\0';
@@ -37,10 +37,12 @@ TEST(heap, malloc) {
   EXPECT_EQ(table[0], static_cast<char>(heap::block::FREE));
   EXPECT_EQ(table[1], static_cast<char>(heap::block::FREE));
 
-  v1 = reinterpret_cast<char*>(test_heap.malloc(20 + 4096));
+  v1 = test_heap.malloc<char>(20 + 4096);
 
   EXPECT_EQ(table[0], static_cast<char>(heap::block::NEXT));
   EXPECT_EQ(table[1], static_cast<char>(heap::block::END));
 
-  EXPECT_EQ(test_heap.malloc(20), nullptr);
+  EXPECT_EQ(test_heap.malloc<char>(20), nullptr);
+
+  test_heap.free(v1);
 }

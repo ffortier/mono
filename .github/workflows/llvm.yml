@@ -1,0 +1,10 @@
+name: llvm
+on:
+  workflow_dispatch: {}
+
+jobs:
+  check-m2:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+        cat $HOME/.m2/settings.json

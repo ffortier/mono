@@ -11,10 +11,8 @@ allocator::allocator(heap* __heap, size_t small_obj_mem_size) {
     _base = nullptr;
     _free_node = allocator::end_block;
   } else {
-    _node_nexts =
-        reinterpret_cast<size_t*>(_heap->malloc(node_count * sizeof(size_t)));
-    _base = reinterpret_cast<uint8_t*>(
-        _heap->malloc(node_count * _heap->block_size()));
+    _node_nexts = _heap->malloc<size_t>(node_count);
+    _base = _heap->malloc<uint8_t>(node_count * _heap->block_size());
 
     for (auto i = 0; i < node_count - 1; i++) {
       _node_nexts[i] = _node_nexts[i + 1];

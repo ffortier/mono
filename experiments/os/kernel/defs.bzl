@@ -27,7 +27,7 @@ def _cc_binary_impl(name, **kwargs):
             ],
             "//conditions:default": [],
         }),
-        cxxopts = (kwargs.pop("cxxopts") or []) + select({
+        cxxopts = (kwargs.pop("cxxopts") or []) + ["-std=c++20"] + select({
             ":%s_kernel" % name: ["-fno-exceptions", "-fno-rtti"],
             "//conditions:default": [],
         }),
@@ -74,7 +74,7 @@ def _cc_library_impl(name, **kwargs):
             ],
             "//conditions:default": [],
         }),
-        cxxopts = (kwargs.pop("cxxopts") or []) + select({
+        cxxopts = (kwargs.pop("cxxopts") or []) + ["-std=c++20"] + select({
             ":%s_kernel" % name: ["-fno-exceptions", "-fno-rtti"],
             "//conditions:default": [],
         }),

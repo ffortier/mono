@@ -23,13 +23,17 @@ def main(args: Namespace):
     files = [Path(input_file) for input_file in args.files]
 
     [boot] = filter(lambda file: file.name == "boot.bin", files)
+    [kernel] = filter(lambda file: file.name == "kernel.bin", files)
 
     assert boot.stat().st_size == 512
+    assert kernel.stat().st_size < 512 * 100
 
     files.remove(boot)
+    files.remove(kernel)
 
     with open(args.output, "wb") as output:
         transfer(boot, output)
+        transfer(kernel, output)
 
         for file in files:
             transfer(file, output)

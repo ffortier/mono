@@ -1,0 +1,12 @@
+load("//experiments/os/kernel:defs.bzl", "cc_library")
+
+cc_library(
+    name = "disk",
+    srcs = ["disk.cc"],
+    hdrs = ["disk.hh"],
+    visibility = ["//experiments/os/kernel:__subpackages__"],
+    deps = [
+        "//experiments/os/kernel/io",
+        "//experiments/os/kernel/nostd",
+    ],
+)
