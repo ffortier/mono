@@ -9,11 +9,19 @@ llvm.toolchain(
         "wasm32": "none",
         "wasm64": "none",
     },
+    cxx_standard = {
+        "": "c++20",
+    },
 )
 
 llvm.sysroot(
     label = "@sysroots_bullseye_amd64//:sysroot",
     targets = ["linux-x86_64"],
+)
+
+llvm.sysroot(
+    label = "@sysroots_bullseye_arm64//:sysroot",
+    targets = ["linux-aarch64"],
 )
 
 llvm.sysroot(
@@ -33,10 +41,10 @@ register_toolchains("@llvm_toolchain//:all", "//third_party/cpp:all")
 sysroots = use_extension("//third_party/cpp:sysroots.bzl", "sysroots")
 
 sysroots.install(
-    targets = ["bullseye_amd64"],
+    targets = ["bullseye_amd64", "bullseye_arm64"],
 )
 
-use_repo(sysroots, "sysroots_bullseye_amd64", "sysroot_darwin_universal")
+use_repo(sysroots, "sysroots_bullseye_amd64", "sysroots_bullseye_arm64", "sysroot_darwin_universal")
 
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 

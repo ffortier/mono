@@ -182,7 +182,7 @@
     "//third_party/cpp:sysroots.bzl%sysroots": {
       "general": {
         "bzlTransitiveDigest": "CPWGDICOARUC7qatXHHghY0AEHHQyTlfdLlWoHT/MRM=",
-        "usagesDigest": "+i3vVg67YoVUk6dy7IodRNsuZBiG29PSIJADV8/vgTc=",
+        "usagesDigest": "LTKJNd5gNxvyNX/J+LO66uaxoVMwB+xFB8tH9NU+5m8=",
         "recordedFileInputs": {
           "@@//third_party/cpp/sysroots.json": "54a898a19c5d4234b07e35502a52582b74b0fdc83c55338e4df77afdbaf7ea19"
         },
@@ -205,6 +205,14 @@
             "attributes": {
               "url": "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/ec989b96c5f1e235182e5f2a5c9d23b3eb4101e0/debian_bullseye_amd64_sysroot.tar.xz",
               "integrity": "sha1-7JiblsXx4jUYLl8qXJ0js+tBAeA=",
+              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+            }
+          },
+          "sysroots_bullseye_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "url": "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/f65e4d81b81d19f4354ed1bb22afeb1f3949a446/debian_bullseye_arm64_sysroot.tar.xz",
+              "integrity": "sha1-9l5NgbgdGfQ1TtG7Iq/rHzlJpEY=",
               "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
             }
           }
@@ -6663,7 +6671,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
-        "usagesDigest": "NsZ7UYqi37FanLkOfXMJQqc/jJMa1tDSvb4U8e3qKbI=",
+        "usagesDigest": "vL62trGCzYFGkNRgsbYNcVJtLjtmPk5ruIFSrf+P/x0=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -6697,7 +6705,9 @@
               "coverage_link_flags": {},
               "cxx_builtin_include_directories": {},
               "cxx_flags": {},
-              "cxx_standard": {},
+              "cxx_standard": {
+                "": "c++20"
+              },
               "dbg_compile_flags": {},
               "exec_arch": "",
               "exec_os": "",
@@ -6719,6 +6729,7 @@
               "toolchain_roots": {},
               "sysroot": {
                 "linux-x86_64": "'@@+sysroots+sysroots_bullseye_amd64//:sysroot'",
+                "linux-aarch64": "'@@+sysroots+sysroots_bullseye_arm64//:sysroot'",
                 "darwin-x86_64": "'@@+sysroots+sysroot_darwin_universal//:sysroot'",
                 "darwin-aarch64": "'@@+sysroots+sysroot_darwin_universal//:sysroot'",
                 "wasm32": "'@@//third_party/cpp/empty:empty'",
