@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - run: |
-        cat $HOME/.m2/settings.json
+          cat $HOME/.m2/settings.json
