@@ -8,5 +8,5 @@ http_archive(
     build_file = "//third_party/cpp:walloc.BUILD.bazel",
 )
 
-bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "googletest", version = "1.16.0")
 bazel_dep(name = "glog", version = "0.7.1")
