@@ -6,7 +6,7 @@ on:
 jobs:
   build-linux-x86_64:
     runs-on: ubuntu-24.04
-    
+    permissions: read-all
     steps:
     - uses: actions/checkout@v4
 
@@ -32,7 +32,7 @@ jobs:
 
   build-darwin-aarch64:
     runs-on: macos-14
-    
+    permissions: read-all
     steps:
     - uses: actions/checkout@v4
 

@@ -11,10 +11,10 @@ import java.nio.ByteBuffer;
 
 public class Screen extends ComponentUI implements Device {
     private static final int[][] BLENDING = {
-            {0, 0, 0, 0, 1, 0, 1, 1, 2, 2, 0, 2, 3, 3, 3, 0},
-            {0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3},
-            {1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1},
-            {2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2},
+            { 0, 0, 0, 0, 1, 0, 1, 1, 2, 2, 0, 2, 3, 3, 3, 0 },
+            { 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3 },
+            { 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1 },
+            { 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2 },
     };
     private final int DEFAULT_WIDTH = 512;
     private final int DEFAULT_HEIGHT = 320;
@@ -140,8 +140,10 @@ public class Screen extends ComponentUI implements Device {
         for (var i = 0; i <= length; i++) {
             var x1 = x + dyx * i;
             var y1 = y + dxy * i;
-            if (x1 >= 0x8000) x1 = -(0x10000 - x1);
-            if (y1 >= 0x8000) y1 = -(0x10000 - y1);
+            if (x1 >= 0x8000)
+                x1 = -(0x10000 - x1);
+            if (y1 >= 0x8000)
+                y1 = -(0x10000 - y1);
             for (var v = 0; v < 8; v++) {
                 var c = ram.get((ptr + v) & 0xffff) | (twobpp != 0 ? (ram.get((ptr + v + 8) & 0xffff) << 8) : 0);
                 var v1 = (flipy ? 7 - v : v);
@@ -154,7 +156,7 @@ public class Screen extends ComponentUI implements Device {
                     }
                 }
             }
-            ptr += addr_incr;
+            ptr += (short) addr_incr;
         }
         if ((move & 0x1) != 0) {
             ram.putShort(0x28, (short) (x + dx * fx));
@@ -175,6 +177,5 @@ public class Screen extends ComponentUI implements Device {
     }
 
     private final Timer timer = new Timer((int) (1000.0 / 60.0), this::animate);
-
 
 }
