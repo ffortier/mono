@@ -5,9 +5,6 @@ cc_binary(
     srcs = ["src/main.c"],
     args = ["$(rootpath README.md)"],
     data = ["README.md"],
-    target_compatible_with = [
-        "@platforms//os:macos",
-    ],
     deps = [
         "@raylib",
     ],
