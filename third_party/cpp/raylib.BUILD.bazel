@@ -1,0 +1,130 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+defines = select({
+    "@platforms//os:linux": [
+        "_GNU_SOURCE",
+        "PLATFORM_DESKTOP",
+    ],
+    "//conditions:default": ["PLATFORM_DESKTOP"],
+})
+
+modules = glob(
+    ["src/*.c"],
+    exclude = [
+        "src/raudio.c",  # Currently not supported on macos hermetic sysroot.
+        "src/rglfw.c",  # Provided differently
+    ],
+)
+
+cc_library(
+    name = "rglfw_macos",
+    srcs = ["src/rglfw.c"],
+    hdrs = [":hdrs"],
+    additional_compiler_inputs = [
+        ":hdrs",
+        ":external",
+        ":platforms",
+    ],
+    copts = ["-ObjC"],
+    includes = [
+        "src/external/glfw/include",
+    ],
+    linkopts = [
+        "-framework Cocoa",
+        "-framework CoreVideo",
+        "-framework OpenGL",
+        "-framework IOKit",
+        "-framework AppKit",
+        "-framework Foundation",
+        "-framework CoreFoundation",
+        "-framework CoreGraphics",
+        "-framework Carbon",
+        "-framework GLUT",
+    ],
+    local_defines = defines,
+    strip_include_prefix = "src",
+    tags = ["manual"],
+)
+
+cc_library(
+    name = "rglfw_linux",
+    srcs = ["src/rglfw.c"],
+    hdrs = [":hdrs"],
+    additional_compiler_inputs = [
+        ":hdrs",
+        ":external",
+        ":platforms",
+    ],
+    includes = [
+        "src/external/glfw/include",
+    ],
+    linkopts = [
+        "-lpthread",
+        "-ldl",
+    ],
+    local_defines = defines,
+    strip_include_prefix = "src",
+    tags = ["manual"],
+)
+
+alias(
+    name = "rglfw",
+    actual = select({
+        "@platforms//os:macos": ":rglfw_macos",
+        "//conditions:default": ":rglfw_linux",
+    }),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "hdrs",
+    srcs = glob(["src/*.h"]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "external",
+    srcs = glob([
+        "src/external/**/*",
+    ]),
+)
+
+filegroup(
+    name = "platforms",
+    srcs = glob([
+        "src/platforms/**/*.c",
+    ]),
+)
+
+[
+    cc_library(
+        name = module.removesuffix(".c").removeprefix("src/"),
+        srcs = [
+            module,
+        ],
+        hdrs = [":hdrs"],
+        additional_compiler_inputs = [
+            ":hdrs",
+            ":external",
+            ":platforms",
+        ],
+        includes = [
+            "src/external/glfw/include",
+        ],
+        local_defines = defines,
+        strip_include_prefix = "src",
+        visibility = ["//visibility:public"],
+    )
+    for module in modules
+]
+
+cc_library(
+    name = "raylib",
+    hdrs = [":hdrs"],
+    strip_include_prefix = "src",
+    visibility = ["//visibility:public"],
+    deps = [":rglfw"] + [
+        ":%s" % module.removesuffix(".c").removeprefix("src/")
+        for module in modules
+    ],
+)

@@ -3692,7 +3692,7 @@
           "CARGO_BAZEL_ISOLATED": null,
           "CARGO_BAZEL_REPIN": null,
           "CARGO_BAZEL_REPIN_ONLY": null,
-          "REPIN": "1"
+          "REPIN": null
         },
         "generatedRepoSpecs": {
           "crates": {

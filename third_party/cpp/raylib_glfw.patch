@@ -1,0 +1,37 @@
+diff --git a/src/external/glfw/src/cocoa_window.m b/src/external/glfw/src/cocoa_window.m
+index daac39b..c057ed9 100644
+--- a/src/external/glfw/src/cocoa_window.m
++++ b/src/external/glfw/src/cocoa_window.m
+@@ -1665,19 +1665,19 @@ void _glfwSetCursorModeCocoa(_GLFWwindow* window, int mode)
+     UniChar characters[4];
+     UniCharCount characterCount = 0;
+ 
+-    if (UCKeyTranslate([(NSData*) _glfw.ns.unicodeData bytes],
+-                       scancode,
+-                       kUCKeyActionDisplay,
+-                       0,
+-                       LMGetKbdType(),
+-                       kUCKeyTranslateNoDeadKeysBit,
+-                       &deadKeyState,
+-                       sizeof(characters) / sizeof(characters[0]),
+-                       &characterCount,
+-                       characters) != noErr)
+-    {
+-        return NULL;
+-    }
++    // if (UCKeyTranslate([(NSData*) _glfw.ns.unicodeData bytes],
++    //                    scancode,
++    //                    kUCKeyActionDisplay,
++    //                    0,
++    //                    LMGetKbdType(),
++    //                    kUCKeyTranslateNoDeadKeysBit,
++    //                    &deadKeyState,
++    //                    sizeof(characters) / sizeof(characters[0]),
++    //                    &characterCount,
++    //                    characters) != noErr)
++    // {
++    //     return NULL;
++    // }
+ 
+     if (!characterCount)
+         return NULL;
