@@ -1,0 +1,6 @@
+load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
+
+deno_binary(
+    name = "problem_1",
+    main = "problem_1.ts",
+)

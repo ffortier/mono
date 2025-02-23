@@ -16,5 +16,8 @@
         "experiments/jasm/src/test/java"
     ],
     "deno.enable": true,
-    "nasm.outputFormat": "elf32"
+    "nasm.outputFormat": "elf32",
+    "[typescript]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },
 }
