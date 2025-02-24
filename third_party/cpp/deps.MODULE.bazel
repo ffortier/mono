@@ -18,5 +18,13 @@ http_archive(
     patch_args = ["-p1"],
 )
 
+http_archive(
+    name = "stb",
+    urls = ["https://github.com/nothings/stb/archive/5c205738c191bcb0abc65c4febfa9bd25ff35234.zip"],
+    sha256 = "08928e193dfd8455dd8463b4b8b2e9db61e144000205b04fe506379832cafc8c",
+    strip_prefix = "stb-5c205738c191bcb0abc65c4febfa9bd25ff35234",
+    build_file = "//third_party/cpp:stb.BUILD.bazel",
+)
+
 bazel_dep(name = "googletest", version = "1.16.0")
 bazel_dep(name = "glog", version = "0.7.1")

@@ -1,0 +1,12 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+
+cc_binary(
+    name = "gather_pet",
+    srcs = ["main.c"],
+    args = ["$(rootpaths //experiments/gather_pet/fada)"],
+    data = ["//experiments/gather_pet/fada"],
+    deps = [
+        "@stb//:stb_image",
+        "@stb//:stb_image_write",
+    ],
+)
