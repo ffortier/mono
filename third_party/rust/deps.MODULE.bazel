@@ -64,7 +64,7 @@ crate.spec(
     package = "scryer-prolog",
     version = "0.9.4",
     default_features = False,
-    features = ["repl", "hostname", "http", "crypto-full"],
+    features = ["repl", "hostname"],
 )
 
 crate.annotation(
