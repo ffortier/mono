@@ -331,7 +331,7 @@
     },
     "@@rules_python+//python/extensions:pip.bzl%pip": {
       "general": {
-        "bzlTransitiveDigest": "m+tIGJonMSbPJNkhieedH7vgdhIE3uSiv47I5ktoO3U=",
+        "bzlTransitiveDigest": "MmQ7PpbppPJo93rCH5NzEVUpPkKdAFYa8U91tGjJyis=",
         "usagesDigest": "w28xxFiS1tlQ+lCxFzKK3KADzpBObWoC2RldTztOJH0=",
         "recordedFileInputs": {
           "@@//third_party/python/requirements_3_9_lock.txt": "659cb41e2f20ca242651a6d663c14494918f4b392c6e684f0f33212bc6f1e677",
@@ -3681,7 +3681,7 @@
     },
     "@@rules_rust+//crate_universe:extension.bzl%crate": {
       "general": {
-        "bzlTransitiveDigest": "GQhukzflS6dJihEuLbANhdzOWxe0Z18XDZKsLwL6Z5k=",
+        "bzlTransitiveDigest": "eC3HqLxe9ELOQjTcpmU/K1aKc8jnG4UXPrnTOe9M6gc=",
         "usagesDigest": "Huw5XkcfCXDQX7XFg3fRNoZRxFgUEjmHPJwwGYf8Ilw=",
         "recordedFileInputs": {
           "@@//third_party/rust/scryer-prolog.BUILD.bazel": "fd0418b29e7b865157c068d26555602a37cb8e26b5f46571a8d2a7edd6b1161c"
