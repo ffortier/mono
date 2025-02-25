@@ -55,6 +55,24 @@ crate.spec(
     version = "=1.1.0",
 )
 
+crate.spec(
+    package = "tokio",
+    version = "1.43.0",
+)
+
+crate.spec(
+    package = "scryer-prolog",
+    version = "0.9.4",
+    default_features = False,
+    features = ["repl", "hostname", "http", "crypto-full"],
+)
+
+crate.annotation(
+    crate = "scryer-prolog",
+    additive_build_file = "//third_party/rust:scryer-prolog.BUILD.bazel",
+    extra_aliased_targets = {"scryer_prolog_bin": "bin"},
+)
+
 crate.from_specs()
 
 use_repo(crate, "crates")

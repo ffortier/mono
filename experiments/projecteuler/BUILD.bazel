@@ -1,5 +1,6 @@
 load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
 
 [
     deno_binary(
@@ -15,4 +16,12 @@ load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
         srcs = [c_file],
     )
     for c_file in glob(["*.c"])
+]
+
+[
+    prolog_binary(
+        name = pl_file.removesuffix(".pl"),
+        main = pl_file,
+    )
+    for pl_file in glob(["*.pl"])
 ]

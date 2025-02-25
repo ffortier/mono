@@ -1,3 +1,4 @@
+load("@rules_prolog//:prolog_toolchain.bzl", "prolog_toolchain")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 # mkdocs wrapper because mkdocs-monorepo-plugin is not able to process symlinks properly
@@ -10,4 +11,15 @@ sh_binary(
         "//experiments/typescript-fun:docs",
         "//third_party/python:mkdocs",
     ],
+)
+
+prolog_toolchain(
+    name = "scryper_prolog",
+    tool = "@crates//:scryer_prolog_bin",
+)
+
+toolchain(
+    name = "scryper_prolog_toolchain",
+    toolchain = ":scryper_prolog",
+    toolchain_type = "@rules_prolog//:toolchain_type",
 )
