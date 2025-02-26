@@ -1,5 +1,5 @@
 _EXEC_CONTENT = """#!/usr/bin/env bash
-{prolog} {main}
+{prolog} {options} {files}
 """
 
 def _impl(ctx):
@@ -7,19 +7,26 @@ def _impl(ctx):
 
     exec = ctx.actions.declare_file(ctx.label.name)
 
+    options = []
+
+    if ctx.attr.goal:
+        options.append("-g")
+        options.append(ctx.attr.goal)
+
     ctx.actions.write(
         output = exec,
         is_executable = True,
         content = _EXEC_CONTENT.format(
             prolog = prolog.tool[DefaultInfo].files_to_run.executable.short_path,
-            main = ctx.file.main.short_path,
+            files = " ".join([f.short_path for f in ctx.files.srcs]),
+            options = " ".join(options),
         ),
     )
 
     return [
         DefaultInfo(
             files = depset([exec]),
-            runfiles = ctx.runfiles([ctx.file.main]).merge(prolog.tool[DefaultInfo].default_runfiles),
+            runfiles = ctx.runfiles(ctx.files.srcs).merge(prolog.tool[DefaultInfo].default_runfiles),
             executable = exec,
         ),
     ]
@@ -28,7 +35,8 @@ prolog_binary = rule(
     implementation = _impl,
     toolchains = ["@rules_prolog//:toolchain_type"],
     attrs = dict(
-        main = attr.label(allow_single_file = [".pl"], mandatory = True),
+        srcs = attr.label_list(allow_files = [".pl"], mandatory = True),
+        goal = attr.string(),
     ),
     executable = True,
 )

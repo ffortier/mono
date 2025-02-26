@@ -57,12 +57,12 @@ crate.spec(
 
 crate.spec(
     package = "tokio",
-    version = "1.43.0",
+    version = "=1.43.0",
 )
 
 crate.spec(
     package = "scryer-prolog",
-    version = "0.9.4",
+    version = "=0.9.4",
     default_features = False,
     features = ["repl", "hostname"],
 )

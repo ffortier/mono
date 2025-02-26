@@ -21,7 +21,8 @@ load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
 [
     prolog_binary(
         name = pl_file.removesuffix(".pl"),
-        main = pl_file,
+        srcs = [pl_file],
+        goal = pl_file.removesuffix(".pl"),
     )
     for pl_file in glob(["*.pl"])
 ]

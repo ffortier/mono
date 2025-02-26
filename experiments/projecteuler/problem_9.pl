@@ -6,12 +6,17 @@
 % Find the product abc.
 :- use_module(library(clpz)).
 
-triplet(A, B, C) :-
+pythagorean_triplet(A, B, C) :-
     0 #< A,
     A #< B,
     B #< C,
     A * A + B * B #= C * C.
 
-run :- triplet(A,B,C), 1000 #= A + B + C, [A,B,C] ins 1..1000, label([A,B,C]), P #= A * B * C, write(P).
-
-:- initialization(run).
+problem_9 :- 
+    pythagorean_triplet(A, B, C), 
+    1000 #= A + B + C, 
+    [A, B, C] ins 1..1000, 
+    label([A, B, C]), 
+    P #= A * B * C, 
+    write_term([["A", A], ["B", B], ["C", C], [P]], []), 
+    halt.
