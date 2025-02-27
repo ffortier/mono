@@ -9,5 +9,6 @@
       qemu
       deno
       vim
+      dotnet-sdk_9
     ];
   }

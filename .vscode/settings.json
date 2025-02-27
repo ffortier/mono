@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "*.pl": "prolog",
-        "*.asm": "nasm"
+        "*.asm": "nasm",
+        "*.fs": "fsharp",
     },
     "rust-analyzer.linkedProjects": [
         "rust-project.json"

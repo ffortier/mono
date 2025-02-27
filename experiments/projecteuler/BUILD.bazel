@@ -1,5 +1,6 @@
 load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_dotnet//dotnet:defs.bzl", "fsharp_binary")
 load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
 
 [
@@ -26,3 +27,12 @@ load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
     )
     for pl_file in glob(["*.pl"])
 ]
+
+fsharp_binary(
+    name = "p",
+    srcs = ["p.fs"],
+    target_frameworks = ["net9.0"],
+    deps = [
+        "@paket.main//fsharp.core",
+    ],
+)
