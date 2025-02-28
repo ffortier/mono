@@ -13,7 +13,7 @@ python.toolchain(
 
 use_repo(python, "python_versions", "python_3_13", "python_3_9")
 
-uv = use_extension("@rules_python//python/uv:extensions.bzl", "uv")
+uv = use_extension("@rules_python//python/uv:uv.bzl", "uv")
 uv.toolchain(uv_version = "0.4.25")
 use_repo(uv, "uv_toolchains")
 
