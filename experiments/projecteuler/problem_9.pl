@@ -19,4 +19,5 @@ problem_9 :-
     label([A, B, C]), 
     P #= A * B * C, 
     write_term([["A", A], ["B", B], ["C", C], [P]], []), 
+    nl,
     halt.

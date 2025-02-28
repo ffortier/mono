@@ -9,4 +9,4 @@ lattice_path(N, X-Y) --> { Y #< N, Y1 #= Y + 1 }, "D", lattice_path(N, X-Y1).
 
 find_path(N, P) :- phrase(lattice_path(N, 0-0), P).
 
-problem_15 :- countall(find_path(20, _), N), write(N), halt.
+problem_15_ :- countall(find_path(2, _), N), write(N), nl, halt.

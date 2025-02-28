@@ -28,11 +28,14 @@ load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
     for pl_file in glob(["*.pl"])
 ]
 
-fsharp_binary(
-    name = "p",
-    srcs = ["p.fs"],
-    target_frameworks = ["net9.0"],
-    deps = [
-        "@paket.main//fsharp.core",
-    ],
-)
+[
+    fsharp_binary(
+        name = fsharp_file.removesuffix(".fs"),
+        srcs = [fsharp_file],
+        target_frameworks = ["net9.0"],
+        deps = [
+            "@paket.main//fsharp.core",
+        ],
+    )
+    for fsharp_file in glob(["*.fs"])
+]
