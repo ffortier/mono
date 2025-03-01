@@ -88,8 +88,8 @@
                 "nuget (.+?) (.+?)(?: |$)"
             ],
             "datasourceTemplate": "nuget",
-            "depNameTemplate": "$2",
-            "currentVersionTemplate": "$1",
+            "depNameTemplate": "$1",
+            "currentValueTemplate": "$2",
             "versioningTemplate": "nuget"
         }
     ]
