@@ -81,6 +81,16 @@
             "matchStrings":[
                 "https:\\/\\/github\\.com\\/NixOS\\/nixpkgs\\/archive\\/(?<currentValue>[a-z0-9-.]+)\\.tar\\.gz"
             ]
+        },
+        {
+            "fileMatch": ["paket.dependencies"],
+            "matchStrings": [
+                "nuget (.+?) (.+?)(?: |$)"
+            ],
+            "datasourceTemplate": "nuget",
+            "depNameTemplate": "$2",
+            "currentVersionTemplate": "$1",
+            "versioningTemplate": "nuget"
         }
     ]
 }
