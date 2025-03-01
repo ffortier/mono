@@ -78,12 +78,15 @@
             "fileMatch": [
                 "\\bshell\\.nix$"
             ],
-            "matchStrings":[
+            "matchStrings": [
                 "https:\\/\\/github\\.com\\/NixOS\\/nixpkgs\\/archive\\/(?<currentValue>[a-z0-9-.]+)\\.tar\\.gz"
             ]
         },
         {
-            "fileMatch": ["paket.dependencies"],
+            "customType": "regex",
+            "fileMatch": [
+                "paket.dependencies"
+            ],
             "matchStrings": [
                 "nuget (?<depName>.+?) (?<currentValue>.+?)(?: |$)"
             ],
