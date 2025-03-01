@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+set -xe
 
 if ! git diff --exit-code third_party/python/requirements.in >/dev/null; then
     bazel run //third_party/python:requirements.update
