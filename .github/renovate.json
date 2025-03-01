@@ -85,11 +85,9 @@
         {
             "fileMatch": ["paket.dependencies"],
             "matchStrings": [
-                "nuget (.+?) (.+?)(?: |$)"
+                "nuget (?<depName>.+?) (?<currentValue>.+?)(?: |$)"
             ],
             "datasourceTemplate": "nuget",
-            "depNameTemplate": "$1",
-            "currentValueTemplate": "$2",
             "versioningTemplate": "nuget"
         }
     ]
