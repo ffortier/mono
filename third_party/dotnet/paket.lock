@@ -2,7 +2,7 @@ STORAGE: NONE
 RESTRICTION: || (== net9.0) (== netstandard2.0)
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FSharp.Core (9.0.100)
+    FSharp.Core (9.0.201)
     FSharp.Data (5.0.2)
       FSharp.Core (>= 5.0.1)
     Microsoft.CodeAnalysis.Analyzers (3.11)
