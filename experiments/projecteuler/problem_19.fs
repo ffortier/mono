@@ -17,14 +17,8 @@ let sundays =
 
         Some((y, m, d), (y', m', d'))
     )
-    |> Seq.filter (fun el ->
-        let y, m, d = el
-        y >= 1901 && d = 1
-    )
-    |> Seq.takeWhile (fun el -> 
-        let y, m, d = el
-        y <= 2000
-    )
+    |> Seq.filter (fun el -> match el with | y, _, d -> y >= 1901 && d = 1)
+    |> Seq.takeWhile (fun el -> match el with | y, _, _ -> y <= 2000)
     |> Seq.length
     |> printfn "%A"
     
