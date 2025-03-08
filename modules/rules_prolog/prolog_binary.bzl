@@ -26,7 +26,7 @@ def _impl(ctx):
     return [
         DefaultInfo(
             files = depset([exec]),
-            runfiles = ctx.runfiles(ctx.files.srcs).merge(prolog.tool[DefaultInfo].default_runfiles),
+            runfiles = ctx.runfiles(ctx.files.srcs + ctx.files.data).merge(prolog.tool[DefaultInfo].default_runfiles),
             executable = exec,
         ),
     ]
@@ -36,6 +36,7 @@ prolog_binary = rule(
     toolchains = ["@rules_prolog//:toolchain_type"],
     attrs = dict(
         srcs = attr.label_list(allow_files = [".pl"], mandatory = True),
+        data = attr.label_list(allow_files = True),
         goal = attr.string(),
     ),
     executable = True,

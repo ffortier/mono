@@ -3,6 +3,13 @@ load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("@rules_dotnet//dotnet:defs.bzl", "fsharp_binary")
 load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
 
+prolog_binary(
+    name = "problem_89",
+    srcs = ["problem_89.pl"],
+    data = ["0089_roman.txt"],
+    goal = "problem_89",
+)
+
 [
     deno_binary(
         name = ts_file.removesuffix(".ts"),
@@ -26,6 +33,7 @@ load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
         goal = pl_file.removesuffix(".pl"),
     )
     for pl_file in glob(["*.pl"])
+    if pl_file.removesuffix(".pl") not in existing_rules()
 ]
 
 [
