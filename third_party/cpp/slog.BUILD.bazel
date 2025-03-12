@@ -1,0 +1,10 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "slog",
+    hdrs = ["src/slog.h"],
+    srcs = ["src/slog.c"],
+    visibility = ["//visibility:public"],
+    include_prefix = "slog",
+    strip_include_prefix = "src",
+)
