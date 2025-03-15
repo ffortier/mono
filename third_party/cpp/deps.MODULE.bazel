@@ -28,6 +28,16 @@ http_archive(
 )
 
 http_archive(
+    name = "libdill",
+    urls = ["https://github.com/sustrik/libdill/archive/refs/tags/2.14.tar.gz"],
+    sha256 = "ebba0e5b433ec123b74a57d49b89dfa673aa258e03e6a452959e556b4c4529b9",
+    strip_prefix = "libdill-2.14",
+    build_file = "//third_party/cpp:libdill.BUILD.bazel",
+    patches = ["//third_party/cpp:libdill.patch"],
+    patch_args = ["-p1"],
+)
+
+http_archive(
     name = "clay",
     urls = ["https://github.com/nicbarker/clay/archive/refs/tags/v0.13.tar.gz"],
     sha256 = "c4b0e765e1b60cdcbdf25bf2f76a914f9f5dbee40900c261d691ce3fa46d3870",
@@ -45,3 +55,5 @@ http_archive(
 
 bazel_dep(name = "googletest", version = "1.16.0")
 bazel_dep(name = "glog", version = "0.7.1")
+bazel_dep(name = "curl", version = "8.8.0.bcr.3")
+bazel_dep(name = "openssl", version = "3.3.1.bcr.1")

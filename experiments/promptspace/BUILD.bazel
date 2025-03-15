@@ -5,6 +5,7 @@ cc_binary(
     srcs = ["main.c"],
     deps = [
         "@clay",
+        "@libdill",
         "@raylib",
         "@slog",
     ],

@@ -1,0 +1,13 @@
+diff --git a/term.c b/term.c
+index f09e679..3e965d1 100644
+--- a/term.c
++++ b/term.c
+@@ -28,7 +28,7 @@
+ #include <string.h>
+ 
+ #define DILL_DISABLE_RAW_NAMES
+-#include <libdillimpl.h>
++#include "libdillimpl.h"
+ #include "iol.h"
+ #include "utils.h"
+ 

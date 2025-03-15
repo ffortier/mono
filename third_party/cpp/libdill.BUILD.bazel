@@ -1,0 +1,26 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "dill",
+    hdrs = ["libdill.h", "libdillimpl.h"],
+    srcs = ["dns/dns.c", "dns/dns.h"] + glob(["*.c", "*.h"]),
+    additional_compiler_inputs = glob(["*.inc"]),
+    deps = [
+        "@openssl//:ssl",
+        "@openssl//:crypto",
+    ],
+    local_defines = select({
+        "@platforms//os:linux": [
+            "HAVE_CLOCK_GETTIME",
+        ],
+        "@platforms//os:macos": [
+            "HAVE_CLOCK_GETTIME",
+        ],
+    }),
+)
+
+alias(
+    name = "libdill",
+    actual = "dill",
+    visibility = ["//visibility:public"],
+)
