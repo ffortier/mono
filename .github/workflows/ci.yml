@@ -47,6 +47,20 @@ jobs:
       run: |
         "${GITHUB_WORKSPACE}/bin/bazel" test --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
 
+  build-windows-x86_64:
+    runs-on: windows-2022
+    permissions: read-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bazelisk
+        run: |
+          powershell -Command "Invoke-WebRequest -Uri 'https://github.com/bazelbuild/bazelisk/releases/download/v1.25.0/bazelisk-windows-amd64.exe' -OutFile 'bazelisk-windows-amd64.exe'"
+
+      - name: Test
+        run: |
+          bazelisk-windows-amd64.exe build //experiments/projecteuler:problem_2
+
   deploy:
     permissions:
       pages: write
