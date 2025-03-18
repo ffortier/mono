@@ -56,7 +56,8 @@ jobs:
       - name: Install bazelisk
         run: |
           mkdir ${GITHUB_WORKSPACE}\bin
-          powershell -Command "Invoke-WebRequest -Uri 'https://github.com/bazelbuild/bazelisk/releases/download/v1.25.0/bazelisk-windows-amd64.exe' -OutFile ${GITHUB_WORKSPACE}\\bin\\bazel.exe"
+          powershell -Command "Invoke-WebRequest -Uri 'https://github.com/bazelbuild/bazelisk/releases/download/v1.25.0/bazelisk-windows-amd64.exe' -OutFile bazelisk-windows-amd64.exe"
+          move /y bazelisk-windows-amd64.exe ${GITHUB_WORKSPACE}\bin\bazel.exe
 
       - name: Test
         run: |
