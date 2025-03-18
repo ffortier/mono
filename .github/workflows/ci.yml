@@ -60,7 +60,7 @@ jobs:
 
       - name: Test
         run: |
-          $env:GITHUB_WORKSPACE\bin\bazel.exe build //experiments/projecteuler:problem_2
+          "$env:GITHUB_WORKSPACE\bin\bazel.exe" build //experiments/projecteuler:problem_2
 
   deploy:
     permissions:
