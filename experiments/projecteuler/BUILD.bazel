@@ -22,6 +22,7 @@ prolog_binary(
     cc_binary(
         name = c_file.removesuffix(".c"),
         srcs = [c_file],
+        tags = ["windows"],
     )
     for c_file in glob(["*.c"])
 ]
@@ -40,6 +41,7 @@ prolog_binary(
     fsharp_binary(
         name = fsharp_file.removesuffix(".fs"),
         srcs = [fsharp_file],
+        tags = ["windows"],
         target_frameworks = ["net9.0"],
         deps = [
             "@paket.main//fsharp.core",
