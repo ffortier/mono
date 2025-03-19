@@ -18,6 +18,7 @@ java_binary(
     srcs = glob(["src/main/java/io/github/ffortier/jasm/cli/**"]),
     main_class = "io.github.ffortier.jasm.cli.Main",
     resources = glob(["src/main/resources/**"]),
+    tags = ["windows"],
     runtime_deps = [
         artifact("ch.qos.logback:logback-classic:1.5.16"),
     ],
