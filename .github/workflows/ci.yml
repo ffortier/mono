@@ -60,7 +60,7 @@ jobs:
 
       - name: Test
         run: |
-          & "$env:GITHUB_WORKSPACE\bin\bazel.exe" build $(bazel query 'attr("tags", "windows", //...)')
+          & "$env:GITHUB_WORKSPACE\bin\bazel.exe" build --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} $(bazel query 'attr("tags", "windows", //...)')
 
   deploy:
     permissions:
