@@ -1,27 +1,27 @@
 open System
 
-let insert_with_permutations (n: int) (arr: int array) = seq {
-    for i in 0..Array.length arr do
-        yield Array.insertAt i n arr
+let insert_with_permutations (n: int) (arr: int list) = seq {
+    for i in 0..List.length arr do
+        yield List.insertAt i n arr
 }
 
-let rec pandigital (n: int) (digits: int array) = 
+let rec pandigital (n: int) (digits: int list) = 
     match n with
     | 0 -> seq {digits}
     | _ -> insert_with_permutations n digits
            |> Seq.map (pandigital (n - 1)) 
            |> Seq.concat
 
-let make_num (digits: int array) =
+let make_num (digits: int list) =
     let rec make_num_ (digits: int list) (n: int) =
         match digits with
         | [] -> n
         | d :: digits' -> make_num_ digits' (n * 10 + d)
 
-    make_num_ (Array.toList digits) 0
+    make_num_ digits 0
 
-let group_numbers (digits: int array) = seq {
-    let n = Array.length digits
+let group_numbers (digits: int list) = seq {
+    let n = List.length digits
     let first_n = int (Math.Floor ((decimal n) / 3.0m))
 
     for f in 0..first_n - 1 do
@@ -34,7 +34,7 @@ let group_numbers (digits: int array) = seq {
             yield (a, b, c)
 }
 
-pandigital 9 [| |]
+pandigital 9 []
 |> Seq.map group_numbers
 |> Seq.concat
 |> Seq.filter (fun (a, b, c) -> a < b && b < c)
