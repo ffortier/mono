@@ -32,7 +32,6 @@ prolog_binary(
     rust_binary(
         name = c_file.removesuffix(".rs"),
         srcs = [c_file],
-        tags = ["windows"],
     )
     for c_file in glob(["*.rs"])
 ]
