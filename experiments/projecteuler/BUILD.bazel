@@ -2,6 +2,7 @@ load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("@rules_dotnet//dotnet:defs.bzl", "fsharp_binary")
 load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
+load("@rules_rust//rust:defs.bzl", "rust_binary")
 
 prolog_binary(
     name = "problem_89",
@@ -25,6 +26,15 @@ prolog_binary(
         tags = ["windows"],
     )
     for c_file in glob(["*.c"])
+]
+
+[
+    rust_binary(
+        name = c_file.removesuffix(".rs"),
+        srcs = [c_file],
+        tags = ["windows"],
+    )
+    for c_file in glob(["*.rs"])
 ]
 
 [
