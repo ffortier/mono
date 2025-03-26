@@ -24,7 +24,6 @@ py_console_script_binary(
     tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
-        requirement("mkdocs-cinder"),
         requirement("mkdocs-material"),
         requirement("mkdocs-monorepo-plugin"),
     ],
