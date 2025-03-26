@@ -4,7 +4,10 @@ nav:
   - Experiments: "*include ./experiments/*/mkdocs.yml"
   - Modules: "*include ./modules/*/mkdocs.yml"
 
-theme: cinder
+theme: material
 
 plugins:
   - monorepo
+
+extra_javascript:
+  - javascripts/extra.js

@@ -1,17 +1,6 @@
+load("@pip//:requirements.bzl", "requirement")
+load("@python_versions//3.13:defs.bzl", "py_console_script_binary")
 load("@rules_prolog//:prolog_toolchain.bzl", "prolog_toolchain")
-load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
-
-# mkdocs wrapper because mkdocs-monorepo-plugin is not able to process symlinks properly
-sh_binary(
-    name = "mkdocs",
-    srcs = ["mkdocs.sh"],
-    data = glob(["docs/**"]) + [
-        "mkdocs.yml",
-        "//experiments/jasm:docs",
-        "//experiments/typescript-fun:docs",
-        "//third_party/python:mkdocs",
-    ],
-)
 
 prolog_toolchain(
     name = "scryper_prolog",
@@ -22,4 +11,21 @@ toolchain(
     name = "scryper_prolog_toolchain",
     toolchain = ":scryper_prolog",
     toolchain_type = "@rules_prolog//:toolchain_type",
+)
+
+py_console_script_binary(
+    name = "mkdocs",
+    data = glob(["docs/**"]) + [
+        "mkdocs.yml",
+        "//experiments/jasm:docs",
+        "//experiments/typescript-fun:docs",
+    ],
+    pkg = requirement("mkdocs"),
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("mkdocs-cinder"),
+        requirement("mkdocs-material"),
+        requirement("mkdocs-monorepo-plugin"),
+    ],
 )

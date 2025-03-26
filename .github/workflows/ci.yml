@@ -23,7 +23,7 @@ jobs:
 
     - name: Build
       run: |
-        "${GITHUB_WORKSPACE}/bin/bazel" run --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} :mkdocs -- build
+        "${GITHUB_WORKSPACE}/bin/bazel" run --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} :mkdocs -- build -d $PWD/site
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
