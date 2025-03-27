@@ -627,7 +627,7 @@
     "@@apple_support+//crosstool:setup.bzl%apple_cc_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "xcBTf2+GaloFpg7YEh/Bv+1yAczRkiCt3DGws4K7kSk=",
-        "usagesDigest": "EjTUtSXVtZ7KsQv72Zphg+jxykTs59HCSOmspATv0pc=",
+        "usagesDigest": "n0PKBJlj4AjZDAHByD2M4nAgXUlve6tnwoDHW6mzfF4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -8658,7 +8658,7 @@
     },
     "@@rules_python+//python/extensions:pip.bzl%pip": {
       "general": {
-        "bzlTransitiveDigest": "f9M6sVxev+kto9mn4EAca1kNuscld8TGO6SuPzmx37U=",
+        "bzlTransitiveDigest": "Y793xTSJ9RpYAhaih4n2RhseTL2MltUQRfJonfSi74g=",
         "usagesDigest": "sZfkh/FF5xClX96ndMiADVj8SL3jVCaXDsgKapFSv9M=",
         "recordedFileInputs": {
           "@@//third_party/python/requirements_lock.txt": "99e78d92c71e1c5fcb93d9d7d6ca83abd23a228e02d281dd33ef8c029fc59cbb",
