@@ -221,10 +221,6 @@ mkdocs==1.6.1 \
     #   -r third_party/python/requirements.in
     #   mkdocs-material
     #   mkdocs-monorepo-plugin
-mkdocs-cinder==1.2.0 \
-    --hash=sha256:0615bb1c7bda0d06379c281a8d19a2c1499179c01805c9fff9208ab13af14cbe \
-    --hash=sha256:2e23e940792d858347553bf029770b52ecfe10ce2707d5cc7387a822f0a025d2
-    # via -r third_party/python/requirements.in
 mkdocs-get-deps==0.2.0 \
     --hash=sha256:162b3d129c7fad9b19abfdcb9c1458a651628e4b1dea628ac68790fb3061c60c \
     --hash=sha256:2bf11d0b133e77a0dd036abeeb06dec8775e46efa526dc70667d8863eefc6134

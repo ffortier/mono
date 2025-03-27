@@ -21,8 +21,6 @@ py_console_script_binary(
         "//experiments/typescript-fun:docs",
     ],
     pkg = requirement("mkdocs"),
-    tags = ["manual"],
-    visibility = ["//visibility:public"],
     deps = [
         requirement("mkdocs-material"),
         requirement("mkdocs-monorepo-plugin"),

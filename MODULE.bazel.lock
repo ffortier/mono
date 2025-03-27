@@ -286,7 +286,7 @@
     },
     "//third_party/dotnet:paket.main_extension.bzl%main_extension": {
       "general": {
-        "bzlTransitiveDigest": "ECxQQlz7x/8k2UITJ/wGXNcYFUTYUXamvrAPjj53xas=",
+        "bzlTransitiveDigest": "SZFEm2BW4wInbcyzpfjPrwIUbVYAk5QxdLpn8mscX/E=",
         "usagesDigest": "9CZOuiAMYAero7els6G1A06umr/uh3pry7UQ7g4KWb0=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1309,7 +1309,7 @@
     },
     "@@rules_dotnet+//dotnet/private/sdk/apphost_packs:dotnet.apphost_packs_extension.bzl%apphost_packs_extension": {
       "general": {
-        "bzlTransitiveDigest": "6hBN9kpcAz46vUL4noH5DhbXcjqCfq9MpW0+4UjNJAc=",
+        "bzlTransitiveDigest": "1eodz/HW0OLkoTl7Njy9eac5sWd+EWU9abv/otACPzk=",
         "usagesDigest": "TYz7+tCpM5A0EjW7wJSd2qZiNnxzHjRH4cuxoAr77+g=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -2111,7 +2111,7 @@
     },
     "@@rules_dotnet+//dotnet/private/sdk/runtime_packs:dotnet.runtime_packs_extension.bzl%runtime_packs_extension": {
       "general": {
-        "bzlTransitiveDigest": "fx/AuHgAFGTfPY+wbnFbroQIvw0Wux1MLhivLZ6vsDU=",
+        "bzlTransitiveDigest": "NgeOZ21d1iKkoP0NPyK8c2p/4DpECQDC8CGy+1rUofQ=",
         "usagesDigest": "Y5IF4l61Nk58ZbY27oMiTnDAn0FHckL370Oi6kojl9M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -3641,7 +3641,7 @@
     },
     "@@rules_dotnet+//dotnet/private/sdk/targeting_packs:dotnet.targeting_packs_extension.bzl%targeting_packs_extension": {
       "general": {
-        "bzlTransitiveDigest": "ICRt3NvoSRG/VfCaCyPqII9Tt7FMEWqMRJhrgN88hrY=",
+        "bzlTransitiveDigest": "OX6MVhwiJLH0guPWUyXmbycF4J5Shf3WANHwBG4wurA=",
         "usagesDigest": "8VpXRArGbapljPZCYj/Z/p3uPQf01iJW4wbevF/omLU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -8661,7 +8661,7 @@
         "bzlTransitiveDigest": "f9M6sVxev+kto9mn4EAca1kNuscld8TGO6SuPzmx37U=",
         "usagesDigest": "sZfkh/FF5xClX96ndMiADVj8SL3jVCaXDsgKapFSv9M=",
         "recordedFileInputs": {
-          "@@//third_party/python/requirements_lock.txt": "1cde1b32646ca47f9aad91349e94f44590146eca518cc4819a8b894233b12269",
+          "@@//third_party/python/requirements_lock.txt": "99e78d92c71e1c5fcb93d9d7d6ca83abd23a228e02d281dd33ef8c029fc59cbb",
           "@@rules_fuzzing+//fuzzing/requirements.txt": "ab04664be026b632a0d2a2446c4f65982b7654f5b6851d2f9d399a19b7242a5b",
           "@@rules_python+//tools/publish/requirements_darwin.txt": "095d4a4f3d639dce831cd493367631cd51b53665292ab20194bac2c0c6458fa8",
           "@@rules_python+//tools/publish/requirements_linux.txt": "d576e0d8542df61396a9b38deeaa183c24135ed5e8e73bb9622f298f2671811e",
@@ -8788,15 +8788,6 @@
               "python_interpreter_target": "@@rules_python++python+python_3_13_host//:python",
               "repo": "pip_313",
               "requirement": "mkdocs==1.6.1 --hash=sha256:7b432f01d928c084353ab39c57282f29f92136665bdd6abf7c1ec8d822ef86f2 --hash=sha256:db91759624d1647f3f34aa0c3f327dd2601beae39a366d6e064c03468d35c20e"
-            }
-          },
-          "pip_313_mkdocs_cinder": {
-            "repoRuleId": "@@rules_python+//python/private/pypi:whl_library.bzl%whl_library",
-            "attributes": {
-              "dep_template": "@pip//{name}:{target}",
-              "python_interpreter_target": "@@rules_python++python+python_3_13_host//:python",
-              "repo": "pip_313",
-              "requirement": "mkdocs-cinder==1.2.0 --hash=sha256:0615bb1c7bda0d06379c281a8d19a2c1499179c01805c9fff9208ab13af14cbe --hash=sha256:2e23e940792d858347553bf029770b52ecfe10ce2707d5cc7387a822f0a025d2"
             }
           },
           "pip_313_mkdocs_get_deps": {
@@ -11390,7 +11381,6 @@
                 "markupsafe": "{\"pip_313_markupsafe\":[{\"version\":\"3.13\"}]}",
                 "mergedeep": "{\"pip_313_mergedeep\":[{\"version\":\"3.13\"}]}",
                 "mkdocs": "{\"pip_313_mkdocs\":[{\"version\":\"3.13\"}]}",
-                "mkdocs_cinder": "{\"pip_313_mkdocs_cinder\":[{\"version\":\"3.13\"}]}",
                 "mkdocs_get_deps": "{\"pip_313_mkdocs_get_deps\":[{\"version\":\"3.13\"}]}",
                 "mkdocs_material": "{\"pip_313_mkdocs_material\":[{\"version\":\"3.13\"}]}",
                 "mkdocs_material_extensions": "{\"pip_313_mkdocs_material_extensions\":[{\"version\":\"3.13\"}]}",
@@ -11425,7 +11415,6 @@
                 "markupsafe",
                 "mergedeep",
                 "mkdocs",
-                "mkdocs_cinder",
                 "mkdocs_get_deps",
                 "mkdocs_material",
                 "mkdocs_material_extensions",
@@ -11810,7 +11799,7 @@
           "CARGO_BAZEL_ISOLATED": null,
           "CARGO_BAZEL_REPIN": null,
           "CARGO_BAZEL_REPIN_ONLY": null,
-          "REPIN": "1"
+          "REPIN": null
         },
         "generatedRepoSpecs": {
           "crates": {
