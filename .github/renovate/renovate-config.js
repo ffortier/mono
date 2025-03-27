@@ -1,8 +1,6 @@
 module.exports = {
-    allowPostUpgradeCommandTemplating: true,
-    allowedPostUpgradeCommands: [
-        "^\\.\\/\.github\\/renovate\\/post-upgrade\\.sh"
-    ],
+    allowCommandTemplating: true,
+    allowedCommands: ["^\\.\\/\.github\\/renovate\\/post-upgrade\\.sh"],
     platform: 'github',
     repositories: ['ffortier/mono'],
 }
