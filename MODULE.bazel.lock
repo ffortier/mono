@@ -171,8 +171,8 @@
     "https://bcr.bazel.build/modules/rules_license/0.0.8/MODULE.bazel": "5669c6fe49b5134dbf534db681ad3d67a2d49cfc197e4a95f1ca2fd7f3aebe96",
     "https://bcr.bazel.build/modules/rules_license/1.0.0/MODULE.bazel": "a7fda60eefdf3d8c827262ba499957e4df06f659330bbe6cdbdb975b768bb65c",
     "https://bcr.bazel.build/modules/rules_license/1.0.0/source.json": "a52c89e54cc311196e478f8382df91c15f7a2bfdf4c6cd0e2675cc2ff0b56efb",
-    "https://bcr.bazel.build/modules/rules_multirun/0.10.0/MODULE.bazel": "84499e8cf17ecf490465aacf719976b7f69686d6cc2f679894eebe3b847e70be",
-    "https://bcr.bazel.build/modules/rules_multirun/0.10.0/source.json": "0dcd2da6a631ea3e047a349da8a66836dd188dec54ce067a64c9585a41387055",
+    "https://bcr.bazel.build/modules/rules_multirun/0.11.0/MODULE.bazel": "19b6307a5ef8a890255cecd704027af0a1afd0f04b992666e0c3ea55ba3398e0",
+    "https://bcr.bazel.build/modules/rules_multirun/0.11.0/source.json": "04504712281584d8d70989ef5072d741701ccd51529d3fe77c0ebef12efdbb58",
     "https://bcr.bazel.build/modules/rules_nodejs/5.8.2/MODULE.bazel": "6bc03c8f37f69401b888023bf511cb6ee4781433b0cb56236b2e55a21e3a026a",
     "https://bcr.bazel.build/modules/rules_perl/0.2.4/MODULE.bazel": "5f5af7be4bf5fb88d91af7469518f0fd2161718aefc606188f7cd51f436ca938",
     "https://bcr.bazel.build/modules/rules_perl/0.2.4/source.json": "574317d6b3c7e4843fe611b76f15e62a1889949f5570702e1ee4ad335ea3c339",
@@ -11578,117 +11578,169 @@
     },
     "@@rules_python+//python/uv:uv.bzl%uv": {
       "general": {
-        "bzlTransitiveDigest": "DjpJ/IIJl51GG3GQ84gJ20+o2twqsRYNdLHyQJ/OsTQ=",
-        "usagesDigest": "gTcJi/lGo9uvwNzz9p73Z1NZG6VTwEtGZFfRrqIQe6g=",
+        "bzlTransitiveDigest": "Xpqjnjzy6zZ90Es9Wa888ZLHhn7IsNGbph/e6qoxzw8=",
+        "usagesDigest": "JnnOH0su+uE14pQ4LTTmkzgI+aHoe+9eesuTz7dbT8U=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "uv_darwin_aarch64": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_aarch64_apple_darwin": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "aarch64-apple-darwin"
+              "version": "0.5.24",
+              "platform": "aarch64-apple-darwin",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-aarch64-apple-darwin.tar.gz"
+              ],
+              "sha256": "8016d47f4cce265b3d122ad8cbbf701713caf803fa7d3ef69d8a1fd6793d939a"
             }
           },
-          "uv_linux_aarch64": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_aarch64_unknown_linux_gnu": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "aarch64-unknown-linux-gnu"
+              "version": "0.5.24",
+              "platform": "aarch64-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-aarch64-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "3cf910468c37c709580d83d19b7b55352cfe05d6e1cc038718698410b6b8c6f0"
             }
           },
-          "uv_linux_ppc": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_powerpc64_unknown_linux_gnu": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "powerpc64le-unknown-linux-gnu"
+              "version": "0.5.24",
+              "platform": "powerpc64-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-powerpc64-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "22c2fb1971cd4ea77d78fc2c7c5574f5e4646525473d08d1b16a4389cda560a8"
             }
           },
-          "uv_linux_s390x": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_powerpc64le_unknown_linux_gnu": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "s390x-unknown-linux-gnu"
+              "version": "0.5.24",
+              "platform": "powerpc64le-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-powerpc64le-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "1e3cfaa0890d42f448bed7d6c7b66240abfe43130c6923b1d5fb7b0ebc302b94"
             }
           },
-          "uv_darwin_x86_64": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_s390x_unknown_linux_gnu": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "x86_64-apple-darwin"
+              "version": "0.5.24",
+              "platform": "s390x-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-s390x-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "a3c8e92deb720dcbf7414d8d0bb91934016d0ace23c3dd452f49a1b92490e0bf"
             }
           },
-          "uv_windows_x86_64": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_x86_64_apple_darwin": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "x86_64-pc-windows-msvc"
+              "version": "0.5.24",
+              "platform": "x86_64-apple-darwin",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-x86_64-apple-darwin.tar.gz"
+              ],
+              "sha256": "dcee10ef84309cf0de4153cb7913b0b506eae0a2e6407faa0f1717f015c35f0c"
             }
           },
-          "uv_linux_x86_64": {
-            "repoRuleId": "@@rules_python+//python/uv/private:uv_repositories.bzl%uv_repository",
+          "uv_0_5_24_x86_64_pc_windows_msvc": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
             "attributes": {
-              "uv_version": "0.4.25",
-              "platform": "x86_64-unknown-linux-gnu"
+              "version": "0.5.24",
+              "platform": "x86_64-pc-windows-msvc",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-x86_64-pc-windows-msvc.zip"
+              ],
+              "sha256": "bd3fedeee0da543d7ac0a530328b3880bc83c1b332b3996f0da691f83423e813"
             }
           },
-          "uv_toolchains": {
+          "uv_0_5_24_x86_64_unknown_linux_gnu": {
+            "repoRuleId": "@@rules_python+//python/uv/private:uv_repository.bzl%uv_repository",
+            "attributes": {
+              "version": "0.5.24",
+              "platform": "x86_64-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.5.24/uv-x86_64-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "a0eb614f7fc38a6e14ef1c4819f1f187591db8e0d3c4218dae38b1bd663a00e2"
+            }
+          },
+          "uv": {
             "repoRuleId": "@@rules_python+//python/uv/private:uv_toolchains_repo.bzl%uv_toolchains_repo",
             "attributes": {
               "toolchain_type": "'@@rules_python+//python/uv:uv_toolchain_type'",
               "toolchain_names": [
-                "uv_darwin_aarch64_toolchain",
-                "uv_linux_aarch64_toolchain",
-                "uv_linux_ppc_toolchain",
-                "uv_linux_s390x_toolchain",
-                "uv_darwin_x86_64_toolchain",
-                "uv_windows_x86_64_toolchain",
-                "uv_linux_x86_64_toolchain"
+                "0_5_24_aarch64_apple_darwin",
+                "0_5_24_aarch64_unknown_linux_gnu",
+                "0_5_24_powerpc64_unknown_linux_gnu",
+                "0_5_24_powerpc64le_unknown_linux_gnu",
+                "0_5_24_s390x_unknown_linux_gnu",
+                "0_5_24_x86_64_apple_darwin",
+                "0_5_24_x86_64_pc_windows_msvc",
+                "0_5_24_x86_64_unknown_linux_gnu"
               ],
-              "toolchain_labels": {
-                "uv_darwin_aarch64_toolchain": "@uv_darwin_aarch64//:uv_toolchain",
-                "uv_linux_aarch64_toolchain": "@uv_linux_aarch64//:uv_toolchain",
-                "uv_linux_ppc_toolchain": "@uv_linux_ppc//:uv_toolchain",
-                "uv_linux_s390x_toolchain": "@uv_linux_s390x//:uv_toolchain",
-                "uv_darwin_x86_64_toolchain": "@uv_darwin_x86_64//:uv_toolchain",
-                "uv_windows_x86_64_toolchain": "@uv_windows_x86_64//:uv_toolchain",
-                "uv_linux_x86_64_toolchain": "@uv_linux_x86_64//:uv_toolchain"
+              "toolchain_implementations": {
+                "0_5_24_aarch64_apple_darwin": "@uv_0_5_24_aarch64_apple_darwin//:uv_toolchain",
+                "0_5_24_aarch64_unknown_linux_gnu": "@uv_0_5_24_aarch64_unknown_linux_gnu//:uv_toolchain",
+                "0_5_24_powerpc64_unknown_linux_gnu": "@uv_0_5_24_powerpc64_unknown_linux_gnu//:uv_toolchain",
+                "0_5_24_powerpc64le_unknown_linux_gnu": "@uv_0_5_24_powerpc64le_unknown_linux_gnu//:uv_toolchain",
+                "0_5_24_s390x_unknown_linux_gnu": "@uv_0_5_24_s390x_unknown_linux_gnu//:uv_toolchain",
+                "0_5_24_x86_64_apple_darwin": "@uv_0_5_24_x86_64_apple_darwin//:uv_toolchain",
+                "0_5_24_x86_64_pc_windows_msvc": "@uv_0_5_24_x86_64_pc_windows_msvc//:uv_toolchain",
+                "0_5_24_x86_64_unknown_linux_gnu": "@uv_0_5_24_x86_64_unknown_linux_gnu//:uv_toolchain"
               },
               "toolchain_compatible_with": {
-                "uv_darwin_aarch64_toolchain": [
-                  "@platforms//os:macos",
-                  "@platforms//cpu:aarch64"
+                "0_5_24_aarch64_apple_darwin": [
+                  "'@@platforms//os:macos'",
+                  "'@@platforms//cpu:aarch64'"
                 ],
-                "uv_linux_aarch64_toolchain": [
-                  "@platforms//os:linux",
-                  "@platforms//cpu:aarch64"
+                "0_5_24_aarch64_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:aarch64'"
                 ],
-                "uv_linux_ppc_toolchain": [
-                  "@platforms//os:linux",
-                  "@platforms//cpu:ppc"
+                "0_5_24_powerpc64_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:ppc'"
                 ],
-                "uv_linux_s390x_toolchain": [
-                  "@platforms//os:linux",
-                  "@platforms//cpu:s390x"
+                "0_5_24_powerpc64le_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:ppc64le'"
                 ],
-                "uv_darwin_x86_64_toolchain": [
-                  "@platforms//os:macos",
-                  "@platforms//cpu:x86_64"
+                "0_5_24_s390x_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:s390x'"
                 ],
-                "uv_windows_x86_64_toolchain": [
-                  "@platforms//os:windows",
-                  "@platforms//cpu:x86_64"
+                "0_5_24_x86_64_apple_darwin": [
+                  "'@@platforms//os:macos'",
+                  "'@@platforms//cpu:x86_64'"
                 ],
-                "uv_linux_x86_64_toolchain": [
-                  "@platforms//os:linux",
-                  "@platforms//cpu:x86_64"
+                "0_5_24_x86_64_pc_windows_msvc": [
+                  "'@@platforms//os:windows'",
+                  "'@@platforms//cpu:x86_64'"
+                ],
+                "0_5_24_x86_64_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:x86_64'"
                 ]
-              }
+              },
+              "toolchain_target_settings": {}
             }
           }
         },
-        "recordedRepoMappingEntries": []
+        "recordedRepoMappingEntries": [
+          [
+            "rules_python+",
+            "platforms",
+            "platforms"
+          ]
+        ]
       }
     },
     "@@rules_rust+//crate_universe:extension.bzl%crate": {
