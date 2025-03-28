@@ -11,9 +11,9 @@ use_repo(python, "python_versions", "python_3_13")
 
 uv = use_extension("@rules_python//python/uv:uv.bzl", "uv")
 uv.configure(version = "0.5.24")
-use_repo(uv, "uv_toolchains")
+use_repo(uv, "uv")
 
-register_toolchains("@uv_toolchains//:all")
+register_toolchains("@uv//:all")
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 
 pip.parse(
