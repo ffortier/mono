@@ -4,7 +4,7 @@ maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
 maven.install(
     artifacts = [
-        "org.ow2.asm:asm:9.7.1",
+        "org.ow2.asm:asm:9.8",
         "org.ow2.asm:asm-util:9.7.1",
         "org.junit.platform:junit-platform-commons:1.12.1",
         "org.junit.platform:junit-platform-console:1.12.1",
