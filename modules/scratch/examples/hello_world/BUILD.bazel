@@ -1,0 +1,9 @@
+load("@scratch//bazel:scratch_binary.bzl", "scratch_binary")
+
+scratch_binary(
+    name = "hello_world",
+    srcs = glob(
+        ["**"],
+        exclude = ["*.bazel"],
+    ),
+)

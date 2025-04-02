@@ -1,0 +1,22 @@
+module(name = "scratch")
+
+bazel_dep(name = "rules_rust", version = "0.59.2")
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate", dev_dependency = True)
+
+crate.spec(
+    package = "peg",
+    version = "=0.8.5",
+)
+
+crate.spec(
+    package = "clap",
+    version = "=4.5.34",
+    features = ["derive"],
+)
+
+crate.from_specs()
+
+use_repo(crate, "crates")
+
+register_toolchains("@scratch//bazel/toolchains:all", dev_dependency = True)

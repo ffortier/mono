@@ -1,0 +1,31 @@
+package(default_visibility = ["//visibility:public"])
+
+constraint_setting(
+    name = "runtime",
+    default_constraint_value = ":classic",
+)
+
+constraint_value(
+    name = "classic",
+    constraint_setting = ":runtime",
+)
+
+constraint_value(
+    name = "turbowrap",
+    constraint_setting = ":runtime",
+)
+
+constraint_value(
+    name = "raspberrypi",
+    constraint_setting = ":runtime",
+)
+
+constraint_value(
+    name = "leopardjs",
+    constraint_setting = ":runtime",
+)
+
+constraint_value(
+    name = "native",
+    constraint_setting = ":runtime",
+)

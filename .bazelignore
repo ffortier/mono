@@ -1,0 +1,14 @@
+modules/scratch/bazel-scratch
+modules/scratch/bazel-bin
+modules/scratch/bazel-out
+modules/scratch/bazel-testlogs
+
+modules/uxn/bazel-uxn
+modules/uxn/bazel-bin
+modules/uxn/bazel-out
+modules/uxn/bazel-testlogs
+
+modules/rules_prolog/bazel-rules_prolog
+modules/rules_prolog/bazel-bin
+modules/rules_prolog/bazel-out
+modules/rules_prolog/bazel-testlogs

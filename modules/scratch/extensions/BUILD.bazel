@@ -1,0 +1,8 @@
+load("@scratch//bazel:scratch_extension.bzl", "scratch_extension")
+
+package(default_visibility = ["//visibility:public"])
+
+scratch_extension(
+    name = "std",
+    src = "std.json",
+)

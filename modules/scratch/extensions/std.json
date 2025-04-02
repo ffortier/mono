@@ -1,0 +1,9 @@
+{
+    "$schema": "./schema.json",
+    "when green flag clicked": {
+        "kind": "event"
+    },
+    "when [key] key pressed": {
+        "kind": "event"
+    }
+}

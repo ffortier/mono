@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "scratch",
+    srcs = glob(["src/**"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@crates//:clap",
+        "@crates//:peg",
+    ],
+)
+
+rust_test(
+    name = "scratch_tests",
+    crate = ":scratch",
+)

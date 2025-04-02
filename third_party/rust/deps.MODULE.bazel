@@ -67,6 +67,11 @@ crate.spec(
     features = ["repl", "hostname"],
 )
 
+crate.spec(
+    package = "peg",
+    version = "=0.8.5",
+)
+
 crate.annotation(
     crate = "scryer-prolog",
     additive_build_file = "//third_party/rust:scryer-prolog.BUILD.bazel",

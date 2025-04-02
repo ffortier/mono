@@ -1,0 +1,28 @@
+(define costumes
+    (costume scratchy "scratchy.svg")
+)
+
+(define block (something [a] and [b])
+    (if (> [a] [b])
+        (do
+            (say "possipable")
+        )
+    )
+)
+
+(define variable [hello] sprite only)
+
+(define list [things]
+    "one"
+    "two"
+    "three"
+)
+
+(when green flag clicked
+    (say "hello" for 2 seconds)
+    (something 1 and 2)
+)
+
+(when "space" key pressed
+    (wait until (touching color #ff0000))
+)
