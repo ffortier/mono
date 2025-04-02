@@ -5,7 +5,7 @@ bazel_dep(name = "rules_multirun", version = "0.11.0")
 bazel_dep(name = "rules_shell", version = "0.4.0")
 bazel_dep(name = "uxn")
 
-# bazel_dep(name = "scratch")
+bazel_dep(name = "scratch")
 bazel_dep(name = "rules_prolog")
 bazel_dep(name = "rules_dotnet", version = "0.18.2")
 
@@ -21,10 +21,10 @@ local_path_override(
     path = "modules/uxn",
 )
 
-# local_path_override(
-#     module_name = "scratch",
-#     path = "modules/scratch",
-# )
+local_path_override(
+    module_name = "scratch",
+    path = "modules/scratch",
+)
 
 register_toolchains("@uxn//:all")
 

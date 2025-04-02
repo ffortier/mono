@@ -3,10 +3,12 @@ load("@scratch//bazel:scratch_toolchain.bzl", "scratch_toolchain")
 scratch_toolchain(
     name = "scratch_classic",
     compiler = "@scratch",
+    tags = ["manual"],
 )
 
 toolchain(
     name = "scatch_classic_toolchain",
+    tags = ["manual"],
     target_compatible_with = ["@scratch//platforms/runtime:classic"],
     toolchain = ":scratch_classic",
     toolchain_type = "@scratch//bazel:toolchain_type",
