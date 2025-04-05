@@ -57,7 +57,7 @@ crate.spec(
 
 crate.spec(
     package = "tokio",
-    version = "=1.44.1",
+    version = "=1.44.2",
 )
 
 crate.spec(
