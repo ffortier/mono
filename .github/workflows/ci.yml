@@ -48,7 +48,7 @@ jobs:
         "${GITHUB_WORKSPACE}/bin/bazel" test --config=bb --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
 
   build-windows-x86_64:
-    runs-on: windows-2022
+    runs-on: windows-2025
     permissions: read-all
     steps:
       - uses: actions/checkout@v4
