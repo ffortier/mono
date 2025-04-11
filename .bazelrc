@@ -6,6 +6,7 @@ build:bb --remote_cache=grpcs://remote.buildbuddy.io
 build:bb --remote_timeout=3600
 build:bb --remote_cache_compression
 build:bb --nolegacy_important_outputs
+build:bb --experimental_remote_cache_compression_threshold=100
 
 common --tool_java_language_version=21
 common --tool_java_runtime_version=remotejdk_21
@@ -20,5 +21,5 @@ build:rbe_linux_amd64 --remote_executor=grpcs://remote.buildbuddy.io
 build:rbe_linux_amd64 --host_platform=//platforms/buildbuddy:platform_linux_x86_64
 build:rbe_linux_amd64 --platforms=//platforms/buildbuddy:platform_linux_x86_64
 build:rbe_linux_amd64 --extra_execution_platforms=//platforms/buildbuddy:platform_linux_x86_64
-
+build:rbe_linux_amd64 --jobs=50
 build:rbe_linux_amd64_cross --extra_toolchains=@llvm_rbe_linux_amd64//:all
