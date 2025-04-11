@@ -34,7 +34,34 @@ llvm.sysroot(
     targets = ["wasm32", "wasm64"],
 )
 
-use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
+llvm.toolchain(
+    name = "llvm_rbe_linux_amd64",
+    exec_os = "linux",
+    exec_arch = "amd64",
+    distribution = "clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04.tar.xz",
+    llvm_version = "17.0.6",
+    stdlib = {
+        "wasm32": "none",
+        "wasm64": "none",
+    },
+    cxx_standard = {
+        "": "c++20",
+    },
+)
+
+llvm.sysroot(
+    name = "llvm_rbe_linux_amd64",
+    label = "@sysroots_bullseye_amd64//:sysroot",
+    targets = ["linux-x86_64"],
+)
+
+llvm.sysroot(
+    name = "llvm_rbe_linux_amd64",
+    label = "@//third_party/cpp/empty",
+    targets = ["wasm32", "wasm64"],
+)
+
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm", "llvm_rbe_linux_amd64", "llvm_rbe_linux_amd64_llvm")
 
 register_toolchains("@llvm_toolchain//:all", "//third_party/cpp:all")
 

@@ -15,3 +15,9 @@ common --java_runtime_version=remotejdk_21
 common --incompatible_autoload_externally="@rules_python"
 
 run:qemu --run_under="qemu-system-x86_64 -hda"
+
+build:rbe_linux_amd64 --remote_executor=grpcs://remote.buildbuddy.io
+build:rbe_linux_amd64 --host_platform=//platforms/buildbuddy:platform_linux_x86_64
+build:rbe_linux_amd64 --platforms=//platforms/buildbuddy:platform_linux_x86_64
+build:rbe_linux_amd64 --extra_execution_platforms=//platforms/buildbuddy:platform_linux_x86_64
+build:rbe_linux_amd64 --extra_toolchains=@llvm_rbe_linux_amd64//:all
