@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
   char path_buf[1024] = {0};
   char* wd = getenv("BUILD_WORKING_DIRECTORY");
 
-  assert(wd != NULL && "Expected to be run via bazel");
+  assert(wd != NULL && "Expected to be run via bazel.");
 
   snprintf(path_buf, 1024, "%s/%s", wd, "out.png");
 
