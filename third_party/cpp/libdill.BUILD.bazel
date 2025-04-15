@@ -17,6 +17,7 @@ cc_library(
             "HAVE_CLOCK_GETTIME",
         ],
     }),
+    copts = ["-Wno-all", "-Wno-deprecated-non-prototype"],
 )
 
 alias(
