@@ -13,7 +13,7 @@ platform_transition_binary(
     name = "adder_wasm32",
     basename = "adder.wasm",
     binary = ":adder",
-    target_platform = "@toolchains_llvm//platforms:wasm32",
+    target_platform = "//platforms:wasm32",
 )
 
 java_binary(

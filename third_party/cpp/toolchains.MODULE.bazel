@@ -73,7 +73,7 @@ sysroots.install(
 
 use_repo(sysroots, "sysroots_bullseye_amd64", "sysroots_bullseye_arm64", "sysroot_darwin_universal")
 
-bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+bazel_dep(name = "hedron_compile_commands")
 
 git_override(
     module_name = "hedron_compile_commands",

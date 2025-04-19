@@ -1,0 +1,3 @@
+module(name = "toolchains_llvm")
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")

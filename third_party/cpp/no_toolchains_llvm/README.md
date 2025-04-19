@@ -1,0 +1,1 @@
+To save space and time when repinning dependencies with renovate

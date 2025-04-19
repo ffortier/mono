@@ -7,3 +7,11 @@ platform(
         "@platforms//cpu:i386",
     ],
 )
+
+platform(
+    name = "wasm32",
+    constraint_values = [
+        "@platforms//os:none",
+        "@platforms//cpu:wasm32",
+    ],
+)
