@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-24.04
     permissions: read-all
     steps:
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@v1.3.1
+      
     - uses: actions/checkout@v4
 
     - name: Install bazelisk
