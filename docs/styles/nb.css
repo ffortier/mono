@@ -1,0 +1,16 @@
+pre:has(>.nbmagic) {
+    display: grid;
+    grid-template-columns: 1.5em 1fr;
+}
+
+pre:has(>.nbmagic)::before {
+    content: '\25B7';
+    cursor: pointer;
+    font-size: larger;
+}
+
+pre:has(>.nbmagic.running)::before {
+    content: '\25F7';
+    cursor: auto;
+    font-size: larger;
+}

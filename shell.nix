@@ -3,6 +3,7 @@
     nativeBuildInputs = with pkgs.buildPackages; [ 
       coreutils
       bazelisk 
+      bazel-watcher
       bazel-buildtools 
       python313
       git
