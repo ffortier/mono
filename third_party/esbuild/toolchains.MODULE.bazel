@@ -1,4 +1,4 @@
-http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+npm_package = use_repo_rule("//third_party/esbuild:npm_package.bzl", "npm_package")
 
 _BUILD = """
 load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
@@ -10,34 +10,30 @@ native_binary(
 )
 """
 
-http_archive(
+npm_package(
     name = "esbuild_linux_x64",
-    urls = ["https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.25.0.tgz"],
-    sha256 = "822e9d5ff45b588f5af388f3ae17a4cd4d0d1b93d04220ee92956e941e7b8d9d",
+    package = "node_modules/@esbuild/linux-x64",
     strip_prefix = "package/bin",
     build_file_content = _BUILD.format(repo = "esbuild_linux_x64", exe = "esbuild"),
 )
 
-http_archive(
+npm_package(
     name = "esbuild_linux_arm64",
-    urls = ["https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.25.0.tgz"],
-    sha256 = "755c9147ddd496b01990c7627829f74606f0aacc693425047db3a84cfd482300",
+    package = "node_modules/@esbuild/linux-arm64",
     strip_prefix = "package/bin",
     build_file_content = _BUILD.format(repo = "esbuild_linux_arm64", exe = "esbuild"),
 )
 
-http_archive(
+npm_package(
     name = "esbuild_darwin_arm64",
-    urls = ["https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.25.0.tgz"],
-    sha256 = "1dc8475bb7938b2eb63c7e79a4a3bb2af0dca3e75bba62db87bb64a6340a79a5",
+    package = "node_modules/@esbuild/darwin-arm64",
     strip_prefix = "package/bin",
     build_file_content = _BUILD.format(repo = "esbuild_darwin_arm64", exe = "esbuild"),
 )
 
-http_archive(
+npm_package(
     name = "esbuild_win32_x64",
-    urls = ["https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.25.0.tgz"],
-    sha256 = "e842c63cb6d7ae26af2ea6290f8d5c7b4042d0d56adfb1ad1f7d9b9fdf3e3f2c",
+    package = "node_modules/@esbuild/win32-x64",
     strip_prefix = "package",
     build_file_content = _BUILD.format(repo = "esbuild_win32_x64", exe = "esbuild.exe"),
 )
