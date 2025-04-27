@@ -41,6 +41,10 @@
                 "devDependencies"
             ],
             "automerge": true
+        },
+        {
+            "matchPackageNames": ["esbuild", "@esbuild/**"],
+            "groupName": "esbuild monorepo"
         }
     ],
     "automergeStrategy": "fast-forward",
