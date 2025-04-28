@@ -6,7 +6,7 @@ const src = document.currentScript?.getAttribute("src");
 const a = new URL(src!, document.currentScript?.baseURI);
 const b = new URL("./js-kernel.js", a);
 
-const nbmagic = /^(?:\s|\n|\r)*%nbmagic:([^\n]*)\n/;
+const nbmagic = /^\s*%nbmagic:([^\n]*)\n/;
 
 interface Stream {
     write(s: string): Promise<void>;
