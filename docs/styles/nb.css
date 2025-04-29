@@ -3,6 +3,10 @@ pre:has(>.nbmagic) {
     grid-template-columns: 1.5em 1fr;
 }
 
+pre>.nbmagic {
+    border-bottom: 1px dashed #000;
+}
+
 pre:has(>.nbmagic)::before {
     content: '\25B7';
     cursor: pointer;

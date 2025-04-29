@@ -10,6 +10,7 @@ plugins:
   - monorepo
 
 extra_javascript:
+  - script/hello.js
   - script/nb.js
 
 extra_css:

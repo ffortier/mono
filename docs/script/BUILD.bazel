@@ -1,10 +1,19 @@
 filegroup(
     name = "script",
     srcs = [
+        ":hello",
         ":js-kernel",
         ":nb",
     ],
     visibility = ["//:__pkg__"],
+)
+
+genrule(
+    name = "hello",
+    srcs = ["hello.ts"],
+    outs = ["hello.js"],
+    cmd = "$(ESBUILD) $< > $@",
+    toolchains = ["//third_party/esbuild:resolved"],
 )
 
 genrule(
