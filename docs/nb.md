@@ -4,7 +4,7 @@ This is a notebook (sort of)
 
 <nb-magic autoplay controls></nb-magic>
 
-## test
+## Javascript
 
 ```javascript
 %nbmagic: {"kernel":"js"}
@@ -22,3 +22,15 @@ globalThis.name = "hackers"
 console.log(`Hello, ${globalThis.name}!`);
 ```
 
+## Swipl
+
+```prolog
+%nbmagic: {"kernel":"swipl", "type":"program"}
+parent_child(bob, alice).
+parent_child(bob, roxy).
+```
+
+```prolog
+%nbmagic: {"kernel":"swipl", "type":"query"}
+parent_child(bob, C).
+```

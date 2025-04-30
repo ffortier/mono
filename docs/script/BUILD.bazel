@@ -4,6 +4,7 @@ filegroup(
         ":hello",
         ":js-kernel",
         ":nb",
+        ":swipl",
     ],
     visibility = ["//:__pkg__"],
 )
@@ -30,4 +31,18 @@ genrule(
     outs = ["js-kernel.js"],
     cmd = "$(ESBUILD) $< > $@",
     toolchains = ["//third_party/esbuild:resolved"],
+)
+
+genrule(
+    name = "swipl",
+    srcs = ["@swipl_wasm//:swipl-web"],
+    outs = [
+        "swipl-web.js",
+        "swipl-web.d.ts",
+        "swipl-web.wasm",
+        "swipl-web.data",
+        "swipl-bundle.js",
+    ],
+    cmd = "$(COREUTILS_BIN) cp $(SRCS) $(RULEDIR)",
+    toolchains = ["@coreutils_toolchains//:resolved_toolchain"],
 )

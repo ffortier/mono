@@ -138,6 +138,98 @@ class JavascriptKernel extends BaseKernel {
             });
     }
 }
+declare let SWIPL: (...args: any[]) => any;
+
+class SwiplKernel extends BaseKernel {
+    private swipl: any;
+
+    override makeCommand(
+        code: string,
+        output: HTMLElement,
+        params: unknown,
+    ): () => Promise<void> {
+        return async () => {
+            await this.initSwipl();
+
+            let type = "program";
+
+            if (params && typeof params === "object" && "type" in params) {
+                type = params["type"] as string;
+            }
+
+            output.innerText = "";
+
+            switch (type) {
+                case "program":
+                    await this.runProgram(code, output);
+                    break;
+                case "query":
+                    await this.runQuery(code, output);
+                    break;
+                default:
+                    throw new Error(`Unexpected type ${type}`);
+            }
+        };
+    }
+
+    async initSwipl() {
+        if (typeof SWIPL === "undefined") {
+            await new Promise((resolve) => {
+                const s = document.createElement("script");
+                s.src = resolveURL("./swipl-bundle.js").toString();
+                s.onload = resolve;
+                document.body.append(s);
+            });
+            console.log(SWIPL);
+        }
+
+        if (!this.swipl) {
+            this.swipl = await SWIPL({ arguments: ["-q"] });
+        }
+    }
+
+    async runProgram(code: string, output: HTMLElement) {
+        if (!output.hasAttribute("nbmagic-program-id")) {
+            output.setAttribute(
+                "nbmagic-program-id",
+                crypto.randomUUID(),
+            );
+        }
+
+        output.innerText += JSON.stringify(
+            await this.swipl.prolog.load_string(
+                code,
+                output.getAttribute("nbmagic-program-id"),
+            ),
+        );
+    }
+
+    async runQuery(code: string, output: HTMLElement) {
+        const query = this.swipl.prolog.query(code);
+
+        let steps = 1;
+
+        for (const bindings of query) {
+            output.innerText += JSON.stringify(bindings) + "\n";
+
+            if (--steps) {
+                continue;
+            }
+
+            steps = await this.prompt(output);
+
+            if (steps <= 0) {
+                break;
+            }
+        }
+    }
+
+    async prompt(output: HTMLElement): Promise<number> {
+        // TODO: Add buttons for interactions
+        await new Promise((resolve) => setTimeout(resolve, 200));
+        return 1;
+    }
+}
 
 const kernels: Record<string, Kernel> = {};
 
@@ -147,6 +239,8 @@ const getKernel = (name: string) => {
     switch (name) {
         case "js":
             return kernels[name] = new JavascriptKernel();
+        case "swipl":
+            return kernels[name] = new SwiplKernel();
         default:
             throw new Error(`unknown kernel ${name}`);
     }
@@ -169,8 +263,8 @@ for (const code of Array.from(document.querySelectorAll("code"))) {
             document.createElement("span"),
             consoleElement,
         );
-        const { kernel, ...params } = JSON.parse(m[1]);
 
+        const { kernel, ...params } = JSON.parse(m[1]);
         const k = getKernel(kernel);
 
         code.parentElement?.addEventListener(
@@ -225,7 +319,7 @@ class NbMagicElement extends HTMLElement {
         _oldValue: string | undefined,
         newValue: string | undefined,
     ) {
-        console.log(name, newValue, typeof newValue);
+        // TODO
     }
 }
 
