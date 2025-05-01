@@ -53,7 +53,7 @@ http_archive(
     build_file = "//third_party/cpp:slog.BUILD.bazel",
 )
 
-bazel_dep(name = "googletest", version = "1.16.0.bcr.1")
+bazel_dep(name = "googletest", version = "1.17.0")
 bazel_dep(name = "glog", version = "0.7.1")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")
 bazel_dep(name = "openssl", version = "3.3.1.bcr.1")
