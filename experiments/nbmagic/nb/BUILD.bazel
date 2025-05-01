@@ -1,0 +1,8 @@
+genrule(
+    name = "nb",
+    srcs = glob(["**/*.ts"]),
+    outs = ["nb.js"],
+    cmd = "$(ESBUILD) --bundle --minify $(rootpath nb.ts) > $@",
+    toolchains = ["//third_party/esbuild:resolved"],
+    visibility = ["//experiments/nbmagic:__pkg__"],
+)

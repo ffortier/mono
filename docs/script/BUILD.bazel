@@ -2,7 +2,6 @@ filegroup(
     name = "script",
     srcs = [
         ":hello",
-        ":js-kernel",
         ":nb",
         ":swipl",
     ],
@@ -19,18 +18,13 @@ genrule(
 
 genrule(
     name = "nb",
-    srcs = ["nb.ts"],
-    outs = ["nb.js"],
-    cmd = "$(ESBUILD) $< > $@",
-    toolchains = ["//third_party/esbuild:resolved"],
-)
-
-genrule(
-    name = "js-kernel",
-    srcs = ["js-kernel.ts"],
-    outs = ["js-kernel.js"],
-    cmd = "$(ESBUILD) $< > $@",
-    toolchains = ["//third_party/esbuild:resolved"],
+    srcs = ["//experiments/nbmagic"],
+    outs = [
+        "nb.js",
+        "js-worker.js",
+    ],
+    cmd = "$(COREUTILS_BIN) cp $(SRCS) $(RULEDIR)",
+    toolchains = ["@coreutils_toolchains//:resolved_toolchain"],
 )
 
 genrule(

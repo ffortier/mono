@@ -1,0 +1,14 @@
+filegroup(
+    name = "nbmagic",
+    srcs = [
+        "//experiments/nbmagic/js-worker",
+        "//experiments/nbmagic/nb",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "docs",
+    srcs = ["mkdocs.yml"] + glob(["docs/**"]),
+    visibility = ["//:__pkg__"],
+)

@@ -1,4 +1,4 @@
-# Hello world
+# nbmagic
 
 This is a notebook (sort of)
 

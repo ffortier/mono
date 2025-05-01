@@ -19,6 +19,7 @@ py_console_script_binary(
         "mkdocs.yml",
         "//docs/script",
         "//experiments/jasm:docs",
+        "//experiments/nbmagic:docs",
         "//experiments/typescript-fun:docs",
     ],
     pkg = requirement("mkdocs"),

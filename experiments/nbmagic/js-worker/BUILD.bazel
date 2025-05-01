@@ -1,0 +1,8 @@
+genrule(
+    name = "js-worker",
+    srcs = glob(["**/*.ts"]),
+    outs = ["js-worker.js"],
+    cmd = "$(ESBUILD) --bundle --minify $(rootpath js-worker.ts) > $@",
+    toolchains = ["//third_party/esbuild:resolved"],
+    visibility = ["//experiments/nbmagic:__pkg__"],
+)
