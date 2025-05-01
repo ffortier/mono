@@ -43,11 +43,13 @@
             "automerge": true
         },
         {
-            "matchPackageNames": ["esbuild", "@esbuild/**"],
+            "matchPackageNames": [
+                "esbuild",
+                "@esbuild/**"
+            ],
             "groupName": "esbuild monorepo"
         }
     ],
-    "automergeStrategy": "fast-forward",
     "customManagers": [
         {
             "customType": "regex",

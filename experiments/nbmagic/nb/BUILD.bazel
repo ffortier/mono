@@ -1,3 +1,5 @@
+load("//third_party/deno:deno_test.bzl", "deno_test")
+
 genrule(
     name = "nb",
     srcs = glob(["**/*.ts"]),
@@ -5,4 +7,10 @@ genrule(
     cmd = "$(ESBUILD) --bundle --minify $(rootpath nb.ts) > $@",
     toolchains = ["//third_party/esbuild:resolved"],
     visibility = ["//experiments/nbmagic:__pkg__"],
+)
+
+deno_test(
+    name = "js-kernel.spec",
+    srcs = glob(["**/*.ts"]),
+    main = "$(rootpath js-kernel.spec.ts)",
 )

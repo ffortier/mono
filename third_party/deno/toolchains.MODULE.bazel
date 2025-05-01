@@ -1,18 +1,9 @@
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-http_archive(
-    name = "aspect_rules_deno",
-    sha256 = "cfda7aeb308082a4525f391b66e81d4f15bd05c3f0a5131e4645e74ea1e32760",
-    strip_prefix = "rules_deno-0.3.0",
-    url = "https://github.com/aspect-build/rules_deno/archive/refs/tags/v0.3.0.tar.gz",
-)
-
 BUILD_FILE_CONTENT = """
-load("@aspect_rules_deno//deno:toolchain.bzl", "deno_toolchain")
-
-deno_toolchain(
+filegroup(
     name = "{repo_name}",
-    target_tool = "deno",
+    srcs = ["{deno}"],
     visibility = ["//visibility:public"],
 )
 """
@@ -21,22 +12,35 @@ http_archive(
     name = "deno_aarch64_apple_darwin",
     urls = ["https://github.com/denoland/deno/releases/download/v2.3.1/deno-aarch64-apple-darwin.zip"],
     sha256 = "e3d3d7b21ce89105d96c316e9370b1f05aa6e87687f40faf37a39a613a477014",
-    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_apple_darwin"),
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_apple_darwin", deno = "deno"),
 )
 
 http_archive(
     name = "deno_x86_64_unknown_linux_gnu",
     urls = ["https://github.com/denoland/deno/releases/download/v2.3.1/deno-x86_64-unknown-linux-gnu.zip"],
     sha256 = "b2920265e633215959b09a32b67f46c93362842bbfd27c96e8acc2d24b66f563",
-    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_x86_64_unknown_linux_gnu"),
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_x86_64_unknown_linux_gnu", deno = "deno"),
 )
 
 http_archive(
     name = "deno_aarch64_unknown_linux_gnu",
     urls = ["https://github.com/denoland/deno/releases/download/v2.3.1/deno-aarch64-unknown-linux-gnu.zip"],
     sha256 = "3771ede34037694591846166f6211e7a8ab5cd77a1e7143e637d4457e8708dc7",
-    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_unknown_linux_gnu"),
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_aarch64_unknown_linux_gnu", deno = "deno"),
+)
+
+http_archive(
+    name = "deno_x86_64_pc_windows_msvc",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.3.1/deno-x86_64-pc-windows-msvc.zip"],
+    sha256 = "1b968541d115420ba04f7a5fbb5d0f8d620d9d87d492b66da5c97ca07e269b9b",
+    build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_x86_64_pc_windows_msvc", deno = "deno.exe"),
 )
 
 register_toolchains("//third_party/deno:all")
 
+resolved = use_repo_rule("@toolchain_utils//toolchain/resolved:defs.bzl", "toolchain_resolved")
+
+resolved(
+    name = "resolved-deno",
+    toolchain_type = "//third_party/deno:toolchain_type",
+)

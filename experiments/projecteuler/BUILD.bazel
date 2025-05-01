@@ -1,8 +1,8 @@
-load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("@rules_dotnet//dotnet:defs.bzl", "fsharp_binary")
 load("@rules_prolog//:prolog_binary.bzl", "prolog_binary")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
+load("//third_party/deno:deno_binary.bzl", "deno_binary")
 
 prolog_binary(
     name = "problem_89",
@@ -14,7 +14,8 @@ prolog_binary(
 [
     deno_binary(
         name = ts_file.removesuffix(".ts"),
-        main = ts_file,
+        srcs = [ts_file],
+        main = "$(rootpath %s)" % ts_file,
     )
     for ts_file in glob(["*.ts"])
 ]

@@ -1,10 +1,4 @@
-load("@aspect_rules_deno//deno:defs.bzl", "deno_binary")
-load("@bazel_skylib//rules:native_binary.bzl", "native_test")
-
-filegroup(
-    name = "srcs",
-    srcs = glob(["src/*.ts"]),
-)
+load("//third_party/deno:deno_test.bzl", "deno_test")
 
 filegroup(
     name = "docs",
@@ -12,13 +6,8 @@ filegroup(
     visibility = ["//:__pkg__"],
 )
 
-deno_binary(
+deno_test(
     name = "typescript-fun",
-    main = "main.ts",
-    deps = [":srcs"],
-)
-
-native_test(
-    name = "test",
-    src = "typescript-fun",
+    srcs = ["main.ts"] + glob(["src/*.ts"]),
+    main = "$(rootpath main.ts)",
 )
