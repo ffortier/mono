@@ -1,7 +1,7 @@
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "aspect_bazel_lib", version = "2.15.3")
 bazel_dep(name = "platforms", version = "0.0.11")
-bazel_dep(name = "rules_multirun", version = "0.11.0")
+bazel_dep(name = "rules_multirun", version = "0.12.0")
 bazel_dep(name = "rules_shell", version = "0.4.0")
 bazel_dep(name = "uxn")
 bazel_dep(name = "rules_prolog")
