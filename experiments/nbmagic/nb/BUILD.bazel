@@ -12,5 +12,6 @@ genrule(
 deno_test(
     name = "js-kernel.spec",
     srcs = glob(["**/*.ts"]),
+    tags = ["requires-network"],
     main = "$(rootpath js-kernel.spec.ts)",
 )
