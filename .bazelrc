@@ -1,7 +1,7 @@
 common --downloader_config=bazel_downloader.cfg
 
 build --@rules_rust//:rustc_output_diagnostics=true --output_groups=+rust_lib_rustc_output,+rust_metadata_rustc_output
-
+test --test_output=errors
 build:bb --bes_results_url=https://app.buildbuddy.io/invocation/
 build:bb --bes_backend=grpcs://remote.buildbuddy.io
 build:bb --remote_cache=grpcs://remote.buildbuddy.io
