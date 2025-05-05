@@ -1,3 +1,5 @@
+try-import %workspace%/local.bazelrc
+
 common --downloader_config=bazel_downloader.cfg
 
 build --@rules_rust//:rustc_output_diagnostics=true --output_groups=+rust_lib_rustc_output,+rust_metadata_rustc_output
