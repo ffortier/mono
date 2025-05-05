@@ -11,19 +11,19 @@
         "executionMode": "branch"
     },
     "pip_requirements": {
-        "fileMatch": [
-            "third_party/python/requirements.in"
+        "managerFilePatterns": [
+            "/third_party/python/requirements.in/"
         ]
     },
     "bazel-module": {
-        "fileMatch": [
-            "\\bMODULE\\.bazel$"
+        "managerFilePatterns": [
+            "/\\bMODULE\\.bazel$/"
         ]
     },
     "bazel": {
-        "fileMatch": [
-            "\\bMODULE\\.bazel$",
-            "\\.bzl$"
+        "managerFilePatterns": [
+            "/\\bMODULE\\.bazel$/",
+            "/\\.bzl$/"
         ]
     },
     "packageRules": [
@@ -54,8 +54,8 @@
         {
             "customType": "regex",
             "datasourceTemplate": "crate",
-            "fileMatch": [
-                "\\bMODULE\\.bazel$"
+            "managerFilePatterns": [
+                "/\\bMODULE\\.bazel$/"
             ],
             "matchStringsStrategy": "any",
             "matchStrings": [
@@ -65,8 +65,8 @@
         {
             "customType": "regex",
             "datasourceTemplate": "maven",
-            "fileMatch": [
-                "\\bMODULE\\.bazel$"
+            "managerFilePatterns": [
+                "/\\bMODULE\\.bazel$/"
             ],
             "matchStringsStrategy": "recursive",
             "matchStrings": [
@@ -81,8 +81,8 @@
             "depNameTemplate": "nixpkgs",
             "packageNameTemplate": "https://github.com/NixOS/nixpkgs",
             "versioningTemplate": "nixpkgs",
-            "fileMatch": [
-                "\\bshell\\.nix$"
+            "managerFilePatterns": [
+                "/\\bshell\\.nix$/"
             ],
             "matchStrings": [
                 "https:\\/\\/github\\.com\\/NixOS\\/nixpkgs\\/archive\\/(?<currentValue>[a-z0-9-.]+)\\.tar\\.gz"
@@ -90,8 +90,8 @@
         },
         {
             "customType": "regex",
-            "fileMatch": [
-                "paket.dependencies"
+            "managerFilePatterns": [
+                "/paket.dependencies/"
             ],
             "matchStringsStrategy": "any",
             "matchStrings": [
