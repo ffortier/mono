@@ -44,3 +44,12 @@ resolved(
     name = "resolved-deno",
     toolchain_type = "//third_party/deno:toolchain_type",
 )
+
+deno = use_extension("//third_party/deno:extension.bzl", "deno")
+
+deno.install(
+    lock = "//:deno.lock",
+    config = "//:deno.json",
+)
+
+use_repo(deno, "deno")

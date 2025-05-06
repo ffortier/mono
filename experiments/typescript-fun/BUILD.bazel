@@ -9,5 +9,5 @@ filegroup(
 deno_test(
     name = "typescript-fun",
     srcs = ["main.ts"] + glob(["src/*.ts"]),
-    main = "$(rootpath main.ts)",
+    main = "main.ts",
 )

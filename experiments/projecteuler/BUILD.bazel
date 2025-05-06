@@ -15,7 +15,7 @@ prolog_binary(
     deno_binary(
         name = ts_file.removesuffix(".ts"),
         srcs = [ts_file],
-        main = "$(rootpath %s)" % ts_file,
+        main = ts_file,
     )
     for ts_file in glob(["*.ts"])
 ]
