@@ -1,22 +1,20 @@
 _SCRIPT = """#!/usr/bin/env bash
 DENO="$PWD"/{deno}
-cd {pkg} && "$DENO" test --cached-only --vendor {main} || exit 1
+cd {pkg} && "$DENO" test --cached-only --vendor --config {config} {main} || exit 1
 """
 
 def _impl(ctx):
-    vendor = ctx.actions.declare_symlink("vendor")
-
-    ctx.actions.symlink(
-        output = vendor,
-        target_path = ("../" * (len(ctx.label.package.split("/")) + 1)) + ctx.attr.vendor.label.repo_name + "/vendor",
-    )
-
     deno_info = ctx.toolchains["//third_party/deno:toolchain_type"]
     runner = ctx.actions.declare_file(ctx.label.name + ".sh")
 
     ctx.actions.write(
         output = runner,
-        content = _SCRIPT.format(pkg = ctx.label.package, deno = deno_info.default.files_to_run.executable.short_path, main = ctx.attr.main),
+        content = _SCRIPT.format(
+            pkg = ctx.label.package,
+            deno = deno_info.default.files_to_run.executable.short_path,
+            main = ctx.attr.main,
+            config = ("../" * (len(ctx.label.package.split("/")) + 1)) + ctx.attr.vendor.label.repo_name + "/deno.json",
+        ),
         is_executable = True,
     )
 
@@ -24,7 +22,7 @@ def _impl(ctx):
         DefaultInfo(
             files = depset([runner]),
             executable = runner,
-            runfiles = ctx.runfiles(files = [vendor, deno_info.default.files_to_run.executable] + ctx.files.srcs + ctx.files.vendor),
+            runfiles = ctx.runfiles(files = [deno_info.default.files_to_run.executable] + ctx.files.srcs + ctx.files.vendor),
         ),
     ]
 

@@ -50,8 +50,9 @@ def _repo_impl(rctx):
         fail("Failed to run `DENO_DIR=. deno i`:\n" + res.stderr)
 
     rctx.delete("deno")
-    rctx.delete("deno.json")
-    rctx.delete("deno.lock")
+
+    # rctx.delete("deno.json")
+    # rctx.delete("deno.lock")
     rctx.delete(".deno")
 
 _repo = repository_rule(
