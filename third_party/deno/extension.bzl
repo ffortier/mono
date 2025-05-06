@@ -6,7 +6,15 @@ filegroup(
 )
 """
 
-def os_from_rctx(rctx):
+def _arch_from_rctx(rctx):
+    arch = rctx.os.arch
+    if arch == "arm64":
+        return "aarch64"
+    if arch == "amd64":
+        return "x86_64"
+    return arch
+
+def _os_from_rctx(rctx):
     name = rctx.os.name
     if name == "linux":
         return "linux"
@@ -16,14 +24,23 @@ def os_from_rctx(rctx):
         return "windows"
     fail("Unsupported OS: " + name)
 
+# TODO: Sync with :toolchains.MODULE.bazel
 _DENO_REPOS = {
-    "darwin": {
+    "darwin-aarch64": {
         "url": "https://github.com/denoland/deno/releases/download/v2.3.1/deno-aarch64-apple-darwin.zip",
-        "sha256":"e3d3d7b21ce89105d96c316e9370b1f05aa6e87687f40faf37a39a613a477014",
+        "sha256": "e3d3d7b21ce89105d96c316e9370b1f05aa6e87687f40faf37a39a613a477014",
     },
-    "linux": {
-        "url":"https://github.com/denoland/deno/releases/download/v2.3.1/deno-x86_64-unknown-linux-gnu.zip",
-        "sha256":"b2920265e633215959b09a32b67f46c93362842bbfd27c96e8acc2d24b66f563",
+    "linux-x86_64": {
+        "url": "https://github.com/denoland/deno/releases/download/v2.3.1/deno-x86_64-unknown-linux-gnu.zip",
+        "sha256": "b2920265e633215959b09a32b67f46c93362842bbfd27c96e8acc2d24b66f563",
+    },
+    "linux-aarch64": {
+        "url": "https://github.com/denoland/deno/releases/download/v2.3.1/deno-aarch64-unknown-linux-gnu.zip",
+        "sha256": "3771ede34037694591846166f6211e7a8ab5cd77a1e7143e637d4457e8708dc7",
+    },
+    "windows-x86_64": {
+        "url": "https://github.com/denoland/deno/releases/download/v2.3.1/deno-x86_64-pc-windows-msvc.zip",
+        "sha256": "1b968541d115420ba04f7a5fbb5d0f8d620d9d87d492b66da5c97ca07e269b9b",
     },
 }
 
@@ -34,7 +51,7 @@ def _repo_impl(rctx):
     rctx.template("deno.lock", rctx.attr.lock)
 
     # TODO: Support more os
-    repo = _DENO_REPOS[os_from_rctx(rctx)]
+    repo = _DENO_REPOS["%s-%s" % (_os_from_rctx(rctx), _arch_from_rctx(rctx))]
     rctx.download_and_extract(
         output = ".",
         url = repo["url"],
