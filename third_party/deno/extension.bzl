@@ -6,6 +6,27 @@ filegroup(
 )
 """
 
+def os_from_rctx(rctx):
+    name = rctx.os.name
+    if name == "linux":
+        return "linux"
+    elif name == "mac os x":
+        return "darwin"
+    elif name.startswith("windows"):
+        return "windows"
+    fail("Unsupported OS: " + name)
+
+_DENO_REPOS = {
+    "darwin": {
+        "url": "https://github.com/denoland/deno/releases/download/v2.3.1/deno-aarch64-apple-darwin.zip",
+        "sha256":"e3d3d7b21ce89105d96c316e9370b1f05aa6e87687f40faf37a39a613a477014",
+    },
+    "linux": {
+        "url":"https://github.com/denoland/deno/releases/download/v2.3.1/deno-x86_64-unknown-linux-gnu.zip",
+        "sha256":"b2920265e633215959b09a32b67f46c93362842bbfd27c96e8acc2d24b66f563",
+    },
+}
+
 def _repo_impl(rctx):
     rctx.file("BUILD", _BUILD.format(repo_name = rctx.original_name))
 
@@ -13,10 +34,11 @@ def _repo_impl(rctx):
     rctx.template("deno.lock", rctx.attr.lock)
 
     # TODO: Support more os
+    repo = _DENO_REPOS[os_from_rctx(rctx)]
     rctx.download_and_extract(
         output = ".",
-        url = ["https://github.com/denoland/deno/releases/download/v2.3.1/deno-aarch64-apple-darwin.zip"],
-        sha256 = "e3d3d7b21ce89105d96c316e9370b1f05aa6e87687f40faf37a39a613a477014",
+        url = repo["url"],
+        sha256 = repo["sha256"],
     )
 
     res = rctx.execute(
