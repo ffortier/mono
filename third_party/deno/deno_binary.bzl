@@ -65,7 +65,7 @@ deno_binary = rule(
         main = attr.string(),
         allow = attr.string_list(),
         vendor = attr.label(default = "@deno", allow_files = True),
-        compile = attr.bool(default = True),
+        compile = attr.bool(default = False),
     ),
     toolchains = ["//third_party/deno:toolchain_type"],
     executable = True,
