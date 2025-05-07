@@ -99,6 +99,20 @@
             ],
             "datasourceTemplate": "nuget",
             "versioningTemplate": "nuget"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/\\bdeno.jsonc\\b/"
+            ],
+            "matchStringsStrategy": "any",
+            "matchStrings": [
+                "\"jsr:@.*?@(?<currentValue>.*?)\"\\s*,?\\s*//\\s*(?<depName>@jsr/.*)"
+            ],
+            "datasourceTemplate": "npm",
+            "versioningTemplate": "npm",
+            "depTypeTemplate": "dependencies",
+            "registryUrlTemplate": "https://npm.jsr.io"
         }
     ]
 }

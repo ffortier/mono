@@ -49,7 +49,7 @@ deno = use_extension("//third_party/deno:extension.bzl", "deno")
 
 deno.install(
     lock = "//:deno.lock",
-    config = "//:deno.json",
+    config = "//:deno.jsonc",
 )
 
 use_repo(deno, "deno")
