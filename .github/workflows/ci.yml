@@ -23,7 +23,6 @@ jobs:
     - name: Test
       run: |
         "${GITHUB_WORKSPACE}/bin/bazel" test --config=bb --config=rbe_linux_amd64 --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //...
-        "${GITHUB_WORKSPACE}/bin/bazel" run --config=bb --config=rbe_linux_amd64 --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} //.github:renovate
 
     - name: Build
       run: |
