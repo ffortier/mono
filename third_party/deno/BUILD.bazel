@@ -1,3 +1,4 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@toolchain_utils//toolchain/info:defs.bzl", "toolchain_info")
 load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
 
@@ -44,4 +45,11 @@ toolchain_test(
     args = ["--version"],
     tags = ["windows"],
     toolchains = [":resolved"],
+)
+
+sh_binary(
+    name = "update-deps",
+    srcs = ["update-deps.sh"],
+    data = [":resolved"],
+    env = {"DENO": "$(rootpath :resolved)"},
 )

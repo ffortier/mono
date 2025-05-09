@@ -17,5 +17,9 @@ if ! git diff --exit-code third_party/dotnet/paket.dependencies >/dev/null; then
     bazel run //third_party/dotnet:update-deps "${bzl_opts[@]}"
 fi
 
+if ! git diff --exit-code deno.jsonc >/dev/null; then
+    bazel run //third_party/deno:update-deps "${bzl_opts[@]}"
+fi
+
 REPIN=1 bazel build --nobuild //... "${bzl_opts[@]}"
 
