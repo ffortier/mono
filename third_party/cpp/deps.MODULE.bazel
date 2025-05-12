@@ -21,9 +21,9 @@ http_archive(
 
 http_archive(
     name = "stb",
-    urls = ["https://github.com/nothings/stb/archive/f0569113c93ad095470c54bf34a17b36646bbbb5.zip"],
-    sha256 = "b62be3009cb9d4b6385bd4854bddf72d8e91f4e19d1347d6cf9589b19f70d45d",
-    strip_prefix = "stb-f0569113c93ad095470c54bf34a17b36646bbbb5",
+    urls = ["https://github.com/nothings/stb/archive/802cd454f25469d3123e678af41364153c132c2a.zip"],
+    sha256 = "7105f0ddaa77e369ff11c7918b78400a08e02ddd5f4f16b39ce06dff72529ec4",
+    strip_prefix = "stb-802cd454f25469d3123e678af41364153c132c2a",
     build_file = "//third_party/cpp:stb.BUILD.bazel",
 )
 
