@@ -38,7 +38,7 @@ NUGET
       FSharp.Data.Http (>= 6.6)
       FSharp.Data.Json.Core (>= 6.6)
       FSharp.Data.Runtime.Utilities (>= 6.6)
-    Microsoft.CodeAnalysis.Analyzers (3.11)
+    Microsoft.CodeAnalysis.Analyzers (4.14)
     Microsoft.CodeAnalysis.Common (4.14)
       Microsoft.CodeAnalysis.Analyzers (>= 3.11)
       System.Buffers (>= 4.5.1) - restriction: || (&& (== net9.0) (< net8.0)) (== netstandard2.0)
