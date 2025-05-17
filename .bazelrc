@@ -1,6 +1,10 @@
 try-import %workspace%/local.bazelrc
 
+common --enable_platform_specific_config
 common --downloader_config=bazel_downloader.cfg
+
+common:windows --build_tag_filters=windows
+test:windows --test_tag_filters=windows
 
 build --@rules_rust//:rustc_output_diagnostics=true --output_groups=+rust_lib_rustc_output,+rust_metadata_rustc_output
 test --test_output=errors
