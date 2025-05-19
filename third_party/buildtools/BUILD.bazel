@@ -18,7 +18,7 @@ supported_platforms = [
         toolchain_info(
             name = target,
             target = "@" + target + "//file",
-            variable = "DENO",
+            variable = "BUILDIFIER",
         ),
         toolchain(
             name = target + "_toolchain",
