@@ -1,0 +1,24 @@
+http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+http_file(
+    name = "buildifier_darwin_aarch64",
+    urls = ["https://github.com/bazelbuild/buildtools/releases/download/v8.2.0/buildifier-darwin-arm64"],
+    sha256 = "e08381a3ed1d59c0a17d1cee1d4e7684c6ce1fc3b5cfa1bd92a5fe978b38b47d",
+    executable = True,
+)
+
+http_file(
+    name = "buildifier_linux_x86_64",
+    urls = ["https://github.com/bazelbuild/buildtools/releases/download/v8.2.0/buildifier-linux-amd64"],
+    sha256 = "3e79e6c0401b5f36f8df4dfc686127255d25c7eddc9599b8779b97b7ef4cdda7",
+    executable = True,
+)
+
+register_toolchains("//third_party/buildtools:all")
+
+resolved = use_repo_rule("@toolchain_utils//toolchain/resolved:defs.bzl", "toolchain_resolved")
+
+resolved(
+    name = "buildifier_resolved",
+    toolchain_type = "//third_party/buildtools:buildifier_toolchain_type",
+)

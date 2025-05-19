@@ -1,0 +1,47 @@
+load("@toolchain_utils//toolchain/info:defs.bzl", "toolchain_info")
+load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
+
+toolchain_type(
+    name = "buildifier_toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
+supported_platforms = [
+    ("buildifier_linux_x86_64", "linux", "x86_64"),
+    # ("buildifier_linux_aarch64", "linux", "aarch64"),
+    ("buildifier_darwin_aarch64", "macos", "aarch64"),
+    # ("buildifier_windows_x86_64", "windows", "x86_64"),
+]
+
+[
+    [
+        toolchain_info(
+            name = target,
+            target = "@" + target + "//file",
+            variable = "DENO",
+        ),
+        toolchain(
+            name = target + "_toolchain",
+            exec_compatible_with = [
+                "@platforms//cpu:" + cpu,
+                "@platforms//os:" + os,
+            ],
+            toolchain = ":" + target,
+            toolchain_type = ":buildifier_toolchain_type",
+        ),
+    ]
+    for target, os, cpu in supported_platforms
+]
+
+alias(
+    name = "buildifier_resolved",
+    actual = "@buildifier_resolved",
+    visibility = ["//visibility:public"],
+)
+
+toolchain_test(
+    name = "test",
+    args = ["--version"],
+    # tags = ["windows"],
+    toolchains = [":buildifier_resolved"],
+)

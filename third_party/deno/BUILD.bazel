@@ -1,3 +1,4 @@
+load("@rules_python//python:py_binary.bzl", "py_binary")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@toolchain_utils//toolchain/info:defs.bzl", "toolchain_info")
 load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
@@ -8,10 +9,10 @@ toolchain_type(
 )
 
 supported_platforms = [
-    ("deno_x86_64_unknown_linux_gnu", "linux", "x86_64"),
-    ("deno_aarch64_unknown_linux_gnu", "linux", "aarch64"),
-    ("deno_aarch64_apple_darwin", "macos", "aarch64"),
-    ("deno_x86_64_pc_windows_msvc", "windows", "x86_64"),
+    ("deno_linux_x86_64", "linux", "x86_64"),
+    ("deno_linux_aarch64", "linux", "aarch64"),
+    ("deno_darwin_aarch64", "macos", "aarch64"),
+    ("deno_windows_x86_64", "windows", "x86_64"),
 ]
 
 [
@@ -52,4 +53,12 @@ sh_binary(
     srcs = ["update-deps.sh"],
     data = [":resolved"],
     env = {"DENO": "$(rootpath :resolved)"},
+)
+
+py_binary(
+    name = "update-toolchains",
+    srcs = ["update-toolchains.py"],
+    data = ["//third_party/buildtools:buildifier_resolved"],
+    tags = ["manual"],
+    toolchains = ["//third_party/buildtools:buildifier_resolved"],
 )

@@ -21,5 +21,9 @@ if ! git diff --exit-code deno.jsonc >/dev/null; then
     bazel run //third_party/deno:update-deps "${bzl_opts[@]}"
 fi
 
+if ! git diff --exit-code third_party/deno/toolchains.MODULE.bazel >/dev/null; then
+    bazel run //third_party/deno:update-toolchains "${bzl_opts[@]}"
+fi
+
 REPIN=1 bazel build --nobuild //... "${bzl_opts[@]}"
 
