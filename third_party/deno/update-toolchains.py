@@ -1,9 +1,9 @@
 import os
 import ast
-import json
 from ast import NodeVisitor, NodeTransformer
 from pathlib import Path
 from dataclasses import dataclass
+from subprocess import run, PIPE
 
 
 @dataclass
@@ -78,6 +78,9 @@ def to_ast(value: any):
         )
     if isinstance(value, list):
         return ast.List(elts=[to_ast(v) for v in value])
+
+    assert isinstance(value, str)
+
     return ast.Constant(value)
 
 
@@ -97,6 +100,14 @@ def update_extension(extension_file: Path, http_archives: list[HttpArchive]):
         f.write(code)
 
 
+def buildifier(extension_file: Path):
+    run(
+        args=[os.getenv("BUILDIFIER", "buildifier"), extension_file],
+        stderr=PIPE,
+        stdout=PIPE,
+    ).check_returncode()
+
+
 def main():
     wd = workspace_directory()
 
@@ -105,6 +116,7 @@ def main():
 
     http_archives = find_http_archived(module_file)
     update_extension(extension_file, http_archives)
+    buildifier(extension_file)
 
 
 if __name__ == "__main__":
