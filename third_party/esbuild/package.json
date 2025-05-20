@@ -5,6 +5,6 @@
     "@esbuild/linux-arm64": "0.25.4",
     "@esbuild/darwin-arm64": "0.25.4",
     "@esbuild/win32-x64": "0.25.4",
-    "swipl-wasm": "5.0.9"
+    "swipl-wasm": "5.0.10"
   }
 }
