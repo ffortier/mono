@@ -1,0 +1,14 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+
+cc_binary(
+    name = "digital",
+    srcs = glob([
+        "src/*.c",
+        "src/*.h",
+    ]),
+    includes = ["src"],
+    visibility = ["//:__pkg__"],
+    deps = [
+        "@slog",
+    ],
+)

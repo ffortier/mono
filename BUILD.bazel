@@ -1,3 +1,4 @@
+load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@pip//:requirements.bzl", "requirement")
 load("@python_versions//3.13:defs.bzl", "py_console_script_binary")
 load("@rules_prolog//:prolog_toolchain.bzl", "prolog_toolchain")
@@ -27,4 +28,11 @@ py_console_script_binary(
         requirement("mkdocs-material"),
         requirement("mkdocs-monorepo-plugin"),
     ],
+)
+
+refresh_compile_commands(
+    name = "refresh_compile_commands",
+    targets = {
+        "//experiments/digital": "",
+    },
 )

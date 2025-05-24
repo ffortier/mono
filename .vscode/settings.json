@@ -21,4 +21,5 @@
     "[typescript]": {
         "editor.defaultFormatter": "denoland.vscode-deno"
     },
+    "C_Cpp.clang_format_style": "file"
 }
