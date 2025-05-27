@@ -66,4 +66,10 @@ LOGIC_GATES
 LOGIC_GATES
 #undef X
 
+void print_nand_gate_t(void* component);
+void print_and_gate_t(void* component);
+void print_or_gate_t(void* component);
+void print_xor_gate_t(void* component);
+void print_not_gate_t(void* component);
+
 #endif

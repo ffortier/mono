@@ -3,25 +3,35 @@
 #include <assert.h>
 #include <slog/slog.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void init_sr_latch(struct sr_latch* latch) {
-  init_nand_gate(&latch->g1);
-  init_nand_gate(&latch->g2);
+static void print_sr_latch_t(void* component) {
+  sr_latch_t* sr_latch = component;
+  printf(SR_LATCH_FMT, SR_LATCH_VALUES(sr_latch));
+}
 
+static void print_d_latch_t(void* component) {
+  d_latch_t* d_latch = component;
+  printf(D_LATCH_FMT, D_LATCH_VALUES(d_latch));
+}
+
+void init_sr_latch(struct sr_latch* latch) {
   connect(SELECT(latch, s), SELECT(&latch->g1, a));
   connect(SELECT(latch, r), SELECT(&latch->g2, b));
   connect(SELECT(&latch->g1, z), SELECT(latch, q));
   connect(SELECT(&latch->g2, z), SELECT(latch, q1));
   connect(SELECT(&latch->g1, z), SELECT(&latch->g2, a));
   connect(SELECT(&latch->g2, z), SELECT(&latch->g1, b));
+  init_xor_gate(&latch->g1);
+  init_xor_gate(&latch->g2);
 }
 
 void register_sr_latch(sr_latch_t* latch) {
-  register_nand_gate(&latch->g1);
-  register_nand_gate(&latch->g2);
-  register_component(latch);
+  register_component(&latch->g1, xor_gate_t);
+  register_component(&latch->g2, xor_gate_t);
+  register_component(latch, sr_latch_t);
 }
 
 sr_latch_t* make_sr_latch() {
@@ -56,7 +66,7 @@ void register_d_latch(d_latch_t* latch) {
   register_nand_gate(&latch->g1);
   register_nand_gate(&latch->g2);
   register_sr_latch(&latch->sr_latch);
-  register_component(latch);
+  register_component(latch, d_latch_t);
 }
 
 d_latch_t* make_d_latch() {

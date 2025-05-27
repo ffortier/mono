@@ -4,6 +4,7 @@
 #include <slog/slog.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef MAX_ITERATION
 #define MAX_ITERATION 50
@@ -12,7 +13,9 @@
 static struct observables observables = {0};
 
 void register_observable(struct observable* observable, int* pin0,
-                         size_t pin_count) {
+                         size_t pin_count, const char* type_name,
+                         const char* decl_name, void (*print)(void*),
+                         size_t size) {
   // TODO: Make dynamic
   if (observables.capacity == 0) {
     observables.capacity = 100;
@@ -23,6 +26,10 @@ void register_observable(struct observable* observable, int* pin0,
   observable->count = pin_count;
   observable->states = malloc(sizeof(struct pin_state) * pin_count);
   observable->pins = pin0;
+  observable->type_name = type_name;
+  observable->decl_name = decl_name;
+  observable->print = print;
+  observable->size = size;
 
   assert(observable->states && "buy more ram");
 
@@ -47,18 +54,54 @@ static void invoke_chain(struct observable* observable, size_t pin_index) {
   }
 }
 
+void print_digest(observable_t* observable) {
+  static char buffer[1024];
+
+  assert(observable->size < sizeof(buffer));
+
+  observable_t* copy = (observable_t*)buffer;
+  size_t pin_offset = (void*)observable->pins - (void*)observable;
+  memcpy(buffer, observable, observable->size);
+
+  copy->pins = (void*)copy + pin_offset;
+
+  for (int i = 0; i < observable->count; i++) {
+    copy->pins[i] = observable->states[i].value;
+  }
+
+  printf("%s: ", observable->decl_name);
+  observable->print(copy);
+  printf(" --> ");
+  observable->print(observable);
+  printf("\n");
+}
+
 bool digest(void) {
   bool stable = true;
+  printf("digest\n");
   for (size_t i = 0; i < observables.count; i++) {
     struct observable* current = observables.items[i];
 
     for (size_t j = 0; j < current->count; j++) {
+      // TODO: Invoke at the end maybe
+      invoke_chain(current, j);
+    }
+
+    bool dirty = false;
+
+    for (size_t j = 0; j < current->count; j++) {
       if (current->pins[j] != current->states[j].value) {
-        // TODO: Invoke at the end maybe
-        invoke_chain(current, j);
-        current->states[j].value = current->pins[j];
-        stable = false;
+        dirty = true;
       }
+    }
+
+    if (dirty) {
+      print_digest(current);
+      stable = false;
+    }
+
+    for (size_t j = 0; j < current->count; j++) {
+      current->states[j].value = current->pins[j];
     }
   }
   return stable;
@@ -90,6 +133,7 @@ static void copy_value(struct observable* observable, size_t pin_index,
 void append_callback_chain(struct observable* observable, int* pin,
                            struct pin_callback_chain next) {
   size_t pin_index = pin - observable->pins;
+  assert(pin_index < 32 && "Probably wrong");
   struct pin_callback_chain** current = &observable->states[pin_index].chain;
 
   while (*current != NULL) {
@@ -109,10 +153,10 @@ void connect(struct observable* observable1, int* pin1,
                             .user_data = pin2,
                         });
 
-  append_callback_chain(observable2, pin2,
-                        (struct pin_callback_chain){
-                            .cb = copy_value,
-                            .next = NULL,
-                            .user_data = pin1,
-                        });
+  // append_callback_chain(observable2, pin2,
+  //                       (struct pin_callback_chain){
+  //                           .cb = copy_value,
+  //                           .next = NULL,
+  //                           .user_data = pin1,
+  //                       });
 }

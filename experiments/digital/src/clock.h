@@ -12,13 +12,16 @@ typedef struct clock {
       int clk;
     };
   };
-} clock_t;
+} clk_t;
 
-clock_t* make_clock(void);
+clk_t* make_clock(void);
 
-void register_clock(clock_t* clock);
-void init_clock(clock_t* clock);
+void register_clock(clk_t* clock);
+void init_clock(clk_t* clock);
 
-void clock_pulse(clock_t* clock);
+void clock_pulse(clk_t* clock);
+
+#define CLOCK_FMT "clock { .clk = %d }"
+#define CLOCK_VALUES(clock) clock->clk
 
 #endif

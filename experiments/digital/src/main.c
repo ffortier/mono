@@ -14,7 +14,7 @@
 int main(void) {
   slog_init("digital", SLOG_FLAGS_ALL, 0);
 
-  clock_t* clock = make_clock();
+  clk_t* clock = make_clock();
   d_latch_t* d_latch = make_d_latch();
 
   connect(SELECT(clock, clk), SELECT(d_latch, e));

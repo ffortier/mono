@@ -1,14 +1,89 @@
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 
 cc_binary(
     name = "digital",
-    srcs = glob([
-        "src/*.c",
-        "src/*.h",
-    ]),
+    srcs = ["src/main.c"],
     includes = ["src"],
     visibility = ["//:__pkg__"],
     deps = [
+        ":clock",
+        ":latches",
+        ":logic_gates",
+        ":observable",
         "@slog",
+    ],
+)
+
+cc_library(
+    name = "observable",
+    srcs = ["src/observable.c"],
+    hdrs = ["src/observable.h"],
+    includes = ["src"],
+    deps = [
+        "@slog",
+    ],
+)
+
+cc_library(
+    name = "clock",
+    srcs = ["src/clock.c"],
+    hdrs = ["src/clock.h"],
+    includes = ["src"],
+    deps = [
+        ":observable",
+        "@slog",
+    ],
+)
+
+cc_library(
+    name = "logic_gates",
+    srcs = ["src/logic_gates.c"],
+    hdrs = ["src/logic_gates.h"],
+    includes = ["src"],
+    deps = [
+        ":observable",
+        "@slog",
+    ],
+)
+
+cc_library(
+    name = "latches",
+    srcs = ["src/latches.c"],
+    hdrs = ["src/latches.h"],
+    includes = ["src"],
+    deps = [
+        ":logic_gates",
+        ":observable",
+        "@slog",
+    ],
+)
+
+cc_test(
+    name = "logic_gates_test",
+    size = "small",
+    srcs = ["src/logic_gates_test.cc"],
+    includes = ["src"],
+    deps = [
+        ":logic_gates",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "latches_test",
+    size = "small",
+    srcs = ["src/latches_test.cc"],
+    includes = ["src"],
+    tags = [
+        "broken",
+        "manual",
+    ],
+    deps = [
+        ":latches",
+        ":observable",
+        "@googletest//:gtest_main",
     ],
 )
