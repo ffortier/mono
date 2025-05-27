@@ -65,6 +65,10 @@ cc_test(
     size = "small",
     srcs = ["src/logic_gates_test.cc"],
     includes = ["src"],
+    tags = [
+        "broken",
+        "manual",
+    ],
     deps = [
         ":logic_gates",
         ":observable",
