@@ -19,8 +19,8 @@ typedef struct sr_latch {
   };
 
   // nested components
-  xor_gate_t g1;
-  xor_gate_t g2;
+  nor_gate_t g1;
+  nor_gate_t g2;
 } sr_latch_t;
 
 typedef struct d_latch {
@@ -39,8 +39,8 @@ typedef struct d_latch {
 
   // nested components
   not_gate_t n;
-  nand_gate_t g1;
-  nand_gate_t g2;
+  and_gate_t g1;
+  and_gate_t g2;
   sr_latch_t sr_latch;
 } d_latch_t;
 

@@ -24,7 +24,13 @@ int main(void) {
 
   d_latch->d = 1;
 
-  clock_pulse(clock);
+  clock->clk = 1;
+  apply();
+  printf(D_LATCH_FMT "\n", D_LATCH_VALUES(d_latch));
+  clock->clk = 0;
+  apply();
+
+  // clock_pulse(clock);
   printf(D_LATCH_FMT "\n", D_LATCH_VALUES(d_latch));
 
   d_latch->d = 0;

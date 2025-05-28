@@ -8,7 +8,7 @@ toolchain_type(
 
 supported_platforms = [
     ("buildifier_linux_x86_64", "linux", "x86_64"),
-    # ("buildifier_linux_aarch64", "linux", "aarch64"),
+    ("buildifier_linux_arm64", "linux", "aarch64"),
     ("buildifier_darwin_aarch64", "macos", "aarch64"),
     # ("buildifier_windows_x86_64", "windows", "x86_64"),
 ]

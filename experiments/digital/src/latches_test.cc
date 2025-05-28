@@ -9,25 +9,55 @@ extern "C" {
 TEST(sr_latch_t, TruthTable) {
   sr_latch_t* sr_latch = make_sr_latch();
 
-  //   fprintf(stderr, SR_LATCH_FMT "\n", SR_LATCH_VALUES(sr_latch));
-  //   fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(&sr_latch->g1));
-  //   fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(&sr_latch->g2));
-
   sr_latch->s = 0;
   sr_latch->r = 1;
   apply();
-  printf(SR_LATCH_FMT "\n", SR_LATCH_VALUES(sr_latch));
-  printf(XOR_GATE_FMT "\n", XOR_GATE_VALUES(&sr_latch->g1));
-  printf(XOR_GATE_FMT "\n", XOR_GATE_VALUES(&sr_latch->g2));
+  EXPECT_FALSE(sr_latch->q);
+  EXPECT_TRUE(sr_latch->q1);
+
+  sr_latch->s = 0;
+  sr_latch->r = 0;
+  apply();
   EXPECT_FALSE(sr_latch->q);
   EXPECT_TRUE(sr_latch->q1);
 
   sr_latch->s = 1;
   sr_latch->r = 0;
   apply();
-  printf(SR_LATCH_FMT "\n", SR_LATCH_VALUES(sr_latch));
-  printf(XOR_GATE_FMT "\n", XOR_GATE_VALUES(&sr_latch->g1));
-  printf(XOR_GATE_FMT "\n", XOR_GATE_VALUES(&sr_latch->g2));
   EXPECT_TRUE(sr_latch->q);
   EXPECT_FALSE(sr_latch->q1);
+
+  sr_latch->s = 0;
+  sr_latch->r = 0;
+  apply();
+  EXPECT_TRUE(sr_latch->q);
+  EXPECT_FALSE(sr_latch->q1);
+}
+
+TEST(d_latch_t, TruthTable) {
+  d_latch_t* d_latch = make_d_latch();
+
+  d_latch->d = 0;
+  d_latch->e = 1;
+  apply();
+  EXPECT_FALSE(d_latch->q);
+  EXPECT_TRUE(d_latch->q1);
+
+  d_latch->d = 0;
+  d_latch->e = 0;
+  apply();
+  EXPECT_FALSE(d_latch->q);
+  EXPECT_TRUE(d_latch->q1);
+
+  d_latch->d = 1;
+  d_latch->e = 1;
+  apply();
+  EXPECT_TRUE(d_latch->q);
+  EXPECT_FALSE(d_latch->q1);
+
+  d_latch->d = 0;
+  d_latch->e = 0;
+  apply();
+  EXPECT_TRUE(d_latch->q);
+  EXPECT_FALSE(d_latch->q1);
 }

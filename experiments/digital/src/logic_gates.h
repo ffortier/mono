@@ -15,7 +15,10 @@
 #define XOR_GATE_FMT "xor_gate { .a = %d, .b = %d, .z = %d }"
 #define XOR_GATE_VALUES(gate) (gate)->a, (gate)->b, (gate)->z
 
-#define NOT_GATE_FMT "xor_gate { .a = %d, .z = %d }"
+#define NOR_GATE_FMT "nor_gate { .a = %d, .b = %d, .z = %d }"
+#define NOR_GATE_VALUES(gate) (gate)->a, (gate)->b, (gate)->z
+
+#define NOT_GATE_FMT "not_gate { .a = %d, .z = %d }"
 #define NOT_GATE_VALUES(gate) (gate)->a, (gate)->z
 
 struct logic_gate_3 {
@@ -50,6 +53,7 @@ struct logic_gate_2 {
   X(and_gate, 3)    \
   X(or_gate, 3)     \
   X(xor_gate, 3)    \
+  X(nor_gate, 3)    \
   X(not_gate, 2)
 
 #define X(name, pin_count) typedef struct logic_gate_##pin_count name##_t;
@@ -71,5 +75,6 @@ void print_and_gate_t(void* component);
 void print_or_gate_t(void* component);
 void print_xor_gate_t(void* component);
 void print_not_gate_t(void* component);
+void print_nor_gate_t(void* component);
 
 #endif

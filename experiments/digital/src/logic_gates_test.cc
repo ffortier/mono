@@ -4,29 +4,35 @@ extern "C" {
 #include "observable.h"
 }
 
+// #include <slog/slog.h>
 #include <gtest/gtest.h>
 
 TEST(nand_gate, TruthTable) {
+  // slog_init("digital", SLOG_FLAGS_ALL, 0);
   nand_gate_t *gate = make_nand_gate();
 
   gate->a = 0;
   gate->b = 0;
   apply();
+  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_TRUE(gate->z);
 
   gate->a = 1;
   gate->b = 0;
   apply();
+  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_TRUE(gate->z);
 
   gate->a = 0;
   gate->b = 1;
   apply();
+  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_TRUE(gate->z);
 
   gate->a = 1;
   gate->b = 1;
   apply();
+  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_FALSE(gate->z);
 
   // TODO: destroy

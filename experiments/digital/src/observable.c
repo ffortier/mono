@@ -34,7 +34,8 @@ void register_observable(struct observable* observable, int* pin0,
   assert(observable->states && "buy more ram");
 
   for (size_t i = 0; i < pin_count; i++) {
-    observable->states->value = -1;  // observable->pins[i];
+    observable->states[i].value = -1;
+    observable->states[i].chain = NULL;
   }
 
   observables.items[observables.count++] = observable;
@@ -78,7 +79,7 @@ void print_digest(observable_t* observable) {
 
 bool digest(void) {
   bool stable = true;
-  printf("digest\n");
+
   for (size_t i = 0; i < observables.count; i++) {
     struct observable* current = observables.items[i];
 
@@ -137,7 +138,7 @@ void append_callback_chain(struct observable* observable, int* pin,
   struct pin_callback_chain** current = &observable->states[pin_index].chain;
 
   while (*current != NULL) {
-    current = &(*current)->next;
+    current = &((*current)->next);
   }
 
   *current = malloc(sizeof(struct pin_callback_chain));

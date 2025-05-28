@@ -1,7 +1,6 @@
 #include "logic_gates.h"
 
 #include <assert.h>
-#include <slog/slog.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +8,7 @@
 
 static void nand_gate_logic(observable_t* observable, size_t pin_index,
                             void* user_data) {
+  fprintf(stderr, "nand_gate_logic\n");
   nand_gate_t* gate = user_data;
 
   gate->z = gate->a && gate->b ? 0 : 1;
@@ -26,6 +26,13 @@ static void or_gate_logic(observable_t* observable, size_t pin_index,
   or_gate_t* gate = user_data;
 
   gate->z = gate->a || gate->b;
+}
+
+static void nor_gate_logic(observable_t* observable, size_t pin_index,
+                           void* user_data) {
+  nor_gate_t* gate = user_data;
+
+  gate->z = gate->a || gate->b ? 0 : 1;
 }
 
 static void xor_gate_logic(observable_t* observable, size_t pin_index,
@@ -57,7 +64,13 @@ void print_and_gate_t(void* component) {
 void print_or_gate_t(void* component) {
   or_gate_t* or_gate = component;
 
-  printf(OR_GATE_FMT, NAND_GATE_VALUES(or_gate));
+  printf(OR_GATE_FMT, OR_GATE_VALUES(or_gate));
+}
+
+void print_nor_gate_t(void* component) {
+  or_gate_t* or_gate = component;
+
+  printf(NOR_GATE_FMT, NOR_GATE_VALUES(or_gate));
 }
 
 void print_xor_gate_t(void* component) {
@@ -74,6 +87,7 @@ void print_not_gate_t(void* component) {
 
 #define X(name, pin_count)                     \
   name##_t* make_##name() {                    \
+    fprintf(stderr, "make_" #name "\n");       \
     name##_t* name = malloc(sizeof(name##_t)); \
     assert(name && "Buy more RAM");            \
     memset(name, 0, sizeof(name##_t));         \

@@ -65,10 +65,10 @@ cc_test(
     size = "small",
     srcs = ["src/logic_gates_test.cc"],
     includes = ["src"],
-    tags = [
-        "broken",
-        "manual",
-    ],
+    # tags = [
+    #     "broken",
+    #     "manual",
+    # ],
     deps = [
         ":logic_gates",
         ":observable",
@@ -81,10 +81,10 @@ cc_test(
     size = "small",
     srcs = ["src/latches_test.cc"],
     includes = ["src"],
-    tags = [
-        "broken",
-        "manual",
-    ],
+    # tags = [
+    #     "broken",
+    #     "manual",
+    # ],
     deps = [
         ":latches",
         ":observable",
