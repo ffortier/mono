@@ -8,6 +8,7 @@ cc_binary(
     includes = ["src"],
     visibility = ["//:__pkg__"],
     deps = [
+        ":adders",
         ":clock",
         ":latches",
         ":logic_gates",
@@ -60,15 +61,23 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "adders",
+    srcs = ["src/adders.c"],
+    hdrs = ["src/adders.h"],
+    includes = ["src"],
+    deps = [
+        ":logic_gates",
+        ":observable",
+        "@slog",
+    ],
+)
+
 cc_test(
     name = "logic_gates_test",
     size = "small",
     srcs = ["src/logic_gates_test.cc"],
     includes = ["src"],
-    # tags = [
-    #     "broken",
-    #     "manual",
-    # ],
     deps = [
         ":logic_gates",
         ":observable",
@@ -81,12 +90,20 @@ cc_test(
     size = "small",
     srcs = ["src/latches_test.cc"],
     includes = ["src"],
-    # tags = [
-    #     "broken",
-    #     "manual",
-    # ],
     deps = [
         ":latches",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "adders_test",
+    size = "small",
+    srcs = ["src/adders_test.cc"],
+    includes = ["src"],
+    deps = [
+        ":adders",
         ":observable",
         "@googletest//:gtest_main",
     ],

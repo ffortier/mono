@@ -56,7 +56,7 @@ static void invoke_chain(struct observable* observable, size_t pin_index) {
 }
 
 void print_digest(observable_t* observable) {
-  static char buffer[1024];
+  static char buffer[8192];
 
   assert(observable->size < sizeof(buffer));
 
