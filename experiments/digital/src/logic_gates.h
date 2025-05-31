@@ -9,6 +9,9 @@
 #define AND_GATE_FMT "and_gate { .a = %d, .b = %d, .z = %d }"
 #define AND_GATE_VALUES(gate) (gate)->a, (gate)->b, (gate)->z
 
+#define AND_GATE_3_FMT "and_gate_3 { .a = %d, .b = %d, .c = %d, .z = %d }"
+#define AND_GATE_3_VALUES(gate) (gate)->a, (gate)->b, (gate)->c, (gate)->z
+
 #define OR_GATE_FMT "or_gate { .a = %d, .b = %d, .z = %d }"
 #define OR_GATE_VALUES(gate) (gate)->a, (gate)->b, (gate)->z
 
@@ -35,6 +38,21 @@ struct logic_gate_3 {
   };
 };
 
+struct logic_gate_4 {
+  struct observable observable;
+
+  // pins
+  union {
+    int pins[4];
+    struct {
+      int a;
+      int b;
+      int c;
+      int z;
+    };
+  };
+};
+
 struct logic_gate_2 {
   struct observable observable;
 
@@ -51,6 +69,7 @@ struct logic_gate_2 {
 #define LOGIC_GATES \
   X(nand_gate, 3)   \
   X(and_gate, 3)    \
+  X(and_gate_3, 4)  \
   X(or_gate, 3)     \
   X(xor_gate, 3)    \
   X(nor_gate, 3)    \
@@ -60,21 +79,8 @@ struct logic_gate_2 {
 LOGIC_GATES
 #undef X
 
-#define X(name, pin_count) name##_t* make_##name(void);
+#define X(name, pin_count) COMPONENT_INTERFACE(name)
 LOGIC_GATES
 #undef X
-#define X(name, pin_count) void init_##name(name##_t* name);
-LOGIC_GATES
-#undef X
-#define X(name, pin_count) void register_##name(name##_t* name);
-LOGIC_GATES
-#undef X
-
-void print_nand_gate_t(void* component);
-void print_and_gate_t(void* component);
-void print_or_gate_t(void* component);
-void print_xor_gate_t(void* component);
-void print_not_gate_t(void* component);
-void print_nor_gate_t(void* component);
 
 #endif

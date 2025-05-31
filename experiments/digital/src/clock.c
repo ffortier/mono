@@ -6,26 +6,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-clk_t* make_clock(void) {
-  clk_t* clock = malloc(sizeof(clk_t));
+clk_t* make_clk(void) {
+  clk_t* clock = calloc(1, sizeof(clk_t));
 
   assert(clock && "Buy more RAM");
-  memset(clock, 0, sizeof(clk_t));
 
-  register_clock(clock);
-  init_clock(clock);
+  register_clk(clock);
+  init_clk(clock);
 
   return clock;
 }
 
-static void print_clk_t(void* component) {
-  clk_t* clock = component;
-  printf(CLOCK_FMT, CLOCK_VALUES(clock));
+size_t format_clk(char* str, size_t n, const clk_t* clk) {
+  return snprintf(str, n, CLOCK_FMT, CLOCK_VALUES(clk));
 }
 
-void register_clock(clk_t* clock) { register_component(clock, clk_t); }
+void register_clk(clk_t* clock) { register_component(clock, clk); }
 
-void init_clock(clk_t* clock) {
+void init_clk(clk_t* clock) {
   // Nothing to do here
 }
 

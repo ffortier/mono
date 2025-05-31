@@ -7,14 +7,14 @@
 #include <string.h>
 
 #ifndef MAX_ITERATION
-#define MAX_ITERATION 50
+#define MAX_ITERATION 500
 #endif
 
 static struct observables observables = {0};
 
 void register_observable(struct observable* observable, int* pin0,
                          size_t pin_count, const char* type_name,
-                         const char* decl_name, void (*print)(void*),
+                         const char* decl_name, format_t formatter,
                          size_t size) {
   // TODO: Make dynamic
   if (observables.capacity == 0) {
@@ -28,7 +28,7 @@ void register_observable(struct observable* observable, int* pin0,
   observable->pins = pin0;
   observable->type_name = type_name;
   observable->decl_name = decl_name;
-  observable->print = print;
+  observable->formatter = formatter;
   observable->size = size;
 
   assert(observable->states && "buy more ram");
@@ -57,6 +57,8 @@ static void invoke_chain(struct observable* observable, size_t pin_index) {
 
 void print_digest(observable_t* observable) {
   static char buffer[8192];
+  static char prev[256];
+  static char current[256];
 
   assert(observable->size < sizeof(buffer));
 
@@ -70,11 +72,21 @@ void print_digest(observable_t* observable) {
     copy->pins[i] = observable->states[i].value;
   }
 
-  printf("%s: ", observable->decl_name);
-  observable->print(copy);
-  printf(" --> ");
-  observable->print(observable);
-  printf("\n");
+  size_t prev_n = observable->formatter(&prev[0], sizeof(prev) - 1, copy);
+  size_t current_n =
+      observable->formatter(&current[0], sizeof(current) - 1, observable);
+
+  if (prev_n > sizeof(prev) - 1) {
+    slogw("Formatted size exceeded buffer size: %d > %d", prev_n,
+          sizeof(prev) - 1);
+  }
+
+  if (current_n > sizeof(current) - 1) {
+    slogw("Formatted size exceeded buffer size: %d > %d", current_n,
+          sizeof(current) - 1);
+  }
+
+  slogt("%s --> %s", prev, current);
 }
 
 bool digest(void) {
@@ -113,14 +125,18 @@ bool digest(void) {
  * MAX_ITERATION is reached
  */
 bool apply(void) {
+  slogt("applying");
+
   for (size_t i = 0; i < MAX_ITERATION; i++) {
+    slogt("digest cycle %zu", i);
+
     if (digest()) {
-      slog("apply %zu", i);
       return true;
     }
   }
 
-  slog("apply MAX_ITERATION %zu", MAX_ITERATION);
+  slogw("apply MAX_ITERATION %zu", MAX_ITERATION);
+
   return false;
 }
 

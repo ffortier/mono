@@ -5,6 +5,7 @@ extern "C" {
 }
 
 #include <gtest/gtest.h>
+#include <slog/slog.h>
 
 TEST(sr_latch_t, TruthTable) {
   sr_latch_t* sr_latch = make_sr_latch();
@@ -61,3 +62,47 @@ TEST(d_latch_t, TruthTable) {
   EXPECT_TRUE(d_latch->q);
   EXPECT_FALSE(d_latch->q1);
 }
+
+// TEST(jk_flip_flop, Toggle) {
+//   slog_init("digital", SLOG_FLAGS_ALL, 0);
+//   jk_flip_flop_t* jk_flip_flop = make_jk_flip_flop();
+
+//   jk_flip_flop->j = 1;
+//   jk_flip_flop->k = 1;
+
+//   jk_flip_flop->clk = 1;
+//   apply();
+//   fprintf(stderr, JK_FLIP_FLOP_FMT "\n", JK_FLIP_FLOP_VALUES(jk_flip_flop));
+//   EXPECT_TRUE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 0;
+//   apply();
+//   fprintf(stderr, JK_FLIP_FLOP_FMT "\n", JK_FLIP_FLOP_VALUES(jk_flip_flop));
+//   EXPECT_TRUE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 1;
+//   apply();
+//   fprintf(stderr, JK_FLIP_FLOP_FMT "\n", JK_FLIP_FLOP_VALUES(jk_flip_flop));
+//   EXPECT_FALSE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 0;
+//   apply();
+//   fprintf(stderr, JK_FLIP_FLOP_FMT "\n", JK_FLIP_FLOP_VALUES(jk_flip_flop));
+//   EXPECT_FALSE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 1;
+//   apply();
+//   EXPECT_TRUE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 0;
+//   apply();
+//   EXPECT_TRUE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 1;
+//   apply();
+//   EXPECT_FALSE(jk_flip_flop->q);
+
+//   jk_flip_flop->clk = 0;
+//   apply();
+//   EXPECT_FALSE(jk_flip_flop->q);
+// }

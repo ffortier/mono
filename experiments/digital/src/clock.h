@@ -3,7 +3,7 @@
 
 #include "observable.h"
 
-typedef struct clock {
+typedef struct clk {
   observable_t observable;
 
   union {
@@ -14,10 +14,7 @@ typedef struct clock {
   };
 } clk_t;
 
-clk_t* make_clock(void);
-
-void register_clock(clk_t* clock);
-void init_clock(clk_t* clock);
+COMPONENT_INTERFACE(clk);
 
 void clock_pulse(clk_t* clock);
 

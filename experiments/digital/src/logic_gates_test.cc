@@ -14,25 +14,21 @@ TEST(nand_gate, TruthTable) {
   gate->a = 0;
   gate->b = 0;
   apply();
-  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_TRUE(gate->z);
 
   gate->a = 1;
   gate->b = 0;
   apply();
-  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_TRUE(gate->z);
 
   gate->a = 0;
   gate->b = 1;
   apply();
-  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_TRUE(gate->z);
 
   gate->a = 1;
   gate->b = 1;
   apply();
-  fprintf(stderr, NAND_GATE_FMT "\n", NAND_GATE_VALUES(gate));
   EXPECT_FALSE(gate->z);
 
   // TODO: destroy

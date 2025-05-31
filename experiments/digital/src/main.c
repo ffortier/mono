@@ -12,9 +12,9 @@
 #include "observable.h"
 
 int main(void) {
-  slog_init("digital", SLOG_FLAGS_ALL, 0);
+  slog_init("digital", SLOG_FLAGS_ALL - SLOG_TRACE, 0);
 
-  clk_t* clock = make_clock();
+  clk_t* clock = make_clk();
   d_latch_t* d_latch = make_d_latch();
 
   connect(SELECT(clock, clk), SELECT(d_latch, e));
