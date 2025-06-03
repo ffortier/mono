@@ -6,6 +6,7 @@ cc_binary(
     name = "digital",
     srcs = ["src/main.c"],
     includes = ["src"],
+    tags = ["windows"],
     visibility = ["//:__pkg__"],
     deps = [
         ":adders",
@@ -23,6 +24,7 @@ cc_library(
     srcs = ["src/observable.c"],
     hdrs = ["src/observable.h"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         "@slog",
     ],
@@ -33,6 +35,7 @@ cc_library(
     srcs = ["src/clock.c"],
     hdrs = ["src/clock.h"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":observable",
         "@slog",
@@ -44,6 +47,7 @@ cc_library(
     srcs = ["src/logic_gates.c"],
     hdrs = ["src/logic_gates.h"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":observable",
         "@slog",
@@ -55,6 +59,7 @@ cc_library(
     srcs = ["src/latches.c"],
     hdrs = ["src/latches.h"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":logic_gates",
         ":observable",
@@ -67,6 +72,7 @@ cc_library(
     srcs = ["src/flipflops.c"],
     hdrs = ["src/flipflops.h"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":latches",
         ":logic_gates",
@@ -80,6 +86,7 @@ cc_library(
     srcs = ["src/adders.c"],
     hdrs = ["src/adders.h"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":logic_gates",
         ":observable",
@@ -92,6 +99,7 @@ cc_test(
     size = "small",
     srcs = ["src/logic_gates_test.cc"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":logic_gates",
         ":observable",
@@ -104,6 +112,7 @@ cc_test(
     size = "small",
     srcs = ["src/latches_test.cc"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":latches",
         ":observable",
@@ -116,6 +125,7 @@ cc_test(
     size = "small",
     srcs = ["src/flipflops_test.cc"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":flipflops",
         ":observable",
@@ -128,6 +138,7 @@ cc_test(
     size = "small",
     srcs = ["src/adders_test.cc"],
     includes = ["src"],
+    tags = ["windows"],
     deps = [
         ":adders",
         ":observable",
