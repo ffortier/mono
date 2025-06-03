@@ -14493,30 +14493,169 @@
     },
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "Uop9mtU89uTBWfJILOaQDtoXi/jaYcjb0TriTNLAbdc=",
+        "bzlTransitiveDigest": "miE+G1r8txiL9GGIOFLiY+RyielXfNO9OiFlFw+NE+U=",
         "usagesDigest": "/jVYn8hN15HG4QuKNvZEpTiRZyDyoWvKXdR0oUbn8Hg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "llvm_toolchain": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_toolchain",
-            "attributes": {}
-          },
           "llvm_toolchain_llvm": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_tools",
-            "attributes": {}
+            "repoRuleId": "@@toolchains_llvm+//toolchain:rules.bzl%llvm",
+            "attributes": {
+              "alternative_llvm_sources": [],
+              "auth_patterns": {},
+              "distribution": "auto",
+              "exec_arch": "",
+              "exec_os": "",
+              "libclang_rt": {},
+              "llvm_mirror": "",
+              "llvm_version": "20.1.1",
+              "llvm_versions": {},
+              "netrc": "",
+              "sha256": {},
+              "strip_prefix": {},
+              "urls": {}
+            }
           },
-          "llvm_rbe_linux_amd64": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_toolchain",
-            "attributes": {}
+          "llvm_toolchain": {
+            "repoRuleId": "@@toolchains_llvm+//toolchain:rules.bzl%toolchain",
+            "attributes": {
+              "absolute_paths": false,
+              "archive_flags": {},
+              "compile_flags": {},
+              "conly_flags": {},
+              "coverage_compile_flags": {},
+              "coverage_link_flags": {},
+              "cxx_builtin_include_directories": {},
+              "cxx_flags": {},
+              "cxx_standard": {
+                "": "c++20"
+              },
+              "dbg_compile_flags": {},
+              "exec_arch": "",
+              "exec_os": "",
+              "extra_exec_compatible_with": {},
+              "extra_target_compatible_with": {},
+              "link_flags": {},
+              "link_libs": {},
+              "llvm_versions": {
+                "": "20.1.1"
+              },
+              "opt_compile_flags": {},
+              "opt_link_flags": {},
+              "stdlib": {
+                "wasm32": "none",
+                "wasm64": "none"
+              },
+              "target_settings": {},
+              "unfiltered_compile_flags": {},
+              "toolchain_roots": {},
+              "sysroot": {
+                "linux-x86_64": "'@@+sysroots+sysroots_bullseye_amd64//:sysroot'",
+                "linux-aarch64": "'@@+sysroots+sysroots_bullseye_arm64//:sysroot'",
+                "darwin-x86_64": "'@@+sysroots+sysroot_darwin_universal//:sysroot'",
+                "darwin-aarch64": "'@@+sysroots+sysroot_darwin_universal//:sysroot'",
+                "wasm32": "'@@//third_party/cpp/empty:empty'",
+                "wasm64": "'@@//third_party/cpp/empty:empty'"
+              }
+            }
           },
           "llvm_rbe_linux_amd64_llvm": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_tools",
-            "attributes": {}
+            "repoRuleId": "@@toolchains_llvm+//toolchain:rules.bzl%llvm",
+            "attributes": {
+              "alternative_llvm_sources": [],
+              "auth_patterns": {},
+              "distribution": "LLVM-20.1.1-Linux-X64.tar.xz",
+              "exec_arch": "amd64",
+              "exec_os": "linux",
+              "libclang_rt": {},
+              "llvm_mirror": "",
+              "llvm_version": "20.1.1",
+              "llvm_versions": {},
+              "netrc": "",
+              "sha256": {},
+              "strip_prefix": {},
+              "urls": {}
+            }
+          },
+          "llvm_rbe_linux_amd64": {
+            "repoRuleId": "@@toolchains_llvm+//toolchain:rules.bzl%toolchain",
+            "attributes": {
+              "absolute_paths": false,
+              "archive_flags": {},
+              "compile_flags": {},
+              "conly_flags": {},
+              "coverage_compile_flags": {},
+              "coverage_link_flags": {},
+              "cxx_builtin_include_directories": {},
+              "cxx_flags": {},
+              "cxx_standard": {
+                "": "c++20"
+              },
+              "dbg_compile_flags": {},
+              "exec_arch": "amd64",
+              "exec_os": "linux",
+              "extra_exec_compatible_with": {},
+              "extra_target_compatible_with": {},
+              "link_flags": {},
+              "link_libs": {},
+              "llvm_versions": {
+                "": "20.1.1"
+              },
+              "opt_compile_flags": {},
+              "opt_link_flags": {},
+              "stdlib": {
+                "wasm32": "none",
+                "wasm64": "none"
+              },
+              "target_settings": {},
+              "unfiltered_compile_flags": {},
+              "toolchain_roots": {},
+              "sysroot": {
+                "linux-x86_64": "'@@+sysroots+sysroots_bullseye_amd64//:sysroot'",
+                "wasm32": "'@@//third_party/cpp/empty:empty'",
+                "wasm64": "'@@//third_party/cpp/empty:empty'"
+              }
+            }
           }
         },
-        "recordedRepoMappingEntries": []
+        "recordedRepoMappingEntries": [
+          [
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "sysroot_darwin_universal",
+            "+sysroots+sysroot_darwin_universal"
+          ],
+          [
+            "",
+            "sysroots_bullseye_amd64",
+            "+sysroots+sysroots_bullseye_amd64"
+          ],
+          [
+            "",
+            "sysroots_bullseye_arm64",
+            "+sysroots+sysroots_bullseye_arm64"
+          ],
+          [
+            "toolchains_llvm+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ],
+          [
+            "toolchains_llvm+",
+            "bazel_tools",
+            "bazel_tools"
+          ],
+          [
+            "toolchains_llvm+",
+            "toolchains_llvm",
+            "toolchains_llvm+"
+          ]
+        ]
       }
     },
     "@@uxn+//:extension.bzl%uxn": {

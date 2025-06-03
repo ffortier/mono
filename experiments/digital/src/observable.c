@@ -63,10 +63,10 @@ void print_digest(observable_t* observable) {
   assert(observable->size < sizeof(buffer));
 
   observable_t* copy = (observable_t*)buffer;
-  size_t pin_offset = (void*)observable->pins - (void*)observable;
+  size_t pin_offset = (uint8_t*)observable->pins - (uint8_t*)observable;
   memcpy(buffer, observable, observable->size);
 
-  copy->pins = (void*)copy + pin_offset;
+  copy->pins = (int*)((uint8_t*)copy + pin_offset);
 
   for (int i = 0; i < observable->count; i++) {
     copy->pins[i] = observable->states[i].value;
