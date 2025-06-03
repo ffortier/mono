@@ -44,36 +44,12 @@ typedef struct d_latch {
   sr_latch_t sr_latch;
 } d_latch_t;
 
-typedef struct jk_flip_flop {
-  observable_t observable;
-
-  union {
-    int pins[5];
-    struct {
-      int j;
-      int k;
-      int clk;
-      int q;
-      int q1;
-    };
-  };
-
-  sr_latch_t sr_latch;
-  and_gate_3_t g1;
-  and_gate_3_t g2;
-} jk_flip_flop_t;
-
 #define SR_LATCH_FMT "sr_latch { .s = %d, .r = %d, .q = %d, .q1 = %d }"
 #define SR_LATCH_VALUES(latch) (latch)->s, (latch)->r, (latch)->q, (latch)->q1
 #define D_LATCH_FMT "d_latch { .d = %d, .e = %d, .q = %d, .q1 = %d }"
 #define D_LATCH_VALUES(latch) (latch)->d, (latch)->e, (latch)->q, (latch)->q1
-#define JK_FLIP_FLOP_FMT \
-  "jk_flip_flop { .j = %d, .k = %d, .clk = %d, .q = %d, .q1 = %d }"
-#define JK_FLIP_FLOP_VALUES(latch) \
-  (latch)->j, (latch)->k, (latch)->clk, (latch)->q, (latch)->q1
 
 COMPONENT_INTERFACE(sr_latch);
 COMPONENT_INTERFACE(d_latch);
-COMPONENT_INTERFACE(jk_flip_flop);
 
 #endif

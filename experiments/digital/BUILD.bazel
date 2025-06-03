@@ -10,6 +10,7 @@ cc_binary(
     deps = [
         ":adders",
         ":clock",
+        ":flipflops",
         ":latches",
         ":logic_gates",
         ":observable",
@@ -62,6 +63,19 @@ cc_library(
 )
 
 cc_library(
+    name = "flipflops",
+    srcs = ["src/flipflops.c"],
+    hdrs = ["src/flipflops.h"],
+    includes = ["src"],
+    deps = [
+        ":latches",
+        ":logic_gates",
+        ":observable",
+        "@slog",
+    ],
+)
+
+cc_library(
     name = "adders",
     srcs = ["src/adders.c"],
     hdrs = ["src/adders.h"],
@@ -92,6 +106,18 @@ cc_test(
     includes = ["src"],
     deps = [
         ":latches",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "flipflops_test",
+    size = "small",
+    srcs = ["src/flipflops_test.cc"],
+    includes = ["src"],
+    deps = [
+        ":flipflops",
         ":observable",
         "@googletest//:gtest_main",
     ],

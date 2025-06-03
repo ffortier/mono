@@ -28,8 +28,8 @@ void init_clk(clk_t* clock) {
 }
 
 void clock_pulse(clk_t* clock) {
-  clock->clk = 1;
+  clock->q = 1;
   apply();
-  clock->clk = 0;
+  clock->q = 0;
   apply();
 }
