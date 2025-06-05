@@ -75,3 +75,25 @@ d_latch_t* make_d_latch() {
 size_t format_d_latch(char* str, size_t n, const d_latch_t* component) {
   return snprintf(str, n, D_LATCH_FMT, D_LATCH_VALUES(component));
 }
+
+void visit_sr_latch(visitor_t* visitor, sr_latch_t* sr_latch) {
+  visit_pin(visitor, &sr_latch->observable, "s", 0);
+  visit_pin(visitor, &sr_latch->observable, "r", 1);
+  visit_pin(visitor, &sr_latch->observable, "q", 2);
+  visit_pin(visitor, &sr_latch->observable, "q1", 3);
+
+  visit_component(visitor, &sr_latch->g1.observable);
+  visit_component(visitor, &sr_latch->g2.observable);
+}
+
+void visit_d_latch(visitor_t* visitor, d_latch_t* d_latch) {
+  visit_pin(visitor, &d_latch->observable, "d", 0);
+  visit_pin(visitor, &d_latch->observable, "e", 1);
+  visit_pin(visitor, &d_latch->observable, "q", 2);
+  visit_pin(visitor, &d_latch->observable, "q1", 3);
+
+  visit_component(visitor, &d_latch->g1.observable);
+  visit_component(visitor, &d_latch->g2.observable);
+  visit_component(visitor, &d_latch->n.observable);
+  visit_component(visitor, &d_latch->sr_latch.observable);
+}

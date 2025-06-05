@@ -14,8 +14,8 @@ static struct observables observables = {0};
 
 void register_observable(struct observable* observable, int* pin0,
                          size_t pin_count, const char* type_name,
-                         const char* decl_name, format_t formatter,
-                         size_t size) {
+                         format_t formatter, size_t size,
+                         visit_component_t visit_component) {
   // TODO: Make dynamic
   if (observables.capacity == 0) {
     observables.capacity = 100;
@@ -27,8 +27,8 @@ void register_observable(struct observable* observable, int* pin0,
   observable->states = malloc(sizeof(struct pin_state) * pin_count);
   observable->pins = pin0;
   observable->type_name = type_name;
-  observable->decl_name = decl_name;
   observable->formatter = formatter;
+  observable->visit_component = visit_component;
   observable->size = size;
 
   assert(observable->states && "buy more ram");
@@ -89,6 +89,12 @@ void print_digest(observable_t* observable) {
   slogt("%s --> %s", prev, current);
 }
 
+static bool slog_trace_enabled(void) {
+  slog_config_t config;
+  slog_config_get(&config);
+  return SLOG_FLAGS_CHECK(config.nFlags, SLOG_TRACE);
+}
+
 bool digest(void) {
   bool stable = true;
 
@@ -109,7 +115,10 @@ bool digest(void) {
     }
 
     if (dirty) {
-      print_digest(current);
+      if (slog_trace_enabled()) {
+        print_digest(current);
+      }
+
       stable = false;
     }
 
@@ -169,11 +178,17 @@ void connect(struct observable* observable1, int* pin1,
                             .next = NULL,
                             .user_data = pin2,
                         });
+}
 
-  // append_callback_chain(observable2, pin2,
-  //                       (struct pin_callback_chain){
-  //                           .cb = copy_value,
-  //                           .next = NULL,
-  //                           .user_data = pin1,
-  //                       });
+void visit_pin(visitor_t* visitor, observable_t* component,
+               const char* pin_name, size_t pin_index) {
+  visitor->visit_pin(visitor, component, pin_name, pin_index);
+}
+
+void visit_component(visitor_t* visitor, observable_t* component) {
+  visitor->visit_component(visitor, component);
+}
+
+void visit_children(visitor_t* visitor, observable_t* component) {
+  component->visit_component(visitor, component);
 }

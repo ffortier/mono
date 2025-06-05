@@ -78,3 +78,19 @@ size_t format_jk_flip_flop(char* str, size_t n,
                            const jk_flip_flop_t* jk_flip_flop) {
   return snprintf(str, n, JK_FLIP_FLOP_FMT, JK_FLIP_FLOP_VALUES(jk_flip_flop));
 }
+
+void visit_jk_flip_flop(visitor_t* visitor, jk_flip_flop_t* jk_flip_flop) {
+  visit_pin(visitor, &jk_flip_flop->observable, "j", 0);
+  visit_pin(visitor, &jk_flip_flop->observable, "k", 0);
+  visit_pin(visitor, &jk_flip_flop->observable, "clk", 0);
+  visit_pin(visitor, &jk_flip_flop->observable, "q", 0);
+  visit_pin(visitor, &jk_flip_flop->observable, "q1", 0);
+
+  visit_component(visitor, &jk_flip_flop->sr_latches[0].observable);
+  visit_component(visitor, &jk_flip_flop->sr_latches[1].observable);
+  visit_component(visitor, &jk_flip_flop->and_gate_3s[0].observable);
+  visit_component(visitor, &jk_flip_flop->and_gate_3s[1].observable);
+  visit_component(visitor, &jk_flip_flop->and_gates[0].observable);
+  visit_component(visitor, &jk_flip_flop->and_gates[1].observable);
+  visit_component(visitor, &jk_flip_flop->not_gate.observable);
+}

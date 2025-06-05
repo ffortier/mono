@@ -33,3 +33,7 @@ void clock_pulse(clk_t* clock) {
   clock->q = 0;
   apply();
 }
+
+void visit_clk(visitor_t* visitor, clk_t* clk) {
+  visit_pin(visitor, &clk->observable, "q", 0);
+}

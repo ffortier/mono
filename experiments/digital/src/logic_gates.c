@@ -112,3 +112,45 @@ LOGIC_GATES
   void register_##name(name##_t* name) { register_component(name, name); }
 LOGIC_GATES
 #undef X
+
+void visit_and_gate(visitor_t* visitor, and_gate_t* and_gate) {
+  visit_pin(visitor, &and_gate->observable, "a", 0);
+  visit_pin(visitor, &and_gate->observable, "b", 1);
+  visit_pin(visitor, &and_gate->observable, "z", 2);
+}
+
+void visit_and_gate_3(visitor_t* visitor, and_gate_3_t* and_gate_3) {
+  visit_pin(visitor, &and_gate_3->observable, "a", 0);
+  visit_pin(visitor, &and_gate_3->observable, "b", 1);
+  visit_pin(visitor, &and_gate_3->observable, "c", 2);
+  visit_pin(visitor, &and_gate_3->observable, "z", 3);
+}
+
+void visit_or_gate(visitor_t* visitor, or_gate_t* or_gate) {
+  visit_pin(visitor, &or_gate->observable, "a", 0);
+  visit_pin(visitor, &or_gate->observable, "b", 1);
+  visit_pin(visitor, &or_gate->observable, "z", 2);
+}
+
+void visit_nor_gate(visitor_t* visitor, nor_gate_t* nor_gate) {
+  visit_pin(visitor, &nor_gate->observable, "a", 0);
+  visit_pin(visitor, &nor_gate->observable, "b", 1);
+  visit_pin(visitor, &nor_gate->observable, "z", 2);
+}
+
+void visit_xor_gate(visitor_t* visitor, xor_gate_t* xor_gate) {
+  visit_pin(visitor, &xor_gate->observable, "a", 0);
+  visit_pin(visitor, &xor_gate->observable, "b", 1);
+  visit_pin(visitor, &xor_gate->observable, "z", 2);
+}
+
+void visit_nand_gate(visitor_t* visitor, nand_gate_t* nand_gate) {
+  visit_pin(visitor, &nand_gate->observable, "a", 0);
+  visit_pin(visitor, &nand_gate->observable, "b", 1);
+  visit_pin(visitor, &nand_gate->observable, "z", 2);
+}
+
+void visit_not_gate(visitor_t* visitor, not_gate_t* not_gate) {
+  visit_pin(visitor, &not_gate->observable, "a", 0);
+  visit_pin(visitor, &not_gate->observable, "z", 2);
+}
