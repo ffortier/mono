@@ -39,9 +39,9 @@ http_archive(
 
 http_archive(
     name = "clay",
-    urls = ["https://github.com/nicbarker/clay/archive/refs/tags/v0.13.tar.gz"],
-    sha256 = "c4b0e765e1b60cdcbdf25bf2f76a914f9f5dbee40900c261d691ce3fa46d3870",
-    strip_prefix = "clay-0.13",
+    urls = ["https://github.com/nicbarker/clay/archive/refs/tags/v0.14.tar.gz"],
+    sha256 = "ee8f6477020dd72afe8cf6f8d3ab6855980028289a2b677a1423d17aab983585",
+    strip_prefix = "clay-0.14",
     build_file = "//third_party/cpp:clay.BUILD.bazel",
 )
 
