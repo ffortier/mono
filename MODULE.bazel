@@ -5,7 +5,7 @@ bazel_dep(name = "rules_multirun", version = "0.12.0")
 bazel_dep(name = "rules_shell", version = "0.4.1")
 bazel_dep(name = "uxn")
 bazel_dep(name = "rules_prolog")
-bazel_dep(name = "rules_dotnet", version = "0.18.2")
+bazel_dep(name = "rules_dotnet", version = "0.19.0")
 bazel_dep(name = "toolchain_utils", version = "1.2.0")
 
 git_override(
