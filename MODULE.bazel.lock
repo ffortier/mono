@@ -7283,7 +7283,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "miE+G1r8txiL9GGIOFLiY+RyielXfNO9OiFlFw+NE+U=",
-        "usagesDigest": "/jVYn8hN15HG4QuKNvZEpTiRZyDyoWvKXdR0oUbn8Hg=",
+        "usagesDigest": "ZE1aTKJhEiTIl5KJJc6Xc9y3YoHGlzxZKyxR3cQCX5A=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -7311,7 +7311,17 @@
             "attributes": {
               "absolute_paths": false,
               "archive_flags": {},
-              "compile_flags": {},
+              "compile_flags": {
+                "wasm32": [
+                  "--target=wasm32-unknown-unknown",
+                  "-nostdlib",
+                  "-nostdinc",
+                  "-fcolor-diagnostics",
+                  "-Wall",
+                  "-Wthread-safety",
+                  "-Wself-assign"
+                ]
+              },
               "conly_flags": {},
               "coverage_compile_flags": {},
               "coverage_link_flags": {},
@@ -7333,8 +7343,7 @@
               "opt_compile_flags": {},
               "opt_link_flags": {},
               "stdlib": {
-                "wasm32": "none",
-                "wasm64": "none"
+                "wasm32": "none"
               },
               "target_settings": {},
               "unfiltered_compile_flags": {},
@@ -7344,8 +7353,7 @@
                 "linux-aarch64": "'@@+sysroots+sysroots_bullseye_arm64//:sysroot'",
                 "darwin-x86_64": "'@@+sysroots+sysroot_darwin_universal//:sysroot'",
                 "darwin-aarch64": "'@@+sysroots+sysroot_darwin_universal//:sysroot'",
-                "wasm32": "'@@//third_party/cpp/empty:empty'",
-                "wasm64": "'@@//third_party/cpp/empty:empty'"
+                "wasm32": "'@@//third_party/cpp/empty:empty'"
               }
             }
           },
@@ -7394,8 +7402,7 @@
               "opt_compile_flags": {},
               "opt_link_flags": {},
               "stdlib": {
-                "wasm32": "none",
-                "wasm64": "none"
+                "wasm32": "none"
               },
               "target_settings": {},
               "unfiltered_compile_flags": {},

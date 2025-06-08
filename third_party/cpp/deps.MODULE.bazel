@@ -51,6 +51,16 @@ http_archive(
     sha256 = "22d06d8f67a7668b1344f6e8486cc58806d1e5f38b40c715cc80cb023e752f10",
     strip_prefix = "slog-1.8.48",
     build_file = "//third_party/cpp:slog.BUILD.bazel",
+    patches = ["//third_party/cpp:slog_wasm32.patch"],
+    patch_args = ["-p1"],
+)
+
+http_archive(
+    name = "twr_wasm",
+    urls = ["https://github.com/twiddlingbits/twr-wasm/archive/refs/tags/v2.5.0.tar.gz"],
+    sha256 = "6d79df15c9d0339b5cc1987949971a4595c8e4cfa7af09e9bc003d0fed838038",
+    strip_prefix = "twr-wasm-2.5.0",
+    build_file = "//third_party/cpp:twr_wasm.BUILD.bazel",
 )
 
 bazel_dep(name = "googletest", version = "1.17.0")

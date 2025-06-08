@@ -1,3 +1,5 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+
 # Not a full fledge toolchain, but required to establish i386-kernel as a legit platform
 toolchain(
     name = "cc-toolchain-i386-kernel",
@@ -7,4 +9,9 @@ toolchain(
     ],
     toolchain = "@llvm_toolchain//:cc-clang-x86_64-linux",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)
+
+sh_binary(
+    name = "slog_patch_gen",
+    srcs = ["slog_patch_gen.sh"],
 )

@@ -1,7 +1,6 @@
 #include "latches.h"
 
 #include <assert.h>
-#include <slog/slog.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

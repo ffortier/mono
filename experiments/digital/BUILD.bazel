@@ -1,14 +1,24 @@
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("@rules_cc//cc:cc_test.bzl", "cc_test")
 
+includes = ["src"]
+
+deps = select({
+    "@platforms//cpu:wasm32": [
+        "@twr_wasm//:twr_headers_only",
+    ],
+    "//conditions:default": [],
+})
+
 cc_binary(
     name = "digital",
     srcs = ["src/main.c"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
     visibility = ["//:__pkg__"],
-    deps = [
+    deps = deps + [
         ":adders",
         ":clock",
         ":flipflops",
@@ -23,9 +33,8 @@ cc_library(
     name = "observable",
     srcs = ["src/observable.c"],
     hdrs = ["src/observable.h"],
-    includes = ["src"],
     tags = ["windows"],
-    deps = [
+    deps = deps + [
         "@slog",
     ],
 )
@@ -34,11 +43,10 @@ cc_library(
     name = "clock",
     srcs = ["src/clock.c"],
     hdrs = ["src/clock.h"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
-    deps = [
+    deps = deps + [
         ":observable",
-        "@slog",
     ],
 )
 
@@ -46,11 +54,10 @@ cc_library(
     name = "logic_gates",
     srcs = ["src/logic_gates.c"],
     hdrs = ["src/logic_gates.h"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
-    deps = [
+    deps = deps + [
         ":observable",
-        "@slog",
     ],
 )
 
@@ -58,12 +65,11 @@ cc_library(
     name = "latches",
     srcs = ["src/latches.c"],
     hdrs = ["src/latches.h"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
-    deps = [
+    deps = deps + [
         ":logic_gates",
         ":observable",
-        "@slog",
     ],
 )
 
@@ -71,13 +77,12 @@ cc_library(
     name = "flipflops",
     srcs = ["src/flipflops.c"],
     hdrs = ["src/flipflops.h"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
-    deps = [
+    deps = deps + [
         ":latches",
         ":logic_gates",
         ":observable",
-        "@slog",
     ],
 )
 
@@ -85,12 +90,11 @@ cc_library(
     name = "adders",
     srcs = ["src/adders.c"],
     hdrs = ["src/adders.h"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
-    deps = [
+    deps = deps + [
         ":logic_gates",
         ":observable",
-        "@slog",
     ],
 )
 
@@ -98,7 +102,7 @@ cc_test(
     name = "logic_gates_test",
     size = "small",
     srcs = ["src/logic_gates_test.cc"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
     deps = [
         ":logic_gates",
@@ -111,7 +115,7 @@ cc_test(
     name = "latches_test",
     size = "small",
     srcs = ["src/latches_test.cc"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
     deps = [
         ":latches",
@@ -124,7 +128,7 @@ cc_test(
     name = "flipflops_test",
     size = "small",
     srcs = ["src/flipflops_test.cc"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
     deps = [
         ":flipflops",
@@ -137,11 +141,40 @@ cc_test(
     name = "adders_test",
     size = "small",
     srcs = ["src/adders_test.cc"],
-    includes = ["src"],
+    includes = includes,
     tags = ["windows"],
     deps = [
         ":adders",
         ":observable",
         "@googletest//:gtest_main",
     ],
+)
+
+cc_binary(
+    name = "digital.wasm",
+    srcs = ["src/main_wasm32.c"],
+    includes = includes,
+    linkopts = [
+        "-Wl,--no-entry",
+        "-Wl,--import-memory",
+    ],
+    target_compatible_with = [
+        "@platforms//os:none",
+        "@platforms//cpu:wasm32",
+    ],
+    deps = deps + [
+        ":adders",
+        ":clock",
+        ":flipflops",
+        ":latches",
+        ":logic_gates",
+        ":observable",
+        "@walloc",
+    ],
+)
+
+platform_transition_binary(
+    name = "wasm32",
+    binary = ":digital.wasm",
+    target_platform = "//platforms:wasm32",
 )

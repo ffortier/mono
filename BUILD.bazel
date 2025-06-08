@@ -2,6 +2,7 @@ load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile
 load("@pip//:requirements.bzl", "requirement")
 load("@python_versions//3.13:defs.bzl", "py_console_script_binary")
 load("@rules_prolog//:prolog_toolchain.bzl", "prolog_toolchain")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 prolog_toolchain(
     name = "scryper_prolog",
@@ -35,4 +36,9 @@ refresh_compile_commands(
     targets = {
         "//experiments/digital": "",
     },
+)
+
+sh_binary(
+    name = "cwd",
+    srcs = ["cwd.sh"],
 )

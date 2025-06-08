@@ -89,92 +89,89 @@ void visit_full_adder(visitor_t* visitor, full_adder_t* full_adder) {
   visit_pin(visitor, &full_adder->observable, "sum", 3);
   visit_pin(visitor, &full_adder->observable, "carry", 4);
 
-  visit_component(visitor, &full_adder->or_gate);
-  visit_component(visitor, &full_adder->xor_gate);
-  visit_component(visitor, &full_adder->and_gate);
-  visit_component(visitor, &full_adder->half_adder);
+  visit_component(visitor, &full_adder->or_gate.observable);
+  visit_component(visitor, &full_adder->xor_gate.observable);
+  visit_component(visitor, &full_adder->and_gate.observable);
+  visit_component(visitor, &full_adder->half_adder.observable);
 }
 
 void visit_half_adder(visitor_t* visitor, half_adder_t* half_adder) {
-  xor_gate_t xor_gate;
-  and_gate_t and_gate;
-
   visit_pin(visitor, &half_adder->observable, "a", 0);
   visit_pin(visitor, &half_adder->observable, "b", 1);
   visit_pin(visitor, &half_adder->observable, "sum", 2);
   visit_pin(visitor, &half_adder->observable, "carry", 3);
 
-  visit_component(visitor, &half_adder->xor_gate);
-  visit_component(visitor, &half_adder->and_gate);
+  visit_component(visitor, &half_adder->xor_gate.observable);
+  visit_component(visitor, &half_adder->and_gate.observable);
 }
 
-#define ADDER_IMPLEMENTATION(bit_count)                                       \
-  adder_##bit_count##_t* make_adder_##bit_count() {                           \
-    adder_##bit_count##_t* adder_##bit_count =                                \
-        calloc(1, sizeof(adder_##bit_count##_t));                             \
-    assert(adder_##bit_count && "Buy more RAM");                              \
-                                                                              \
-    register_adder_##bit_count(adder_##bit_count);                            \
-    init_adder_##bit_count(adder_##bit_count);                                \
-                                                                              \
-    return adder_##bit_count;                                                 \
-  }                                                                           \
-                                                                              \
-  void init_adder_##bit_count(adder_##bit_count##_t* adder_##bit_count) {     \
-    for (size_t i = 0; i < bit_count; i++) {                                  \
-      init_full_adder(&adder_##bit_count->full_adders[i]);                    \
-                                                                              \
-      connect(SELECT(adder_##bit_count, a_inputs[i]),                         \
-              SELECT(&adder_##bit_count->full_adders[i], a));                 \
-      connect(SELECT(adder_##bit_count, b_inputs[i]),                         \
-              SELECT(&adder_##bit_count->full_adders[i], b));                 \
-      connect(SELECT(&adder_##bit_count->full_adders[i], sum),                \
-              SELECT(adder_##bit_count, outputs[i]));                         \
-                                                                              \
-      if (i < bit_count - 1) {                                                \
-        connect(SELECT(&adder_##bit_count->full_adders[i], carry),            \
-                SELECT(&adder_##bit_count->full_adders[i + 1], c));           \
-      }                                                                       \
-    }                                                                         \
-                                                                              \
-    connect(SELECT(adder_##bit_count, cin),                                   \
-            SELECT(&adder_##bit_count->full_adders[0], c));                   \
-    connect(SELECT(&adder_##bit_count->full_adders[bit_count - 1], carry),    \
-            SELECT(adder_##bit_count, cout));                                 \
-  }                                                                           \
-                                                                              \
-  void register_adder_##bit_count(adder_##bit_count##_t* adder_##bit_count) { \
-    register_component(adder_##bit_count, adder_##bit_count);                 \
-                                                                              \
-    for (size_t i = 0; i < bit_count; i++) {                                  \
-      register_full_adder(&adder_##bit_count->full_adders[i]);                \
-    }                                                                         \
-  }                                                                           \
-                                                                              \
-  size_t format_adder_##bit_count(char* str, size_t n,                        \
-                                  const adder_##bit_count##_t* adder) {       \
-    return snprintf(str, n, ADDER_##bit_count##_FMT,                          \
-                    ADDER_##bit_count##_VALUES(adder));                       \
-  }                                                                           \
-                                                                              \
-  void visit_adder_##bit_count(visitor_t* visitor,                            \
-                               adder_##bit_count##_t* adder_##bit_count) {    \
-    size_t pin_index = 0;                                                     \
-    for (size_t i = 0; i < bit_count; i++) {                                  \
-      visit_pin(visitor, &adder_##bit_count->observable, "a", pin_index++);   \
-    }                                                                         \
-    for (size_t i = 0; i < bit_count; i++) {                                  \
-      visit_pin(visitor, &adder_##bit_count->observable, "b", pin_index++);   \
-    }                                                                         \
-    visit_pin(visitor, &adder_##bit_count->observable, "cin", pin_index++);   \
-    visit_pin(visitor, &adder_##bit_count->observable, "cout", pin_index++);  \
-    for (size_t i = 0; i < bit_count; i++) {                                  \
-      visit_pin(visitor, &adder_##bit_count->observable, "outputs",           \
-                pin_index++);                                                 \
-    }                                                                         \
-    for (size_t i = 0; i < bit_count; i++) {                                  \
-      visit_component(visitor, &adder_##bit_count->full_adders[i]);           \
-    }                                                                         \
+#define ADDER_IMPLEMENTATION(bit_count)                                        \
+  adder_##bit_count##_t* make_adder_##bit_count() {                            \
+    adder_##bit_count##_t* adder_##bit_count =                                 \
+        calloc(1, sizeof(adder_##bit_count##_t));                              \
+    assert(adder_##bit_count && "Buy more RAM");                               \
+                                                                               \
+    register_adder_##bit_count(adder_##bit_count);                             \
+    init_adder_##bit_count(adder_##bit_count);                                 \
+                                                                               \
+    return adder_##bit_count;                                                  \
+  }                                                                            \
+                                                                               \
+  void init_adder_##bit_count(adder_##bit_count##_t* adder_##bit_count) {      \
+    for (size_t i = 0; i < bit_count; i++) {                                   \
+      init_full_adder(&adder_##bit_count->full_adders[i]);                     \
+                                                                               \
+      connect(SELECT(adder_##bit_count, a_inputs[i]),                          \
+              SELECT(&adder_##bit_count->full_adders[i], a));                  \
+      connect(SELECT(adder_##bit_count, b_inputs[i]),                          \
+              SELECT(&adder_##bit_count->full_adders[i], b));                  \
+      connect(SELECT(&adder_##bit_count->full_adders[i], sum),                 \
+              SELECT(adder_##bit_count, outputs[i]));                          \
+                                                                               \
+      if (i < bit_count - 1) {                                                 \
+        connect(SELECT(&adder_##bit_count->full_adders[i], carry),             \
+                SELECT(&adder_##bit_count->full_adders[i + 1], c));            \
+      }                                                                        \
+    }                                                                          \
+                                                                               \
+    connect(SELECT(adder_##bit_count, cin),                                    \
+            SELECT(&adder_##bit_count->full_adders[0], c));                    \
+    connect(SELECT(&adder_##bit_count->full_adders[bit_count - 1], carry),     \
+            SELECT(adder_##bit_count, cout));                                  \
+  }                                                                            \
+                                                                               \
+  void register_adder_##bit_count(adder_##bit_count##_t* adder_##bit_count) {  \
+    register_component(adder_##bit_count, adder_##bit_count);                  \
+                                                                               \
+    for (size_t i = 0; i < bit_count; i++) {                                   \
+      register_full_adder(&adder_##bit_count->full_adders[i]);                 \
+    }                                                                          \
+  }                                                                            \
+                                                                               \
+  size_t format_adder_##bit_count(char* str, size_t n,                         \
+                                  const adder_##bit_count##_t* adder) {        \
+    return snprintf(str, n, ADDER_##bit_count##_FMT,                           \
+                    ADDER_##bit_count##_VALUES(adder));                        \
+  }                                                                            \
+                                                                               \
+  void visit_adder_##bit_count(visitor_t* visitor,                             \
+                               adder_##bit_count##_t* adder_##bit_count) {     \
+    size_t pin_index = 0;                                                      \
+    for (size_t i = 0; i < bit_count; i++) {                                   \
+      visit_pin(visitor, &adder_##bit_count->observable, "a", pin_index++);    \
+    }                                                                          \
+    for (size_t i = 0; i < bit_count; i++) {                                   \
+      visit_pin(visitor, &adder_##bit_count->observable, "b", pin_index++);    \
+    }                                                                          \
+    visit_pin(visitor, &adder_##bit_count->observable, "cin", pin_index++);    \
+    visit_pin(visitor, &adder_##bit_count->observable, "cout", pin_index++);   \
+    for (size_t i = 0; i < bit_count; i++) {                                   \
+      visit_pin(visitor, &adder_##bit_count->observable, "outputs",            \
+                pin_index++);                                                  \
+    }                                                                          \
+    for (size_t i = 0; i < bit_count; i++) {                                   \
+      visit_component(visitor, &adder_##bit_count->full_adders[i].observable); \
+    }                                                                          \
   }
 
 ADDER_IMPLEMENTATION(4);

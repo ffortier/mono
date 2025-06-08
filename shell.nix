@@ -11,5 +11,6 @@
       deno
       vim
       dotnet-sdk_9
+      wabt
     ];
   }

@@ -1,10 +1,30 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
+config_setting(
+    name = "wasm32",
+    constraint_values = [
+        "@platforms//os:none",
+        "@platforms//cpu:wasm32",
+    ],
+)
+
 cc_library(
     name = "slog",
     hdrs = ["src/slog.h"],
-    srcs = ["src/slog.c"],
+    srcs = select({
+        ":wasm32": ["src/slog_wasm32.c"],
+        "//conditions:default": ["src/slog.c"],
+    }),
+    copts = select({
+        ":wasm32": ["-nostdlib", "-nostdinc"],
+        "//conditions:default": [],
+    }),
+    deps = select({
+        ":wasm32": ["@twr_wasm//:twr_headers_only"],
+        "//conditions:default": [],
+    }),
     visibility = ["//visibility:public"],
     include_prefix = "slog",
     strip_include_prefix = "src",
+    linkstatic = True,
 )
