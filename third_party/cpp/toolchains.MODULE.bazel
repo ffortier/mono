@@ -56,6 +56,17 @@ llvm.toolchain(
     cxx_standard = {
         "": "c++20",
     },
+    compile_flags = {
+        "wasm32": [
+            "--target=wasm32-unknown-unknown",
+            "-nostdlib",
+            "-nostdinc",
+            "-fcolor-diagnostics",
+            "-Wall",
+            "-Wthread-safety",
+            "-Wself-assign",
+        ],
+    },
 )
 
 llvm.sysroot(
