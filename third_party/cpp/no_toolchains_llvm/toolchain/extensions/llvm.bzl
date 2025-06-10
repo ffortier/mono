@@ -103,6 +103,7 @@ llvm = module_extension(
                 llvm_version = attr.string(),
                 stdlib = attr.string_dict(),
                 cxx_standard = attr.string_dict(),
+                compile_flags = attr.string_dict(),
             ),
         ),
         sysroot = tag_class(
