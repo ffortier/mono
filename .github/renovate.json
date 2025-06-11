@@ -51,7 +51,7 @@
         },
         {
             "matchPackageNames": [
-                "buildifier*"
+                "/^buildifier.*/"
             ],
             "groupName": "buildifier monorepo"
         }
