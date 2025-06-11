@@ -48,6 +48,12 @@
                 "@esbuild/**"
             ],
             "groupName": "esbuild monorepo"
+        },
+        {
+            "matchPackageNames": [
+                "buildifier*"
+            ],
+            "groupName": "buildifier monorepo"
         }
     ],
     "customManagers": [
