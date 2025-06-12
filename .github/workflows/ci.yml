@@ -53,6 +53,11 @@ jobs:
   build-windows-x86_64:
     runs-on: windows-2025
     permissions: read-all
+    env: 
+      BAZEL_VC: C:\Program Files\Microsoft Visual Studio\2022\Enterprise
+      BAZEL_VC_FULL_VERSION: 17.13.35825.156
+      BAZEL_WINSDK_FULL_VERSION: 10.0.22621.0
+
     steps:
       - uses: actions/checkout@v4
 
