@@ -6,6 +6,7 @@ rust_binary(
     env = {
         "RUST_BACKTRACE": "1",
     },
+    tags = ["windows"],
     deps = [
         "@crates//:byteorder",
         "@crates//:flate2",

@@ -4,7 +4,7 @@ try-import %workspace%/local.bazelrc
 common --downloader_config=bazel_downloader.cfg
 
 common --enable_platform_specific_config
-build:windows --cxxopt=/std:c++20
+common:windows --cxxopt=/std:c++20
 common:windows --build_tag_filters=windows
 test:windows --test_tag_filters=windows
 
