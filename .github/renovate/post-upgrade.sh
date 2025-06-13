@@ -26,5 +26,3 @@ if ! git diff --exit-code third_party/deno/toolchains.MODULE.bazel >/dev/null; t
 fi
 
 REPIN=1 bazel build --nobuild //... "${bzl_opts[@]}"
-
-cp $RENOVATE_REPORT_PATH .
