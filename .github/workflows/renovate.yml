@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: read-all
     env:
-      RENOVATE_REPORT_PATH: ${GITHUB_WORKSPACE}/report.json
+      RENOVATE_REPORT_PATH: renovate-report.json
       RENOVATE_REPORT_TYPE: file
     steps:
       - name: Checkout
