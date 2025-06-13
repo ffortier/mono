@@ -1,6 +1,6 @@
 _SCRIPT = """#!/usr/bin/env bash
 DENO="$PWD"/{deno}
-cd {pkg} && "$DENO" run --cached-only --vendor {main} || exit 1
+cd {pkg} && "$DENO" run --cached-only --vendor {allow} {main} || exit 1
 """
 
 def _impl(ctx):
@@ -46,6 +46,7 @@ def _impl(ctx):
             pkg = ctx.label.package,
             deno = deno_info.default.files_to_run.executable.short_path,
             main = ctx.attr.main,
+            allow = " ".join(["--allow-%s" % allow for allow in ctx.attr.allow]),
         ),
         is_executable = True,
     )

@@ -1,0 +1,35 @@
+package(default_visibility = ["//experiments/digital:__subpackages__"])
+
+genrule(
+    name = "web",
+    srcs = glob(["**/*.ts"]),
+    outs = ["digital.js"],
+    cmd = "$(ESBUILD) --bundle --minify $(rootpath main.ts) > $@",
+    toolchains = ["//third_party/esbuild:resolved"],
+)
+
+# deno_binary(
+#     name = "bundler",
+#     srcs = [
+#         "bundler.ts",
+#     ],
+#     allow = [
+#         "read",
+#         "write",
+#         "env",
+#         "run",
+#     ],
+#     main = "bundler.ts",
+# )
+
+# run_binary(
+#     name = "web",
+#     srcs = ["main.ts"],
+#     outs = ["digital.js"],
+#     args = [
+#         "-o",
+#         "$(rootpath digital.js)",
+#         "$(rootpath main.ts)",
+#     ],
+#     tool = ":bundler",
+# )

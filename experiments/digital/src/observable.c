@@ -189,6 +189,28 @@ void visit_component(visitor_t* visitor, observable_t* component) {
   visitor->visit_component(visitor, component);
 }
 
+WASM_EXPORT("visitChildren")
 void visit_children(visitor_t* visitor, observable_t* component) {
   component->visit_component(visitor, component);
+}
+
+WASM_EXPORT("observableTypeName")
+const char* observable_type_name(const observable_t* observable) {
+  return observable->type_name;
+}
+
+WASM_EXPORT("observablePinValue")
+int observable_pin_value(const observable_t* observable, size_t pin_index) {
+  return observable->pins[pin_index];
+}
+
+WASM_EXPORT("observableSetPinValue")
+void observable_set_pin_value(observable_t* observable, size_t pin_index,
+                              int pin_value) {
+  observable->pins[pin_index] = pin_value;
+}
+
+WASM_EXPORT("observablePinCount")
+int observable_pin_count(const observable_t* observable) {
+  return observable->count;
 }

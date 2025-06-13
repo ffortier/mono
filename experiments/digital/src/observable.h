@@ -4,6 +4,12 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#ifdef __wasm__
+#define WASM_EXPORT(name) __attribute__((export_name(name)))
+#else
+#define WASM_EXPORT(name)
+#endif
+
 typedef struct observable observable_t;
 typedef struct visitor visitor_t;
 
@@ -89,5 +95,11 @@ void visit_pin(visitor_t* visitor, observable_t* component,
 void visit_component(visitor_t* visitor, observable_t* component);
 
 void visit_children(visitor_t* visitor, observable_t* component);
+
+const char* observable_type_name(const observable_t* observable);
+int observable_pin_value(const observable_t* observable, size_t pin_index);
+void observable_set_pin_value(observable_t* observable, size_t pin_index,
+                              int pin_value);
+int observable_pin_count(const observable_t* observable);
 
 #endif

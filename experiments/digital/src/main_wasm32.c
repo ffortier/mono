@@ -4,13 +4,6 @@
 #include "flipflops.h"
 #include "observable.h"
 
-__attribute__((export_name("add"))) int add(int a, int b) {
-  jk_flip_flop_t* jk = make_jk_flip_flop();
-  apply();
-
-  return a + b + jk->q;
-}
-
 void* calloc(size_t count, size_t size) {
   void* ptr = malloc(count * size);
   if (ptr) {
@@ -18,6 +11,22 @@ void* calloc(size_t count, size_t size) {
   }
   return ptr;
 }
+
 void _assert(char const* message, char const* filename, unsigned line) {}
 
 int snprintf(char* buffer, size_t bufsz, const char* format, ...) { return 0; }
+
+__attribute__((import_module("env"), import_name("dispatchVisitPin"))) void
+dispatch_visit_pin(visitor_t* self, observable_t* component,
+                   const char* pin_name, size_t pin_index);
+
+__attribute__((import_module("env"),
+               import_name("dispatchVisitComponent"))) void
+dispatch_visit_component(visitor_t* self, observable_t* component);
+
+WASM_EXPORT("makeVisitor") visitor_t* make_visitor(void) {
+  visitor_t* visitor = malloc(sizeof(visitor_t));
+  visitor->visit_pin = dispatch_visit_pin;
+  visitor->visit_component = dispatch_visit_component;
+  return visitor;
+}

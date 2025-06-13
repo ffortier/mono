@@ -1,6 +1,7 @@
 filegroup(
     name = "script",
     srcs = [
+        ":digital",
         ":hello",
         ":nb",
         ":swipl",
@@ -22,6 +23,17 @@ genrule(
     outs = [
         "nb.js",
         "js-worker.js",
+    ],
+    cmd = "$(COREUTILS_BIN) cp $(SRCS) $(RULEDIR)",
+    toolchains = ["@coreutils_toolchains//:resolved_toolchain"],
+)
+
+genrule(
+    name = "digital",
+    srcs = ["//experiments/digital"],
+    outs = [
+        "digital.js",
+        "digital.wasm",
     ],
     cmd = "$(COREUTILS_BIN) cp $(SRCS) $(RULEDIR)",
     toolchains = ["@coreutils_toolchains//:resolved_toolchain"],
