@@ -6,9 +6,6 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     permissions: read-all
-    env:
-      RENOVATE_REPORT_PATH: renovate-report.json
-      RENOVATE_REPORT_TYPE: file
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
