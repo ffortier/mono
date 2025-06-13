@@ -2,6 +2,7 @@ load("@rules_python//python:py_binary.bzl", "py_binary")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@toolchain_utils//toolchain/info:defs.bzl", "toolchain_info")
 load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
+load(":deno_binary.bzl", "deno_binary")
 
 toolchain_type(
     name = "toolchain_type",
@@ -63,4 +64,8 @@ py_binary(
         "BUILDIFIER": "$(rootpath //third_party/buildtools:buildifier_resolved)",
     },
     tags = ["manual"],
+)
+
+deno_binary(
+    name = "bundler",
 )

@@ -1,0 +1,171 @@
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
+
+package(default_visibility = ["//experiments/digital:__subpackages__"])
+
+deps = select({
+    "@platforms//cpu:wasm32": [
+        "@twr_wasm//:twr_headers_only",
+    ],
+    "//conditions:default": [],
+})
+
+cc_binary(
+    name = "digital",
+    srcs = ["main.c"],
+    tags = ["windows"],
+    deps = deps + [
+        ":adders",
+        ":clock",
+        ":flipflops",
+        ":latches",
+        ":logic_gates",
+        ":observable",
+        "@slog",
+    ],
+)
+
+cc_library(
+    name = "observable",
+    srcs = ["observable.c"],
+    hdrs = ["observable.h"],
+    tags = ["windows"],
+    deps = deps + [
+        "@slog",
+    ],
+)
+
+cc_library(
+    name = "clock",
+    srcs = ["clock.c"],
+    hdrs = ["clock.h"],
+    tags = ["windows"],
+    deps = deps + [
+        ":observable",
+    ],
+)
+
+cc_library(
+    name = "logic_gates",
+    srcs = ["logic_gates.c"],
+    hdrs = ["logic_gates.h"],
+    tags = ["windows"],
+    deps = deps + [
+        ":observable",
+    ],
+)
+
+cc_library(
+    name = "latches",
+    srcs = ["latches.c"],
+    hdrs = ["latches.h"],
+    tags = ["windows"],
+    deps = deps + [
+        ":logic_gates",
+        ":observable",
+    ],
+)
+
+cc_library(
+    name = "flipflops",
+    srcs = ["flipflops.c"],
+    hdrs = ["flipflops.h"],
+    tags = ["windows"],
+    deps = deps + [
+        ":latches",
+        ":logic_gates",
+        ":observable",
+    ],
+)
+
+cc_library(
+    name = "adders",
+    srcs = ["adders.c"],
+    hdrs = ["adders.h"],
+    tags = ["windows"],
+    deps = deps + [
+        ":logic_gates",
+        ":observable",
+    ],
+)
+
+cc_test(
+    name = "logic_gates_test",
+    size = "small",
+    srcs = ["logic_gates_test.cc"],
+    tags = ["windows"],
+    deps = [
+        ":logic_gates",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "latches_test",
+    size = "small",
+    srcs = ["latches_test.cc"],
+    tags = ["windows"],
+    deps = [
+        ":latches",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "flipflops_test",
+    size = "small",
+    srcs = ["flipflops_test.cc"],
+    tags = ["windows"],
+    deps = [
+        ":flipflops",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "adders_test",
+    size = "small",
+    srcs = ["adders_test.cc"],
+    tags = ["windows"],
+    deps = [
+        ":adders",
+        ":observable",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_binary(
+    name = "digital.wasm",
+    srcs = ["main_wasm32.c"],
+    linkopts = [
+        "-Wl,--no-entry",
+        "-Wl,--import-memory",
+        "-Wl,--export=make_jk_flip_flop",
+        "-Wl,--export=apply",
+        "-Wl,--export=visit_children",
+    ],
+    target_compatible_with = [
+        "@platforms//os:none",
+        "@platforms//cpu:wasm32",
+    ],
+    deps = deps + [
+        ":adders",
+        ":clock",
+        ":flipflops",
+        ":latches",
+        ":logic_gates",
+        ":observable",
+        "@walloc",
+    ],
+)
+
+platform_transition_binary(
+    name = "wasm32",
+    binary = ":digital.wasm",
+    target_platform = "//platforms:wasm32",
+)
