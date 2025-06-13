@@ -27,3 +27,4 @@ fi
 
 REPIN=1 bazel build --nobuild //... "${bzl_opts[@]}"
 
+cp $RENOVATE_REPORT_PATH .
