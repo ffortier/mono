@@ -8,12 +8,6 @@ bazel_dep(name = "rules_prolog")
 bazel_dep(name = "rules_dotnet", version = "0.19.0")
 bazel_dep(name = "toolchain_utils", version = "1.2.0")
 
-git_override(
-    module_name = "bazel_skylib",
-    remote = "https://github.com/bazelbuild/bazel-skylib",
-    commit = "454b25912a8ddf3d90eb47f25260befd5ee274a8",
-)
-
 dotnet = use_extension("@rules_dotnet//dotnet:extensions.bzl", "dotnet")
 dotnet.toolchain(dotnet_version = "9.0.100")
 
