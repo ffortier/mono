@@ -11,7 +11,7 @@ bazel_dep(name = "toolchain_utils", version = "1.2.0")
 git_override(
     module_name = "bazel_skylib",
     remote = "https://github.com/bazelbuild/bazel-skylib",
-    commit = "454b25912a8ddf3d90eb47f25260befd5ee274a8",
+    commit = "309f3d67bbcac03aca5d76ba36287f150673e5e2",
 )
 
 dotnet = use_extension("@rules_dotnet//dotnet:extensions.bzl", "dotnet")
