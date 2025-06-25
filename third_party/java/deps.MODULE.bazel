@@ -6,7 +6,7 @@ maven.install(
     artifacts = [
         "org.ow2.asm:asm:9.8",
         "org.ow2.asm:asm-util:9.8",
-        "org.junit.platform:junit-platform-commons:1.13.1",
+        "org.junit.platform:junit-platform-commons:1.13.2",
         "org.junit.platform:junit-platform-console:1.13.1",
         "org.junit.platform:junit-platform-engine:1.13.1",
         "org.junit.platform:junit-platform-launcher:1.13.1",
