@@ -8,8 +8,8 @@ def _impl(name, srcs, entrypoint, out, platform, minify, **kwargs):
     args.append("--config")
     args.append(Label("@deno").workspace_root + "/deno.json")
 
-    kwargs.pop("expect_failure")  # Not supported
-    kwargs.pop("toolchains")  # Not supported
+    kwargs.pop("expect_failure", None)  # Not supported
+    kwargs.pop("toolchains", None)      # Not supported
 
     native.genrule(
         name = name,
