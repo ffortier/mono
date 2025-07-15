@@ -1,0 +1,4 @@
+site_name: Digital
+
+nav:
+  - Intro: "index.md"

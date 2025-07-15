@@ -113,12 +113,26 @@
             ],
             "matchStringsStrategy": "any",
             "matchStrings": [
-                "\"jsr:@.*?@(?<currentValue>.*?)\"\\s*,?\\s*//\\s*(?<depName>@jsr/.*)"
+                "\"jsr:@.*?@(?<currentValue>.*?)\"\\s*,?\\s*//\\s*(?<depName>@jsr/.*)",
             ],
             "datasourceTemplate": "npm",
             "versioningTemplate": "npm",
             "depTypeTemplate": "dependencies",
             "registryUrlTemplate": "https://npm.jsr.io"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/\\bdeno.jsonc\\b/"
+            ],
+            "matchStringsStrategy": "any",
+            "matchStrings": [
+                "\"npm:(?<depName>.+?)@(?<currentValue>.*?)\""
+            ],
+            "datasourceTemplate": "npm",
+            "versioningTemplate": "npm",
+            "depTypeTemplate": "dependencies",
+            "registryUrlTemplate": "https://registry.npmjs.org"
         }
     ]
 }

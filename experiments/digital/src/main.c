@@ -49,7 +49,7 @@ int main(void) {
       .depth = 0,
   };
 
-  debug_visit_component(&visitor, sr_latch);
+  debug_visit_component(&visitor, &sr_latch->observable);
 
   return 0;
 }

@@ -1,0 +1,6 @@
+{
+  "name": "esbuild",
+  "optionalDependencies": {
+    "swipl-wasm": "5.0.13"
+  }
+}

@@ -1,11 +1,11 @@
+load("//third_party/deno:deno_bundle.bzl", "deno_bundle")
 load("//third_party/deno:deno_test.bzl", "deno_test")
 
-genrule(
+deno_bundle(
     name = "nb",
     srcs = glob(["**/*.ts"]),
-    outs = ["nb.js"],
-    cmd = "$(ESBUILD) --bundle --minify $(rootpath nb.ts) > $@",
-    toolchains = ["//third_party/esbuild:resolved"],
+    out = "nb.js",
+    entrypoint = "nb.ts",
     visibility = ["//experiments/nbmagic:__pkg__"],
 )
 

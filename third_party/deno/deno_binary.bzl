@@ -1,16 +1,9 @@
 _SCRIPT = """#!/usr/bin/env bash
 DENO="$PWD"/{deno}
-cd {pkg} && "$DENO" run --cached-only --vendor {main} || exit 1
+cd {pkg} && "$DENO" run --cached-only --vendor {allow} {main} || exit 1
 """
 
 def _impl(ctx):
-    # vendor = ctx.actions.declare_symlink("vendor")
-
-    # ctx.actions.symlink(
-    #     output = vendor,
-    #     target_path = ("../" * (len(ctx.label.package.split("/")) + 1)) + ctx.attr.vendor.label.repo_name + "/vendor",
-    # )
-
     deno_info = ctx.toolchains["//third_party/deno:toolchain_type"]
     runner = ctx.actions.declare_file(ctx.label.name + ".exe")
 
@@ -46,6 +39,7 @@ def _impl(ctx):
             pkg = ctx.label.package,
             deno = deno_info.default.files_to_run.executable.short_path,
             main = ctx.attr.main,
+            allow = " ".join(["--allow-%s" % allow for allow in ctx.attr.allow]),
         ),
         is_executable = True,
     )

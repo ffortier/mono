@@ -1,5 +1,6 @@
 {
   "imports": {
-    "@std/assert": "jsr:@std/assert@^1.0.13" // @jsr/std__assert
+    "@std/assert": "jsr:@std/assert@^1.0.13", // @jsr/std__assert
+    "swipl": "npm:swipl-wasm@^5.0.13"
   }
 }

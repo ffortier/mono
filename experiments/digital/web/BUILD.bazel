@@ -1,0 +1,10 @@
+load("//third_party/deno:deno_bundle.bzl", "deno_bundle")
+
+package(default_visibility = ["//experiments/digital:__subpackages__"])
+
+deno_bundle(
+    name = "web",
+    srcs = glob(["**/*.ts"]),
+    out = "digital.js",
+    entrypoint = "main.ts",
+)
