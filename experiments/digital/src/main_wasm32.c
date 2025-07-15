@@ -26,6 +26,9 @@ dispatch_visit_component(visitor_t* self, observable_t* component);
 
 WASM_EXPORT("makeVisitor") visitor_t* make_visitor(void) {
   visitor_t* visitor = malloc(sizeof(visitor_t));
+  if (!visitor) {
+    return NULL;
+  }
   visitor->visit_pin = dispatch_visit_pin;
   visitor->visit_component = dispatch_visit_component;
   return visitor;
