@@ -1,92 +1,91 @@
-// import { css, html, LitElement } from "lit";
-// import { customElement } from "lit/decorators.js";
+const memory = new WebAssembly.Memory({ initial: 10 });
 
-// @customElement("my-element")
-// export class MyElement extends LitElement {
-//   override render() {
-//     const message = "hello world";
-//     return html`<p>${message}</p>`;
-//   }
-// }
+interface DigitalAPI {
+  makeVisitor(): number;
 
-// (async () => {
-//   const memory = new WebAssembly.Memory({ initial: 10 });
+  make_jk_flip_flop(): number;
+  apply(): void;
 
-//   interface DigitalAPI {
-//     makeVisitor(): number;
+  visitChildren(visitor: number, component: number): void;
 
-//     make_jk_flip_flop(): number;
-//     apply(): void;
+  observableTypeName(observable: number): number;
+  observablePinValue(observable: number, pinIndex: number): number;
+}
 
-//     visitChildren(visitor: number, component: number): void;
+const decodeCString = (memory: WebAssembly.Memory, offset: number) => {
+  const buffer = new Uint8Array(memory.buffer, offset);
+  const decoder = new TextDecoder();
+  const len = buffer.findIndex((value) => value === 0);
 
-//     observableTypeName(observable: number): number;
-//     observablePinValue(observable: number, pinIndex: number): number;
-//   }
+  return decoder.decode(buffer.slice(0, len));
+};
 
-//   const decodeCString = (memory: WebAssembly.Memory, offset: number) => {
-//     const buffer = new Uint8Array(memory.buffer, offset);
-//     const decoder = new TextDecoder();
-//     const len = buffer.findIndex((value) => value === 0);
+const objectRefs: Record<number, unknown> = {};
 
-//     return decoder.decode(buffer.slice(0, len));
-//   };
+const dispatch = (name: string) => (ref: number, ...args: unknown[]) => {
+  const obj = objectRefs[ref];
+  if (!obj) throw new Error(`Unknown object ref: ${ref}`);
+  return (obj as any)[name](...args);
+};
 
-//   const objectRefs: Record<number, unknown> = {};
+class Visitor {
+  #self: number;
 
-//   const dispatch = (name: string) => (ref: number, ...args: unknown[]) => {
-//     const obj = objectRefs[ref];
-//     if (!obj) throw new Error(`Unknown object ref: ${ref}`);
-//     return (obj as any)[name](...args);
-//   };
+  constructor(
+    private readonly api: DigitalAPI,
+    private readonly memory: WebAssembly.Memory,
+  ) {
+    this.#self = this.api.makeVisitor();
 
-//   class Visitor {
-//     #self: number;
+    objectRefs[this.#self] = this;
+  }
 
-//     constructor(
-//       private readonly api: DigitalAPI,
-//       private readonly memory: WebAssembly.Memory,
-//     ) {
-//       this.#self = this.api.makeVisitor();
+  visitPin(component: number, pinName: number, pinIndex: number) {
+    console.log(
+      "visitPin",
+      decodeCString(this.memory, pinName),
+      this.api.observablePinValue(component, pinIndex),
+    );
+  }
 
-//       objectRefs[this.#self] = this;
-//     }
+  visitComponent(component: number) {
+    console.log(
+      "visitComponent",
+      decodeCString(this.memory, this.api.observableTypeName(component)),
+    );
 
-//     visitPin(component: number, pinName: number, pinIndex: number) {
-//       console.log(
-//         "visitPin",
-//         decodeCString(this.memory, pinName),
-//         this.api.observablePinValue(component, pinIndex),
-//       );
-//     }
+    this.api.visitChildren(this.#self, component);
+  }
+}
 
-//     visitComponent(component: number) {
-//       console.log(
-//         "visitComponent",
-//         decodeCString(this.memory, this.api.observableTypeName(component)),
-//       );
+const wasm = WebAssembly.instantiateStreaming(
+  fetch("/script/digital.wasm"),
+  {
+    env: {
+      memory,
+      dispatchVisitPin: dispatch("visitPin"),
+      dispatchVisitComponent: dispatch("visitComponent"),
+    },
+  },
+);
 
-//       this.api.visitChildren(this.#self, component);
-//     }
-//   }
+class DigitalJkFlipFlopElement extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({ mode: "open" });
 
-//   const { instance, module } = await WebAssembly.instantiateStreaming(
-//     fetch("/script/digital.wasm"),
-//     {
-//       env: {
-//         memory,
-//         dispatchVisitPin: dispatch("visitPin"),
-//         dispatchVisitComponent: dispatch("visitComponent"),
-//       },
-//     },
-//   );
+    shadowRoot.append("Open console");
+  }
 
-//   const api = instance.exports as unknown as DigitalAPI;
+  async connectedCallback() {
+    const api = (await wasm).instance.exports as unknown as DigitalAPI;
+    const visitor = new Visitor(api, memory);
+    const jk = api.make_jk_flip_flop();
 
-//   const visitor = new Visitor(api, memory);
-//   const srlatch = api.make_jk_flip_flop();
+    api.apply();
 
-//   api.apply();
+    visitor.visitComponent(jk);
+  }
+}
 
-//   visitor.visitComponent(srlatch);
-// })();
+customElements.define("digital-jk-flip-flop", DigitalJkFlipFlopElement);

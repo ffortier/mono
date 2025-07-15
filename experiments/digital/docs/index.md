@@ -1,3 +1,3 @@
 # Digital
 
-<my-element></my-element>
+<digital-jk-flip-flop></digital-jk-flip-flop>

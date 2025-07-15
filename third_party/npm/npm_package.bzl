@@ -15,7 +15,7 @@ npm_package = repository_rule(
     implementation = _impl,
     attrs = dict(
         package = attr.string(mandatory = True),
-        package_lock = attr.label(default = "//third_party/esbuild:package-lock.json"),
+        package_lock = attr.label(default = "//third_party/npm:package-lock.json"),
         strip_prefix = attr.string(default = "package"),
         build_file_content = attr.string(),
     ),

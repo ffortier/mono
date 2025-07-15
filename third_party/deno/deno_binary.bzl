@@ -4,13 +4,6 @@ cd {pkg} && "$DENO" run --cached-only --vendor {allow} {main} || exit 1
 """
 
 def _impl(ctx):
-    # vendor = ctx.actions.declare_symlink("vendor")
-
-    # ctx.actions.symlink(
-    #     output = vendor,
-    #     target_path = ("../" * (len(ctx.label.package.split("/")) + 1)) + ctx.attr.vendor.label.repo_name + "/vendor",
-    # )
-
     deno_info = ctx.toolchains["//third_party/deno:toolchain_type"]
     runner = ctx.actions.declare_file(ctx.label.name + ".exe")
 

@@ -1,0 +1,16 @@
+npm_package = use_repo_rule("//third_party/npm:npm_package.bzl", "npm_package")
+
+_SWIPL_BUILD = """
+filegroup(
+    name = "swipl-web",
+    srcs = glob(["swipl-web.*"]) + ["swipl-bundle.js"],
+    visibility = ["//visibility:public"],
+)
+"""
+
+npm_package(
+    name = "swipl_wasm",
+    package = "node_modules/swipl-wasm",
+    strip_prefix = "package/dist/swipl",
+    build_file_content = _SWIPL_BUILD,
+)

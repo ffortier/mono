@@ -1,8 +1,9 @@
-genrule(
+load("@//third_party/deno:deno_bundle.bzl", "deno_bundle")
+
+deno_bundle(
     name = "js-worker",
     srcs = glob(["**/*.ts"]),
-    outs = ["js-worker.js"],
-    cmd = "$(ESBUILD) --bundle --minify $(rootpath js-worker.ts) > $@",
-    toolchains = ["//third_party/esbuild:resolved"],
-    visibility = ["//experiments/nbmagic:__pkg__"],
+    out = "js-worker.js",
+    entrypoint = "js-worker.ts",
+    visibility = ["//experiments/nbmagic:__subpackages__"],
 )

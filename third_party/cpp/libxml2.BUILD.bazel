@@ -1,0 +1,61 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+write_file(
+    name = "config",
+    out = "config.h",
+    content = [""],
+)
+
+expand_template(
+    name = "version",
+    out = "include/libxml/xmlversion.h",
+    template = "include/libxml/xmlversion.h.in",
+    substitutions = {
+        "@VERSION@": "2.14.4",
+        "@LIBXML_VERSION_NUMBER@": "21404",
+        "@LIBXML_VERSION_EXTRA@": "",
+        "@WITH_THREADS@": "0",
+        "@WITH_THREAD_ALLOC@": "0",
+        "@WITH_OUTPUT@": "0",
+        "@WITH_PUSH@": "0",
+        "@WITH_READER@": "0",
+        "@WITH_PATTERN@": "0",
+        "@WITH_WRITER@": "0",
+        "@WITH_SAX1@": "0",
+        "@WITH_HTTP@": "0",
+        "@WITH_VALID@": "0",
+        "@WITH_HTML@": "0",
+        "@WITH_C14N@": "0",
+        "@WITH_CATALOG@": "0",
+        "@WITH_XPATH@": "0",
+        "@WITH_XPTR@": "0",
+        "@WITH_XINCLUDE@": "0",
+        "@WITH_ICONV@": "0",
+        "@WITH_ICU@": "0",
+        "@WITH_ISO8859X@": "0",
+        "@WITH_DEBUG@": "0",
+        "@WITH_REGEXPS@": "0",
+        "@WITH_RELAXNG@": "0",
+        "@WITH_SCHEMAS@": "0",
+        "@WITH_SCHEMATRON@": "0",
+        "@WITH_MODULES@": "0",
+        "@WITH_ZLIB@": "0",
+        "@WITH_LZMA@": "0",
+    },
+)
+
+cc_library(
+    name = "libxml2",
+    srcs = glob(["*.c", "*.h"]) + [":config"],
+    hdrs = glob(["include/**/*.h"]) + [":version"],
+    includes = [
+        "include",  # So #include <libxml/parser.h> works
+    ],
+    defines = [
+        "LIBXML_STATIC",
+        # Add any required defines here
+    ],
+    visibility = ["//visibility:public"],
+)

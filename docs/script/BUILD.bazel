@@ -1,3 +1,5 @@
+load("//third_party/deno:deno_bundle.bzl", "deno_bundle")
+
 filegroup(
     name = "script",
     srcs = [
@@ -9,12 +11,11 @@ filegroup(
     visibility = ["//:__pkg__"],
 )
 
-genrule(
+deno_bundle(
     name = "hello",
     srcs = ["hello.ts"],
-    outs = ["hello.js"],
-    cmd = "$(ESBUILD) $< > $@",
-    toolchains = ["//third_party/esbuild:resolved"],
+    out = "hello.js",
+    entrypoint = "hello.ts",
 )
 
 genrule(
