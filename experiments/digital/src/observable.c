@@ -201,6 +201,9 @@ const char* observable_type_name(const observable_t* observable) {
 
 WASM_EXPORT("observablePinValue")
 int observable_pin_value(const observable_t* observable, size_t pin_index) {
+  if (pin_index >= observable->count) {
+    return -1; // or another sentinel value indicating invalid index
+  }
   return observable->pins[pin_index];
 }
 
