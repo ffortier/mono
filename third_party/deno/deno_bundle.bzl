@@ -11,7 +11,7 @@ def _impl(name, srcs, entrypoint, out, platform, minify, **kwargs):
     kwargs.pop("expect_failure", None)  # Not supported
     kwargs.pop("toolchains", None)  # Not supported
 
-    tags = kwargs.pop("tags", [])
+    tags = kwargs.pop("tags", None) or []
 
     native.genrule(
         name = name,
