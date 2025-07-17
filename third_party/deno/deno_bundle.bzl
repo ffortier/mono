@@ -9,7 +9,9 @@ def _impl(name, srcs, entrypoint, out, platform, minify, **kwargs):
     args.append(Label("@deno").workspace_root + "/deno.json")
 
     kwargs.pop("expect_failure", None)  # Not supported
-    kwargs.pop("toolchains", None)      # Not supported
+    kwargs.pop("toolchains", None)  # Not supported
+
+    tags = kwargs.pop("tags", [])
 
     native.genrule(
         name = name,
@@ -17,6 +19,7 @@ def _impl(name, srcs, entrypoint, out, platform, minify, **kwargs):
         outs = [out],
         cmd = "$(DENO) bundle {args} --output $@ $(rootpath {entrypoint})".format(args = " ".join(args), entrypoint = entrypoint),
         toolchains = ["//third_party/deno:resolved"],
+        tags = tags + ["no-sandbox"],
         **kwargs
     )
 
