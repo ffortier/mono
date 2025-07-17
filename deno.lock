@@ -3,7 +3,13 @@
   "specifiers": {
     "jsr:@std/assert@^1.0.13": "1.0.13",
     "jsr:@std/internal@^1.0.6": "1.0.6",
-    "npm:swipl-wasm@^5.0.11": "5.0.11"
+    "npm:@esbuild/darwin-arm64@0.25.5": "0.25.5",
+    "npm:@esbuild/darwin-x64@0.25.5": "0.25.5",
+    "npm:@esbuild/linux-arm64@0.25.5": "0.25.5",
+    "npm:@esbuild/linux-x64@0.25.5": "0.25.5",
+    "npm:@esbuild/win32-x64@0.25.5": "0.25.5",
+    "npm:esbuild@0.25.5": "0.25.5",
+    "npm:swipl-wasm@^5.0.13": "5.0.13"
   },
   "jsr": {
     "@std/assert@1.0.13": {
@@ -145,8 +151,40 @@
     "@types/emscripten@1.40.1": {
       "integrity": "sha512-sr53lnYkQNhjHNN0oJDdUm5564biioI5DuOpycufDVK7D3y+GR3oUswe2rlwY1nPNyusHbrJ9WoTyIHl4/Bpwg=="
     },
-    "swipl-wasm@5.0.11": {
-      "integrity": "sha512-Dv0bAh73Vv/UABJJWZOtrfr3sjlSsQ4mxlILEZ2c2OKBfRI+dvTuGi7VSbljm51BLKVV8lmObGoN7eeTyQTiZw==",
+    "esbuild@0.25.5": {
+      "integrity": "sha512-P8OtKZRv/5J5hhz0cUAdu/cLuPIKXpQl1R9pZtvmHWQvrAUVd0UNIPT4IB4W3rNOqVO0rlqHmCIbSwxh/c9yUQ==",
+      "optionalDependencies": [
+        "@esbuild/aix-ppc64",
+        "@esbuild/android-arm",
+        "@esbuild/android-arm64",
+        "@esbuild/android-x64",
+        "@esbuild/darwin-arm64",
+        "@esbuild/darwin-x64",
+        "@esbuild/freebsd-arm64",
+        "@esbuild/freebsd-x64",
+        "@esbuild/linux-arm",
+        "@esbuild/linux-arm64",
+        "@esbuild/linux-ia32",
+        "@esbuild/linux-loong64",
+        "@esbuild/linux-mips64el",
+        "@esbuild/linux-ppc64",
+        "@esbuild/linux-riscv64",
+        "@esbuild/linux-s390x",
+        "@esbuild/linux-x64",
+        "@esbuild/netbsd-arm64",
+        "@esbuild/netbsd-x64",
+        "@esbuild/openbsd-arm64",
+        "@esbuild/openbsd-x64",
+        "@esbuild/sunos-x64",
+        "@esbuild/win32-arm64",
+        "@esbuild/win32-ia32",
+        "@esbuild/win32-x64"
+      ],
+      "scripts": true,
+      "bin": true
+    },
+    "swipl-wasm@5.0.13": {
+      "integrity": "sha512-KUgE3eDvGdAbv+XKl7zckioy2JbwvgSRcKok1ECpZzZhZNq19ksdNHaOImyjIoKpGkgXrvJTAHSMk0r1KF63xg==",
       "dependencies": [
         "@types/emscripten"
       ],
@@ -156,7 +194,13 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@^1.0.13",
-      "npm:swipl-wasm@^5.0.11"
+      "npm:@esbuild/darwin-arm64@0.25.5",
+      "npm:@esbuild/darwin-x64@0.25.5",
+      "npm:@esbuild/linux-arm64@0.25.5",
+      "npm:@esbuild/linux-x64@0.25.5",
+      "npm:@esbuild/win32-x64@0.25.5",
+      "npm:esbuild@0.25.5",
+      "npm:swipl-wasm@^5.0.13"
     ]
   }
 }

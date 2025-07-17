@@ -1,6 +1,12 @@
 {
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.13", // @jsr/std__assert
-    "swipl": "npm:swipl-wasm@^5.0.13"
+    "swipl": "npm:swipl-wasm@^5.0.13",
+    "esbuild": "npm:esbuild@0.25.5",
+    "@esbuild/linux-x64": "npm:@esbuild/linux-x64@0.25.5",
+    "@esbuild/linux-arm64": "npm:@esbuild/linux-arm64@0.25.5",
+    "@esbuild/darwin-x64": "npm:@esbuild/darwin-x64@0.25.5",
+    "@esbuild/darwin-arm64": "npm:@esbuild/darwin-arm64@0.25.5",
+    "@esbuild/win32-x64": "npm:@esbuild/win32-x64@0.25.5"
   }
 }
