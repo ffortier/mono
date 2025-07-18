@@ -19,7 +19,7 @@ def _impl(name, srcs, entrypoint, out, platform, minify, **kwargs):
         outs = [out],
         cmd = "$(DENO) bundle {args} --output $@ $(rootpath {entrypoint})".format(args = " ".join(args), entrypoint = entrypoint),
         toolchains = ["//third_party/deno:resolved"],
-        tags = tags + ["no-sandbox"],
+        tags = tags + ["no-sandbox", "no-remote-exec"],
         **kwargs
     )
 
