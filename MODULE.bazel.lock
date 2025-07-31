@@ -286,7 +286,7 @@
     },
     "//third_party/deno:extension.bzl%deno": {
       "general": {
-        "bzlTransitiveDigest": "Tff+EqflFSvoBf1U2zSbrSBaK9eZRyKPyYDMvOmHi28=",
+        "bzlTransitiveDigest": "F/Xx52w5YVtLCOIVO2baQ6kiI8ksVYt1FeAPl7NVVC0=",
         "usagesDigest": "OfnyPIJMtLFYiJgR7UJaUSV8a+nCFUro1DkLJZgFIfc=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
