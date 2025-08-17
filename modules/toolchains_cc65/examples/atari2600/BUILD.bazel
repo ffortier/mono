@@ -1,0 +1,10 @@
+load("@toolchains_cc65//cc65:cc65_binary.bzl", "cc65_binary")
+
+cc65_binary(
+    name = "hello",
+    srcs = [
+        "hello.c",
+        "hello.h",
+    ],
+    target = "atari2600",
+)

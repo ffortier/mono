@@ -5,6 +5,7 @@ bazel_dep(name = "rules_multirun", version = "0.12.0")
 bazel_dep(name = "rules_shell", version = "0.5.1")
 bazel_dep(name = "uxn")
 bazel_dep(name = "rules_prolog")
+bazel_dep(name = "toolchains_cc65")
 bazel_dep(name = "rules_dotnet", version = "0.19.2")
 bazel_dep(name = "toolchain_utils", version = "1.2.0")
 
@@ -35,6 +36,36 @@ bazel_lib_toolchains.coreutils()
 use_repo(bazel_lib_toolchains, "coreutils_toolchains")
 
 register_toolchains("@coreutils_toolchains//:all")
+
+local_path_override(
+    module_name = "toolchains_cc65",
+    path = "modules/toolchains_cc65",
+)
+
+cc65 = use_extension("@toolchains_cc65//toolchains:extensions.bzl", "cc65")
+
+cc65.bootstrap_from_sources(
+    urls = ["https://github.com/cc65/cc65/archive/refs/tags/V2.19.tar.gz"],
+    sha256 = "157b8051aed7f534e5093471e734e7a95e509c577324099c3c81324ed9d0de77",
+    strip_prefix = "cc65-2.19",
+)
+
+cc65.common_snapshot(
+    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/all/cc65-common_2.19.0.git.1753630199.6efe447d-0_all.deb"],
+    sha256 = "3819bc6ada2b43adcfa599ce866c89dd32cd71f7f5077ee3644763fa58c046c7",
+    strip_prefix = "usr/share/cc65",
+)
+
+cc65.binary_snapshot(
+    platform = "linux-x86_64",
+    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/amd64/cc65_2.19.0.git.1753630199.6efe447d-0_amd64.deb"],
+    sha256 = "af0ec3e4a0361485cba7cfa95cc7078ef49dd8f1d811dd9d8fdb5529b6062e54",
+    strip_prefix = "usr",
+)
+
+use_repo(cc65, "cc65")
+
+register_toolchains("@cc65//:all")
 
 include("//third_party/rust:toolchains.MODULE.bazel")
 include("//third_party/rust:deps.MODULE.bazel")

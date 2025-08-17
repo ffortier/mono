@@ -1,0 +1,14 @@
+load("@rules_cc//cc/toolchains:feature_set.bzl", "cc_feature_set")
+
+cc_feature_set(
+    name = "args",
+    all_of = [
+        "@toolchains_cc65//toolchains/args/dependency_file:feature",
+        "@toolchains_cc65//toolchains/args/include_paths:feature",
+        "@toolchains_cc65//toolchains/args/target:feature",
+        "@toolchains_cc65//toolchains/args/cpu:feature",
+        "@toolchains_cc65//toolchains/args/compiler_input_flags:feature",
+        "@toolchains_cc65//toolchains/args/linker_lib_flags:feature",
+    ],
+    visibility = ["//visibility:public"],
+)

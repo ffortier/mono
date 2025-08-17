@@ -1,0 +1,16 @@
+package(default_visibility = ["//visibility:public"])
+
+alias(
+    name = "cpu",
+    actual = "@platforms//cpu",
+)
+
+constraint_value(
+    name = "6502",
+    constraint_setting = ":cpu",
+)
+
+constraint_value(
+    name = "65c02",
+    constraint_setting = ":cpu",
+)

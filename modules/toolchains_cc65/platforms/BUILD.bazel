@@ -1,0 +1,15 @@
+load("@toolchains_cc65//platforms:platforms.bzl", "SUPPORTED_PLATFORMS")
+
+package(default_visibility = ["//visibility:public"])
+
+[
+    platform(
+        name = "%s-%s" % (name, cpu) if name == "none" else name,
+        constraint_values = [
+            "@toolchains_cc65//platforms/compiler:cc65",
+            "@toolchains_cc65//platforms/cpu:{}".format(cpu),
+            "@toolchains_cc65//platforms/os:{}".format(name),
+        ],
+    )
+    for name, cpu in SUPPORTED_PLATFORMS
+]
