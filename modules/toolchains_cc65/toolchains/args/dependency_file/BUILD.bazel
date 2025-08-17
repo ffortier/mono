@@ -1,0 +1,20 @@
+load("@rules_cc//cc/toolchains:args.bzl", "cc_args")
+load("@rules_cc//cc/toolchains:feature.bzl", "cc_feature")
+
+cc_feature(
+    name = "feature",
+    args = [":flags"],
+    overrides = "@rules_cc//cc/toolchains/features/legacy:dependency_file",
+    visibility = ["//visibility:public"],
+)
+
+cc_args(
+    name = "flags",
+    actions = ["@rules_cc//cc/toolchains/actions:compile_actions"],
+    args = [
+        "--create-full-dep",
+        "{dependency_file}",
+    ],
+    format = {"dependency_file": "@rules_cc//cc/toolchains/variables:dependency_file"},
+    requires_not_none = "@rules_cc//cc/toolchains/variables:dependency_file",
+)

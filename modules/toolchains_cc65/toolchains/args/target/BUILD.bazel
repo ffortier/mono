@@ -1,0 +1,28 @@
+load("@rules_cc//cc/toolchains:args.bzl", "cc_args")
+load("@rules_cc//cc/toolchains:feature.bzl", "cc_feature")
+load("@toolchains_cc65//platforms:platforms.bzl", "SUPPORTED_PLATFORMS")
+
+cc_feature(
+    name = "feature",
+    args = [":type_flags"],
+    feature_name = "target",
+    visibility = ["//visibility:public"],
+)
+
+cc_args(
+    name = "type_flags",
+    actions = [
+        "@rules_cc//cc/toolchains/actions:compile_actions",
+        "@rules_cc//cc/toolchains/actions:link_actions",
+    ],
+    args = select({
+        "@toolchains_cc65//platforms/os:%s" % os: [
+            "-t",
+            os,
+        ]
+        for os, _ in SUPPORTED_PLATFORMS
+        if os != "none"
+    } | {
+        "//conditions:default": [],
+    }),
+)

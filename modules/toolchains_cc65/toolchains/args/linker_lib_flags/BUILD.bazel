@@ -1,0 +1,29 @@
+load("@rules_cc//cc/toolchains:args.bzl", "cc_args")
+load("@rules_cc//cc/toolchains:feature.bzl", "cc_feature")
+load("@toolchains_cc65//platforms:platforms.bzl", "SUPPORTED_PLATFORMS")
+
+cc_feature(
+    name = "feature",
+    args = [
+        "@rules_cc//cc/toolchains/args/libraries_to_link:libraries_to_link",
+        "flags",
+    ],
+    overrides = "@rules_cc//cc/toolchains/features/legacy:libraries_to_link",
+    visibility = ["//visibility:public"],
+)
+
+cc_args(
+    name = "flags",
+    actions = [
+        "@rules_cc//cc/toolchains/actions:link_actions",
+    ],
+    args = select({
+        "@toolchains_cc65//platforms/os:%s" % os: [
+            "%s.lib" % os,
+        ]
+        for os, _ in SUPPORTED_PLATFORMS
+        if os != "none"
+    } | {
+        "//conditions:default": [],
+    }),
+)

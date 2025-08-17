@@ -1,0 +1,45 @@
+load("@rules_cc//cc/toolchains:args.bzl", "cc_args")
+load("@rules_cc//cc/toolchains:feature.bzl", "cc_feature")
+
+config_setting(
+    name = "cpu_6502",
+    constraint_values = [
+        "@toolchains_cc65//platforms/cpu:6502",
+        "@toolchains_cc65//platforms/os:none",
+    ],
+)
+
+config_setting(
+    name = "cpu_65c02",
+    constraint_values = [
+        "@toolchains_cc65//platforms/cpu:65c02",
+        "@toolchains_cc65//platforms/os:none",
+    ],
+)
+
+cc_feature(
+    name = "feature",
+    args = [":flags"],
+    feature_name = "cpu",
+    visibility = ["//visibility:public"],
+)
+
+cc_args(
+    name = "flags",
+    actions = [
+        "@rules_cc//cc/toolchains/actions:compile_actions",
+        "@rules_cc//cc/toolchains/actions:link_actions",
+    ],
+    args = select({
+        ":cpu_6502": [
+            "--cpu",
+            "6502",
+        ],
+        ":cpu_65c02": [
+            "--cpu",
+            "65c02",
+        ],
+    } | {
+        "//conditions:default": [],
+    }),
+)
