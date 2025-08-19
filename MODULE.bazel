@@ -63,6 +63,12 @@ cc65.binary_snapshot(
     strip_prefix = "usr",
 )
 
+cc65.binary_snapshot(
+    platform = "windows-x86_64",
+    urls = ["https://versaweb.dl.sourceforge.net/project/cc65/cc65-snapshot-win32.zip"],
+    sha256 = "a6fd44c9ddd20ff81db0743488d05fa51bd08d7e9be265c5092f9c663d071c04",
+)
+
 use_repo(cc65, "cc65")
 
 register_toolchains("@cc65//:all")
