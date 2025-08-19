@@ -65,8 +65,9 @@ cc65.binary_snapshot(
 
 cc65.binary_snapshot(
     platform = "windows-x86_64",
-    urls = ["https://versaweb.dl.sourceforge.net/project/cc65/cc65-snapshot-win32.zip"],
-    sha256 = "a6fd44c9ddd20ff81db0743488d05fa51bd08d7e9be265c5092f9c663d071c04",
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/728d0f5934c1e072d85bd3ac14554dc5c46b6568/cc65-snapshot-win32.tar.gz"],
+    sha256 = "29c27316692f7f4ea21d9be6be13717cbdecd37d7794c8eb3734159ca241a4bb",
+    strip_prefix = "cc65-snapshot-win32",
 )
 
 use_repo(cc65, "cc65")
