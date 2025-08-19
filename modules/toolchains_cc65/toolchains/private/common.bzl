@@ -18,4 +18,4 @@ def arch_from_rctx(rctx):
     return arch
 
 def os_bzl(os):
-    return {"darwin": "osx", "linux": "linux", "none": "none", "wasip1": "wasi"}[os]
+    return {"darwin": "osx", "linux": "linux", "windows": "windows"}[os]
