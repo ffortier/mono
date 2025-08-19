@@ -25,6 +25,18 @@ SUPPORTED_PLATFORMS = [
 ]
 
 def find_platform_constraints(name):
+    """Return constraint_values for a given cc65 platform name.
+
+    Args:
+        name: One of:
+          - "none-6502" or "none-65c02"
+          - Any OS name from SUPPORTED_PLATFORMS (e.g., "c64", "atari2600", ...)
+            where the CPU is derived from SUPPORTED_PLATFORMS.
+    Returns:
+        A list of label strings for the OS and CPU constraint_values.
+    Raises:
+        Error if name is ambiguous ("none") or unsupported.
+    """
     if name == "none":
         fail("Ambiguous platform: none")
 

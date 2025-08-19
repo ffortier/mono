@@ -1,11 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-alias(
-    name = "compiler",
-    actual = "@rules_cc//cc/private/toolchain:cc_compiler",
-)
-
 constraint_value(
     name = "cc65",
-    constraint_setting = ":compiler",
+    constraint_setting = "@rules_cc//cc/private/toolchain:cc_compiler",
 )

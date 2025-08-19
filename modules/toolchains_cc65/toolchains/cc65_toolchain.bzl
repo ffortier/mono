@@ -3,22 +3,19 @@ load("@rules_cc//cc/toolchains:tool.bzl", "cc_tool")
 load("@rules_cc//cc/toolchains:tool_map.bzl", "cc_tool_map")
 load("@rules_cc//cc/toolchains:toolchain.bzl", "cc_toolchain")
 
-def cc65_toolchain(*, name, repo_name, common_repo_name, exec_compatible_with, **kwargs):
-    if not common_repo_name:
-        common_repo_name = repo_name
-
+def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
     cc_tool(
         name = "%s_cc65" % name,
-        src = "@toolchains_cc65//toolchains/tools:cc65_wrapper.sh",
+        src = "@toolchains_cc65//toolchains/tools:cc65_wrapper",
         data = [
-            "@%s//:include" % common_repo_name,
-            "@%s//:cfg" % common_repo_name,
-            "@%s//:target" % common_repo_name,
+            "@%s//:include" % repo_name,
+            "@%s//:cfg" % repo_name,
+            "@%s//:target" % repo_name,
             "@%s//:bin/cc65" % repo_name,
             "@%s//:bin/ca65" % repo_name,
         ],
         allowlist_include_directories = [
-            "@%s//:include" % common_repo_name,
+            "@%s//:include" % repo_name,
         ],
     )
 
@@ -26,9 +23,9 @@ def cc65_toolchain(*, name, repo_name, common_repo_name, exec_compatible_with, *
         name = "%s_ca65" % name,
         src = "@%s//:bin/ca65" % repo_name,
         data = [
-            "@%s//:asminc" % common_repo_name,
-            "@%s//:cfg" % common_repo_name,
-            "@%s//:target" % common_repo_name,
+            "@%s//:asminc" % repo_name,
+            "@%s//:cfg" % repo_name,
+            "@%s//:target" % repo_name,
         ],
     )
 
@@ -36,9 +33,9 @@ def cc65_toolchain(*, name, repo_name, common_repo_name, exec_compatible_with, *
         name = "%s_ld65" % name,
         src = "@%s//:bin/ld65" % repo_name,
         data = [
-            "@%s//:lib" % common_repo_name,
-            "@%s//:cfg" % common_repo_name,
-            "@%s//:target" % common_repo_name,
+            "@%s//:lib" % repo_name,
+            "@%s//:cfg" % repo_name,
+            "@%s//:target" % repo_name,
         ],
     )
 

@@ -6,9 +6,8 @@ _BUILD_TOOLCHAIN = """
 load("@{repo_name}//:toolchain_info.bzl", {repo_name}_info = "toolchain_info")
 
 cc65_toolchain(
-    name = "{repo_name}", 
-    repo_name = "{repo_name}", 
-    common_repo_name = {repo_name}_info.common_repo_name, 
+    name = "{repo_name}",
+    repo_name = "{repo_name}",
     exec_compatible_with = {repo_name}_info.constraint_values,
 )
 """
