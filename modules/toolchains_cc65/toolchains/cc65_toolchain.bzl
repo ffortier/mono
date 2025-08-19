@@ -14,6 +14,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
         src = "@toolchains_cc65//toolchains/tools:cc65_wrapper",
         data = [
             "@%s//:include" % repo_name,
+            "@%s//:asminc" % repo_name,
             "@%s//:cfg" % repo_name,
             "@%s//:target" % repo_name,
             "@%s//:bin/cc65%s" % (repo_name, extname),
@@ -21,6 +22,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
         ],
         allowlist_include_directories = [
             "@%s//:include" % repo_name,
+            "@%s//:asminc" % repo_name,
         ],
     )
 
