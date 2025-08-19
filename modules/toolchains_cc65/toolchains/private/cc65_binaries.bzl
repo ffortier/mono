@@ -1,3 +1,5 @@
+load("@toolchains_cc65//toolchains/private:common.bzl", "os_bzl")
+
 _BUILD = """
 load("@bazel_skylib//rules/directory:directory.bzl", "directory")
 

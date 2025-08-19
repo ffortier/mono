@@ -6493,7 +6493,7 @@
     },
     "@@toolchains_cc65+//toolchains:extensions.bzl%cc65": {
       "general": {
-        "bzlTransitiveDigest": "XqUz97VZNGik+bBXGg9hUVBWOUX7U3QdcpBeE/zrFaM=",
+        "bzlTransitiveDigest": "w8IJzkL3eIWJ/OIoWoW7zLNlj18FXRI8otBh2oIpJZo=",
         "usagesDigest": "UfMAmLNbWwgdQWf/G/X/pAyGDEdOHZKwIMTvAMaQ+WU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
