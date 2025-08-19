@@ -6493,8 +6493,8 @@
     },
     "@@toolchains_cc65+//toolchains:extensions.bzl%cc65": {
       "general": {
-        "bzlTransitiveDigest": "w8IJzkL3eIWJ/OIoWoW7zLNlj18FXRI8otBh2oIpJZo=",
-        "usagesDigest": "UfMAmLNbWwgdQWf/G/X/pAyGDEdOHZKwIMTvAMaQ+WU=",
+        "bzlTransitiveDigest": "D6mAxsWLGfw9ez4izdXQerQ8kEq5r9MtC8sw2zSUl/E=",
+        "usagesDigest": "DOUcL/BhHiUJce1r1HQ6/3kQe/UWWauCl8AkWp9I0K8=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -6516,6 +6516,18 @@
               "common_strip_prefix": "usr/share/cc65"
             }
           },
+          "cc65_windows_x86_64": {
+            "repoRuleId": "@@toolchains_cc65+//toolchains/private:cc65_binaries.bzl%cc65_binaries",
+            "attributes": {
+              "urls": [
+                "https://cdn.statically.io/gh/ffortier/prebuilt/728d0f5934c1e072d85bd3ac14554dc5c46b6568/cc65-snapshot-win32.tar.gz"
+              ],
+              "sha256": "29c27316692f7f4ea21d9be6be13717cbdecd37d7794c8eb3734159ca241a4bb",
+              "strip_prefix": "cc65-snapshot-win32",
+              "exec_os": "windows",
+              "exec_arch": "x86_64"
+            }
+          },
           "cc65_sources": {
             "repoRuleId": "@@toolchains_cc65+//toolchains/private:cc65_sources.bzl%cc65_sources",
             "attributes": {
@@ -6531,6 +6543,7 @@
             "attributes": {
               "toolchain_repos": [
                 "cc65_linux_x86_64",
+                "cc65_windows_x86_64",
                 "cc65_sources"
               ]
             }

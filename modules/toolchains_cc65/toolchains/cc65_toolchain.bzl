@@ -4,6 +4,11 @@ load("@rules_cc//cc/toolchains:tool_map.bzl", "cc_tool_map")
 load("@rules_cc//cc/toolchains:toolchain.bzl", "cc_toolchain")
 
 def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
+    extname = ""
+
+    if "@platforms//os:windows" in exec_compatible_with:
+        extname = ".exe"
+
     cc_tool(
         name = "%s_cc65" % name,
         src = "@toolchains_cc65//toolchains/tools:cc65_wrapper",
@@ -11,8 +16,8 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
             "@%s//:include" % repo_name,
             "@%s//:cfg" % repo_name,
             "@%s//:target" % repo_name,
-            "@%s//:bin/cc65" % repo_name,
-            "@%s//:bin/ca65" % repo_name,
+            "@%s//:bin/cc65%s" % (repo_name, extname),
+            "@%s//:bin/ca65%s" % (repo_name, extname),
         ],
         allowlist_include_directories = [
             "@%s//:include" % repo_name,
@@ -21,7 +26,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
 
     cc_tool(
         name = "%s_ca65" % name,
-        src = "@%s//:bin/ca65" % repo_name,
+        src = "@%s//:bin/ca65%s" % (repo_name, extname),
         data = [
             "@%s//:asminc" % repo_name,
             "@%s//:cfg" % repo_name,
@@ -31,7 +36,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
 
     cc_tool(
         name = "%s_ld65" % name,
-        src = "@%s//:bin/ld65" % repo_name,
+        src = "@%s//:bin/ld65%s" % (repo_name, extname),
         data = [
             "@%s//:lib" % repo_name,
             "@%s//:cfg" % repo_name,
@@ -41,7 +46,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
 
     cc_tool(
         name = "%s_ar65" % name,
-        src = "@%s//:bin/ar65" % repo_name,
+        src = "@%s//:bin/ar65%s" % (repo_name, extname),
     )
 
     cc_tool_map(
