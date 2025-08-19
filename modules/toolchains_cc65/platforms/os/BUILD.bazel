@@ -3,11 +3,6 @@ load("@toolchains_cc65//platforms:platforms.bzl", "SUPPORTED_PLATFORMS")
 package(default_visibility = ["//visibility:public"])
 
 alias(
-    name = "os",
-    actual = "@platforms//os",
-)
-
-alias(
     name = "none",
     actual = "@platforms//os:none",
 )
@@ -15,7 +10,7 @@ alias(
 [
     constraint_value(
         name = os,
-        constraint_setting = ":os",
+        constraint_setting = "@platforms//os",
     )
     for os, _ in SUPPORTED_PLATFORMS
     if os != "none"

@@ -6495,22 +6495,12 @@
     },
     "@@toolchains_cc65+//toolchains:extensions.bzl%cc65": {
       "general": {
-        "bzlTransitiveDigest": "tEEscxajZ+pRXW0bATc5dqJXEa/xQuhH3ENA02zCP7M=",
+        "bzlTransitiveDigest": "XqUz97VZNGik+bBXGg9hUVBWOUX7U3QdcpBeE/zrFaM=",
         "usagesDigest": "UfMAmLNbWwgdQWf/G/X/pAyGDEdOHZKwIMTvAMaQ+WU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "cc65_common": {
-            "repoRuleId": "@@toolchains_cc65+//toolchains/private:cc65_common.bzl%cc65_common",
-            "attributes": {
-              "urls": [
-                "https://download.opensuse.org/repositories/home:/strik/Debian_12/all/cc65-common_2.19.0.git.1753630199.6efe447d-0_all.deb"
-              ],
-              "sha256": "3819bc6ada2b43adcfa599ce866c89dd32cd71f7f5077ee3644763fa58c046c7",
-              "strip_prefix": "usr/share/cc65"
-            }
-          },
           "cc65_linux_x86_64": {
             "repoRuleId": "@@toolchains_cc65+//toolchains/private:cc65_binaries.bzl%cc65_binaries",
             "attributes": {
@@ -6520,7 +6510,12 @@
               "sha256": "af0ec3e4a0361485cba7cfa95cc7078ef49dd8f1d811dd9d8fdb5529b6062e54",
               "strip_prefix": "usr",
               "exec_os": "linux",
-              "exec_arch": "x86_64"
+              "exec_arch": "x86_64",
+              "common_urls": [
+                "https://download.opensuse.org/repositories/home:/strik/Debian_12/all/cc65-common_2.19.0.git.1753630199.6efe447d-0_all.deb"
+              ],
+              "common_sha256": "3819bc6ada2b43adcfa599ce866c89dd32cd71f7f5077ee3644763fa58c046c7",
+              "common_strip_prefix": "usr/share/cc65"
             }
           },
           "cc65_sources": {

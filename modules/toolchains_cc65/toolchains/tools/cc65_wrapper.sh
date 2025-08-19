@@ -102,7 +102,6 @@ patch_depfile() {
         fi
     done <"$1"
 
-    IFS=$'\n' echo "${out[*]}" >&2
     IFS=$'\n' echo "${out[*]}" >"$1"
 }
 

@@ -2,6 +2,7 @@ module(name = "toolchains_cc65")
 
 bazel_dep(name = "bazel_skylib", version = "1.8.1")
 bazel_dep(name = "rules_cc", version = "0.2.0")
+bazel_dep(name = "rules_shell", version = "0.5.1")
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "aspect_bazel_lib", version = "2.20.0")
 
@@ -24,6 +25,12 @@ cc65.binary_snapshot(
     urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/amd64/cc65_2.19.0.git.1753630199.6efe447d-0_amd64.deb"],
     sha256 = "af0ec3e4a0361485cba7cfa95cc7078ef49dd8f1d811dd9d8fdb5529b6062e54",
     strip_prefix = "usr",
+)
+
+cc65.binary_snapshot(
+    platform = "windows-x86_64",
+    urls = ["https://versaweb.dl.sourceforge.net/project/cc65/cc65-snapshot-win32.zip"],
+    sha256 = "a6fd44c9ddd20ff81db0743488d05fa51bd08d7e9be265c5092f9c663d071c04",
 )
 
 use_repo(cc65, "cc65")

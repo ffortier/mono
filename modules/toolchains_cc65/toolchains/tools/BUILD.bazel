@@ -1,1 +1,8 @@
-exports_files(["cc65_wrapper.sh"])
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+sh_binary(
+    name = "cc65_wrapper",
+    srcs = ["cc65_wrapper.sh"],
+)
