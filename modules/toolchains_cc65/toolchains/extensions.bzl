@@ -21,7 +21,10 @@ _common_snapshot = tag_class(
 
 _binary_snapshot = tag_class(
     attrs = dict(
-        platform = attr.string(mandatory = True, values = ["linux-x86_64"]),
+        platform = attr.string(mandatory = True, values = [
+            "linux-x86_64",
+            "windows-x86_64",
+        ]),
         urls = attr.string_list(),
         sha256 = attr.string(default = ""),
         strip_prefix = attr.string(default = ""),
