@@ -30,7 +30,7 @@ crate.spec(
 
 crate.spec(
     package = "thiserror",
-    version = "=2.0.15",
+    version = "=2.0.16",
 )
 
 crate.spec(
