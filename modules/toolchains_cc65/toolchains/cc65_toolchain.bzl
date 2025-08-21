@@ -51,6 +51,11 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
         src = "@%s//:bin/ar65%s" % (repo_name, extname),
     )
 
+    cc_tool(
+        name = "%s_sim65" % name,
+        src = "@%s//:bin/sim65%s" % (repo_name, extname),
+    )
+
     cc_tool_map(
         name = "%s_tool_map" % name,
         tags = ["manual"],
@@ -59,6 +64,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
             "@rules_cc//cc/toolchains/actions:assembly_actions": ":%s_ca65" % name,
             "@rules_cc//cc/toolchains/actions:c_compile": ":%s_cc65" % name,
             "@rules_cc//cc/toolchains/actions:link_actions": ":%s_ld65" % name,
+            "@toolchains_cc65//toolchains/actions:run_simulator": ":%s_sim65" % name,
         },
     )
 

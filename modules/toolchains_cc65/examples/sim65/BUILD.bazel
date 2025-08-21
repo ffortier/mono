@@ -1,0 +1,31 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@toolchains_cc65//cc65:sim65_binary.bzl", "sim65_binary")
+load("@toolchains_cc65//cc65:sim65_test.bzl", "sim65_test")
+
+cc_library(
+    name = "hello",
+    srcs = ["hello.c"],
+    hdrs = ["hello.h"],
+    tags = ["manual"],
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.c"],
+    target_compatible_with = [
+        "@toolchains_cc65//platforms/os:sim6502",
+        "@toolchains_cc65//platforms/cpu:6502",
+    ],
+    deps = [":hello"],
+)
+
+sim65_binary(
+    name = "sim",
+    binary = ":main",
+)
+
+sim65_test(
+    name = "test",
+    binary = ":main",
+)
