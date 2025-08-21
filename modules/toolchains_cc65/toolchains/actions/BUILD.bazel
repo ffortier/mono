@@ -1,0 +1,8 @@
+load("@rules_cc//cc/toolchains:actions.bzl", "cc_action_type")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_action_type(
+    name = "run_simulator",
+    action_name = "run_simulator",
+)
