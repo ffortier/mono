@@ -1,4 +1,5 @@
 load("@rules_cc//cc:find_cc_toolchain.bzl", "find_cc_toolchain", "use_cc_toolchain")
+load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
 
 _SIM65_EXEC_TEMPLATE = """
 #!/usr/bin/env bash
@@ -32,13 +33,16 @@ def _sim65_tool_impl(ctx):
     )
     simulator_path = cc_common.get_tool_for_action(
         feature_configuration = feature_configuration,
-        action_name = "run_simulator",
+        action_name = ctx.attr.action_name,
     )
     simulator = None
     for f in cc_toolchain.all_files.to_list():
         if f.path == simulator_path:
             simulator = f
             break
+
+    if not simulator:
+        fail("cc65 sim tool not found for action '%s' at path: %s" % (ctx.attr.action_name, simulator_path))
 
     return [DefaultInfo(files = depset([simulator]))]
 
@@ -61,6 +65,7 @@ def _sim65_binary_impl(ctx):
         ),
         is_executable = True,
     )
+
     return DefaultInfo(
         executable = executable,
         runfiles = ctx.runfiles(files = [ctx.file.tool, ctx.file.binary]),
@@ -130,5 +135,8 @@ def _sim65_test_macro(name, **kwargs):
 
 sim65_test = macro(
     implementation = _sim65_test_macro,
-    attrs = _SIM65_ATTRS,
+    attrs = dict(
+        size = attr.string(default = "small", values = ["small", "medium", "large"], configurable = False),
+        **_SIM65_ATTRS
+    ),
 )
