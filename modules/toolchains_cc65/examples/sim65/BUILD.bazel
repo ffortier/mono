@@ -27,5 +27,6 @@ sim65_binary(
 
 sim65_test(
     name = "test",
+    size = "small",
     binary = ":main",
 )
