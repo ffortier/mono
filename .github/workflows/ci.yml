@@ -29,7 +29,7 @@ jobs:
         "${GITHUB_WORKSPACE}/bin/bazel" run --config=bb --config=rbe_linux_amd64 --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_APIKEY }} :mkdocs -- build -d $PWD/site
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v4
       with:
         path: site/
 
