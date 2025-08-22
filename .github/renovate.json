@@ -113,7 +113,7 @@
             ],
             "matchStringsStrategy": "any",
             "matchStrings": [
-                "\"jsr:@.*?@(?<currentValue>.*?)\"\\s*,?\\s*//\\s*(?<depName>@jsr/.*)",
+                "\"jsr:@.*?@(?<currentValue>.*?)\"\\s*,?\\s*//\\s*(?<depName>@jsr/.*)"
             ],
             "datasourceTemplate": "npm",
             "versioningTemplate": "npm",
