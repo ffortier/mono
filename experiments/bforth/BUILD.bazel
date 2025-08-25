@@ -1,14 +1,15 @@
-load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
-
-sh_binary(
-    name = "bforth",
-    srcs = ["bforth.sh"],
-)
+load("//tools/ape/bash:bash_binary.bzl", "bash_binary")
 
 sh_test(
     name = "bforth_test",
     size = "small",
     srcs = ["bforth_test.sh"],
     data = [":bforth"],
+)
+
+bash_binary(
+    name = "bforth",
+    srcs = ["bforth.sh"],
+    runtime_args = ["-u"],
 )

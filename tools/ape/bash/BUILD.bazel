@@ -1,0 +1,11 @@
+load("@ape//ape/toolchain:defs.bzl", "ape_toolchain")
+
+toolchain_type(
+    name = "type",
+)
+
+ape_toolchain(
+    name = "ape",
+    toolchain = "@ape//ape/toolchain/info:bash",
+    toolchain_type = ":type",
+)
