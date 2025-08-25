@@ -8,6 +8,7 @@ bazel_dep(name = "rules_prolog")
 bazel_dep(name = "toolchains_cc65")
 bazel_dep(name = "rules_dotnet", version = "0.19.2")
 bazel_dep(name = "toolchain_utils", version = "1.2.0")
+bazel_dep(name = "ape", version = "1.0.1")
 
 dotnet = use_extension("@rules_dotnet//dotnet:extensions.bzl", "dotnet")
 dotnet.toolchain(dotnet_version = "9.0.100")
@@ -73,6 +74,7 @@ cc65.binary_snapshot(
 use_repo(cc65, "cc65")
 
 register_toolchains("@cc65//:all")
+register_toolchains("//tools/ape/bash:all")
 
 include("//third_party/rust:toolchains.MODULE.bazel")
 include("//third_party/rust:deps.MODULE.bazel")
