@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-stack=()
-declare -A udf
 
+#region "utils"
 die() {
     caller >&2
     echo "$*">&2
@@ -9,9 +8,46 @@ die() {
 }
 
 log() {
-    echo "$*">&2
+    if [[ "${BFORTH_LOG:-0}" -ne 0 ]]; then
+        echo "$*">&2
+    fi
 }
 
+check_prerequisites() {
+    # TODO: Should do feature detection instead
+    [[ "${BASH_VERSINFO[0]}" -ge 4 ]] || die "Required bash 4 or more, got $BASH_VERSION"
+}
+#endregion
+
+#region private ops
+check_stack_underflow() {
+    local -i n="${1:-1}"
+
+    [[ "${#stack[@]}" -ge "$n" ]] || die "Stack underflow, expected at least $n items"
+}
+
+read_token() {
+    read -r "$1" || return $?
+    local token="${!1}"
+    printf -v "$2" '%s' "${token%%:*}"
+    printf -v "$3" '%s' "${token#*:}"
+}
+
+is_word_defined() {
+    [[ -v "udf[$1]" || -v "consts[$1]" ]]
+}
+
+pop() {
+    printf -v "$1" "%s" "${stack[-1]}"
+    unset 'stack[-1]'
+}
+
+push() {
+    stack+=("$1")
+}
+#endregion
+
+#region lexer
 token_stream() {
     local line
     local len
@@ -19,11 +55,12 @@ token_stream() {
     local word
     local type
 
-    while read -r line;
+    while read -r line || [[ -n $line ]];
     do
+        log "$line"
         len=${#line}
         word=''
-        type=n # n|s|w
+        type=n # n|s|w|c
         
         for (( i = 0; i < len; i++ ))
         do
@@ -38,10 +75,12 @@ token_stream() {
                         word+="${line:i:1}"
                         ;;
                 esac
+            elif [[ $type == 'c' ]]; then
+                [[ "${line:i:1}" == " )" ]] && type=n
             else
                 case "${line:i:1}" in
                     ' ')
-                        [[ -n "$word" ]] && echo "$type:$word"
+                        [[ -n "$word" ]] && echo "$type:${word,,}"
                         word=''
                         type=n
                         ;;
@@ -50,10 +89,19 @@ token_stream() {
                         ;;
                     '"')
                         [[ "${line:i:2}" == '" ' ]] || die "Expected '"'" '"', but got '${line:i:2}'"
-                        echo "w:$word"'"'
+                        echo "w:${word,,}"'"'
                         word=''
                         type='s'
                         ((i++))
+                        ;;
+                    '(')
+                        if [[ -z "$word" && "${line:i:2}" == '( ' ]]; then
+                            type='c'
+                            ((i++))
+                        else
+                            type=w
+                            word+="${line:i:1}"
+                        fi
                         ;;
                     '-')
                         [[ -z "$word" && "${line:i+1:1}" == [0-9] ]] || type=w
@@ -71,25 +119,9 @@ token_stream() {
         [[ -n "$word" ]] && echo "$type:$word"
     done
 }
+#endregion
 
-check_stack_underflow() {
-    local -i n="${1:-1}"
-
-    [[ "${#stack[@]}" -ge "$n" ]] || die "Stack underflow, expected at least $n items"
-}
-
-pop() {
-    check_stack_underflow 1
-    local -n var="$1"
-    # shellcheck disable=SC2034
-    var="${stack[-1]}"
-    unset 'stack[-1]'
-}
-
-push() {
-    stack+=("$1")
-}
-
+#region standard ops
 op_print_stack() {
     local content
     content="$(printf "<%d> " "${stack[@]}")"
@@ -103,7 +135,7 @@ op_print_string() {
 op_add() {
     check_stack_underflow 2
 
-    local a b
+    local -i a b
     pop b
     pop a
     push $((a+b))
@@ -112,7 +144,7 @@ op_add() {
 op_sub() {
     check_stack_underflow 2
 
-    local a b
+    local -i a b
     pop b
     pop a
     push $((a-b))
@@ -121,7 +153,7 @@ op_sub() {
 op_mul() {
     check_stack_underflow 2
 
-    local a b
+    local -i a b
     pop b
     pop a
     push $((a*b))
@@ -130,10 +162,24 @@ op_mul() {
 op_div() {
     check_stack_underflow 2
 
-    local a b
+    local -i a b
     pop b
     pop a
     push $((a/b))
+}
+
+op_eq() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    if (( a == b)); then 
+        push 0 
+    else
+        push -1
+    fi
 }
 
 op_dup() {
@@ -145,37 +191,135 @@ op_dup() {
 op_pop() {
     check_stack_underflow 1
 
-    local value
+    local -i value
     pop value
     echo "$value"
 }
 
-eval_udf() {
-    [[ -v "udf[$1]" ]] || die "Unknown word <$1>"
+op_eq0() {
+    check_stack_underflow 1
 
-    eval_next <<< "${udf[$1]}"
+    local -i value
+
+    pop value
+
+    if (( value == 0 )); then
+        push -1
+    else
+        push 0
+    fi
+}
+
+op_exit() {
+    check_stack_underflow 1
+
+    local code
+    pop code
+    exit "$code"
+}
+
+op_here() {
+    push "${#mem[@]}"
+}
+
+op_allot() {
+    check_stack_underflow 1
+
+    local -i size i len
+    pop size
+
+    for (( i = 0; i < size; i++ ));
+    do
+        mem+=(0)
+    done
+
+    if (( size < 0 )); then
+        len="${#mem[@]}"
+        mem=("${mem[@]:0:$len+$size}")
+    fi
+}
+
+op_constant() {
+    check_stack_underflow 1
+
+    local token type word
+
+    read_token token type word
+
+    [[ "$type" == "w" ]] || die "Expected word after CONSTANT"
+
+    is_word_defined "$word" && die "Word already defined <$word>"
+
+    local -i value
+
+    pop value
+
+    consts[$word]="$value"
+}
+
+op_variable() {
+    local token type word
+
+    read_token token type word
+
+    [[ "$type" == "w" ]] || die "Expected word after VARIABLE"
+
+    is_word_defined "${word}" && die "Word already defined <$word>"
+
+    consts[$word]="${#mem[@]}"
+    mem+=(0)
+}
+
+op_store() {
+    check_stack_underflow 2
+    local value addr
+    pop addr
+    pop value
+
+    # bad shellcheck, not an issue
+    # shellcheck disable=SC2004
+    mem[$addr]="$value"
+}
+
+op_load() {
+    check_stack_underflow 1
+    local addr
+    pop addr
+    push "${mem[$addr]}"
+}
+
+op_depth() {
+    push "${#stack[@]}"
+}
+#endregion
+
+#region interpreter
+eval_udf() {
+    if [[ -v "udf[$1]" ]]; then
+        eval_next <<< "${udf[$1]}"
+    elif [[ -v "consts[$1]" ]]; then
+        push "${consts[$1]}"
+    else
+        die "Unknown word <$1>"
+    fi
 }
 
 eval_word_def() {
     local token type word
     local word_body=''
 
-    read -r token
-    type="${token%%:*}"
-    word="${token#*:}"
+    read_token token type word
 
     [[ "$type" == 'w' && "$word" != ';' ]] || die "Expected word name, but got ${token}"
 
     local word_name="$word"
 
-    while read -r token
+    while read_token token type word
     do
-        type="${token%%:*}"
-        word="${token#*:}"
-
         case "$word" in
             ';')
-                udf["$word_name"]="$word_body"
+                is_word_defined "${word_name,,}" && die "Word already defined <$word_name>"
+                udf["${word_name,,}"]="$word_body"
                 return 0
                 ;;
             ':')
@@ -206,11 +350,8 @@ eval_if() {
         if [[ $eval_ret -eq 1 ]]; then
             depth=1
 
-            while read -r token
+            while read_token token type word
             do
-                type="${token%%:*}"
-                word="${token#*:}"
-
                 case "$word" in
                     'if') (( depth++ )) ;;
                     'then') (( --depth == 0 )) && return 0 ;;
@@ -223,11 +364,8 @@ eval_if() {
         # condition is false, need to skip until we reach <else> or <then>
         depth=1
 
-        while read -r token
+        while read_token token type word
         do
-            type="${token%%:*}"
-            word="${token#*:}"
-
             case "$word" in
                 'if') (( depth++ )) ;;
                 'else') (( depth == 1 )) && break ;;
@@ -255,29 +393,39 @@ eval_next() {
     local end_token1="${1:-''}"
     local end_token2="${2:-''}"
 
-    while read -r token
+    while read_token token type word
     do
         if [[ "$token" == "$end_token1" ]]; then return 1
         elif [[ "$token" == "$end_token2" ]]; then return 2
         fi
 
-        type="${token%%:*}"
-        word="${token#*:}"
+        log "$token"
         
         case "$type" in
             n) stack+=("$word") ;;
             w)
-                case "${word,,}" in
+                case "${word}" in
                     '.s') op_print_stack ;;
                     '+') op_add ;;
                     '-') op_sub ;;
                     '*') op_mul ;;
                     '/') op_div ;;
+                    '=') op_eq ;;
                     '.') op_pop ;;
+                    '!') op_store ;;
+                    '@') op_load ;;
+                    'allot') op_allot ;;
+                    'here') op_here ;;
+                    'constant') op_constant ;;
+                    'variable') op_variable ;;
+                    'depth') op_depth ;;
                     '."') string_op='op_print_string' ;;
                     'dup') op_dup ;;
+                    '0=') op_eq0 ;;
+                    'exit') op_exit ;;
                     ':') eval_word_def ;;
                     'if') eval_if ;;
+                    'bye') exit 0 ;;
                     *) eval_udf "${word}" ;;
                 esac
                 ;;
@@ -289,11 +437,9 @@ eval_next() {
         esac	
     done
 }
+#endregion
 
-check_prerequisites() {
-    [[ "${BASH_VERSINFO[0]}" -ge 4 ]] || die "Required bash 4 or more, got $BASH_VERSION"
-}
-
+#region tests
 test_token_stream() {
     local expected_tokens=(
         'w:hello'
@@ -346,17 +492,34 @@ run_all_tests() {
         fi
     done
 }
+#endregion
 
-main() {
+#region interactive mode
+run_repl() {
     local line
-
-    check_prerequisites
-    run_all_tests
 
     while read -rep '> ' line
     do
         eval_next < <(token_stream <<< "$line")
     done
+}
+#endregion
+
+main() {
+    check_prerequisites
+
+    declare -ga stack=()
+    declare -ga mem=()
+    declare -gA udf
+    declare -gA consts
+
+    if [[ $# -eq 1 ]]; then
+        eval_next < <(token_stream <"$1")
+    elif [[ -t 0 ]]; then
+        run_repl
+    else
+        eval_next < <(token_stream)
+    fi    
 }
 
 

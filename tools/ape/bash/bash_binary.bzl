@@ -19,7 +19,7 @@ def _impl(ctx):
 
     return DefaultInfo(executable = executable, runfiles = ctx.runfiles(
         files = ctx.files.srcs,
-        transitive_files = depset([data[DefaultInfo].files for data in ctx.attr.data], transitive = [bash_info.default.files]),
+        transitive_files = depset(ctx.files.data, transitive = [bash_info.default.files]),
     ))
 
 bash_binary = rule(
@@ -27,8 +27,19 @@ bash_binary = rule(
     toolchains = [":type"],
     attrs = dict(
         srcs = attr.label_list(allow_files = True, mandatory = True),
-        data = attr.label_list(),
+        data = attr.label_list(allow_files = True),
         runtime_args = attr.string_list(),
     ),
     executable = True,
+)
+
+bash_test = rule(
+    implementation = _impl,
+    toolchains = [":type"],
+    attrs = dict(
+        srcs = attr.label_list(allow_files = True, mandatory = True),
+        data = attr.label_list(allow_files = True),
+        runtime_args = attr.string_list(),
+    ),
+    test = True,
 )
