@@ -1,6 +1,66 @@
 #!/usr/bin/env bash
 
-#region "utils"
+#region config
+HISTFILE=~/.bforth_history
+HISTSIZE=1000
+HISTCONTROL=ignoredups:erasedups
+#endregion
+
+#region globals
+declare -A words=(
+    # --- Stack operations ---
+    ['.']=op_pop
+    ['.s']=op_print_stack
+    ['dup']=op_dup
+    ['depth']=op_depth
+
+    # --- Arithmetic and Comparison ---
+    ['+']=op_add
+    ['-']=op_sub
+    ['*']=op_mul
+    ['/']=op_div
+    ['0=']=op_eq0
+    ['=']=op_eq
+    ['>']=op_gt
+    ['<']=op_lt
+    ['>=']=op_ge
+    ['<=']=op_le
+    ['<>']=op_neq
+
+    # --- Memory/Variables ---
+    ['!']=op_store
+    ['@']=op_load
+    ['allot']=op_allot
+    ['here']=op_here
+    ['constant']=op_constant
+    ['variable']=op_variable
+
+    # --- Output ---
+    ['."']=op_print_string
+
+    # --- Control flow ---
+    ['begin']=op_begin
+    ['do']=op_do
+    ['if']=op_if
+    [':']=op_word_def
+    ['then']="op_unexpected THEN"
+    ['else']="op_unexpected ELSE"
+    ['loop']="op_unexpected LOOP"
+    ['until']="op_unexpected UNTIL"
+    ['while']="op_unexpected WHILE"
+    ['repeat']="op_unexpected REPEAT"
+
+    # --- System/Exit ---
+    ['bye']=op_bye
+    ['exit']=op_exit
+)
+
+declare -a stack=()
+declare -a mem=()
+declare -A udf
+#endregion
+
+#region utils
 die() {
     caller >&2
     echo "$*">&2
@@ -34,7 +94,7 @@ read_token() {
 }
 
 is_word_defined() {
-    [[ -v "udf[$1]" || -v "consts[$1]" ]]
+    [[ -v "words[$1]" ]]
 }
 
 pop() {
@@ -54,13 +114,14 @@ token_stream() {
     local i
     local word
     local type
+    local comment=0
 
     while read -r line || [[ -n $line ]];
     do
-        log "$line"
+        log "Reading $line"
         len=${#line}
         word=''
-        type=n # n|s|w|c
+        type=n # n|s|w
         
         for (( i = 0; i < len; i++ ))
         do
@@ -75,12 +136,12 @@ token_stream() {
                         word+="${line:i:1}"
                         ;;
                 esac
-            elif [[ $type == 'c' ]]; then
-                [[ "${line:i:1}" == " )" ]] && type=n
             else
                 case "${line:i:1}" in
                     ' ')
-                        [[ -n "$word" ]] && echo "$type:${word,,}"
+                        [[ "$type" == 'w' && "$word" == '(' ]] && comment=1
+                        [[ -n "$word" && "$comment" -eq 0 ]] && echo "$type:${word,,}"
+                        [[ "$type" == 'w' && "$word" == ')' ]] && comment=0
                         word=''
                         type=n
                         ;;
@@ -94,15 +155,6 @@ token_stream() {
                         type='s'
                         ((i++))
                         ;;
-                    '(')
-                        if [[ -z "$word" && "${line:i:2}" == '( ' ]]; then
-                            type='c'
-                            ((i++))
-                        else
-                            type=w
-                            word+="${line:i:1}"
-                        fi
-                        ;;
                     '-')
                         [[ -z "$word" && "${line:i+1:1}" == [0-9] ]] || type=w
                         word+="${line:i:1}"
@@ -115,13 +167,19 @@ token_stream() {
             fi
         done
 
-        [[ $type != 's' ]] || die "Unexpected end of line, unclosed string literal"
-        [[ -n "$word" ]] && echo "$type:$word"
+        [[ "$type" != 's' ]] || die "Unexpected end of line, unclosed string literal"
+        [[ "$type" == 'w' && "$word" == '(' ]] && comment=1
+        [[ -n "$word" && "$comment" -eq 0 ]] && echo "$type:${word,,}"
+        [[ "$type" == 'w' && "$word" == ')' ]] && comment=0
     done
 }
 #endregion
 
 #region standard ops
+op_unexpected() {
+    die "Unexpected token $1"
+}
+
 op_print_stack() {
     local content
     content="$(printf "<%d> " "${stack[@]}")"
@@ -129,7 +187,9 @@ op_print_stack() {
 }
 
 op_print_string() {
-    echo "$1"
+    read_token token type word
+    [[ $type == 's' ]] || die "Expected string but got <$token>"
+    echo "$word"
 }
 
 op_add() {
@@ -182,6 +242,76 @@ op_eq() {
     fi
 }
 
+op_gt() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    if (( a > b)); then 
+        push 0 
+    else
+        push -1
+    fi
+}
+
+op_lt() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    if (( a < b)); then 
+        push 0 
+    else
+        push -1
+    fi
+}
+
+op_ge() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    if (( a >= b)); then 
+        push 0 
+    else
+        push -1
+    fi
+}
+
+op_le() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    if (( a <= b)); then 
+        push 0 
+    else
+        push -1
+    fi
+}
+
+op_neq() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    if (( a != b)); then 
+        push 0 
+    else
+        push -1
+    fi
+}
+
 op_dup() {
     check_stack_underflow 1
 
@@ -216,6 +346,10 @@ op_exit() {
     local code
     pop code
     exit "$code"
+}
+
+op_bye() {
+    exit 0
 }
 
 op_here() {
@@ -254,7 +388,7 @@ op_constant() {
 
     pop value
 
-    consts[$word]="$value"
+    words[$word]="push $value"
 }
 
 op_variable() {
@@ -266,7 +400,7 @@ op_variable() {
 
     is_word_defined "${word}" && die "Word already defined <$word>"
 
-    consts[$word]="${#mem[@]}"
+    words[$word]="push ${#mem[@]}"
     mem+=(0)
 }
 
@@ -291,20 +425,96 @@ op_load() {
 op_depth() {
     push "${#stack[@]}"
 }
+
+op_do() {
+    check_stack_underflow 2
+
+    local -i to from i
+    local token type word
+    local tokens=()
+    local loop_found=0
+
+    pop from
+    pop to
+
+    while read_token token type word
+    do
+        case "$token" in
+            'w:loop')
+                loop_found=1
+                break
+                ;;
+            *)
+                tokens+=("$token")
+                ;;
+        esac
+    done
+
+    [[ $loop_found -eq 1 ]] || die "Expected LOOP after DO"
+
+    for (( i = from; i < to; i++ ))
+    do
+        eval_next < <(printf "%s\n" "${tokens[@]}") || die "Failed to evaluate loop body"
+    done
+}
+
+op_begin() {
+    local token type word
+    local -i condition
+    local condition_tokens=()
+    local body_tokens=()
+    local tokens_ref=condition_tokens
+    local loop_type
+
+    while read_token token type word
+    do
+        case "$token" in
+            'w:until')
+                loop_type=until
+                break
+                ;;
+            'w:while')
+                tokens_ref=body_tokens
+                loop_type=while
+                ;;
+            'w:repeat')
+                break
+                ;;
+            *)
+                if [[ "$tokens_ref" == 'condition_tokens' ]]; then
+                    condition_tokens+=("$token")
+                else
+                    body_tokens+=("$token")
+                fi
+                ;;
+        esac
+    done
+
+    [[ -n "$loop_type" ]] || die "Expected UNTIL or WHILE REPEAT"
+
+    while true
+    do
+        eval_next < <(printf "%s\n" "${condition_tokens[@]}")
+
+        check_stack_underflow 1
+
+        pop condition
+
+        case "$loop_type" in
+            while)
+                [[ "$condition" -eq 0 ]] && break
+                eval_next < <(printf "%s\n" "${body_tokens[@]}")
+                ;;
+            until)
+                [[ "$condition" -ne 0 ]] && break
+                ;;
+        esac
+    done
+}
 #endregion
 
 #region interpreter
-eval_udf() {
-    if [[ -v "udf[$1]" ]]; then
-        eval_next <<< "${udf[$1]}"
-    elif [[ -v "consts[$1]" ]]; then
-        push "${consts[$1]}"
-    else
-        die "Unknown word <$1>"
-    fi
-}
-
-eval_word_def() {
+op_word_def() {
     local token type word
     local word_body=''
 
@@ -318,8 +528,9 @@ eval_word_def() {
     do
         case "$word" in
             ';')
-                is_word_defined "${word_name,,}" && die "Word already defined <$word_name>"
-                udf["${word_name,,}"]="$word_body"
+                is_word_defined "${word_name}" && die "Word already defined <$word_name>"
+                udf["${word_name}"]="$word_body"
+                words["${word_name}"]='eval_next < <(echo -n "''$''{udf['"${word_name}"']}")'
                 return 0
                 ;;
             ':')
@@ -332,7 +543,7 @@ eval_word_def() {
     done
 }
 
-eval_if() {
+op_if() {
     check_stack_underflow 1
 
     local token type word
@@ -387,52 +598,27 @@ eval_next() {
     local token
     local type
     local word
-    local string_op
-    local word_name
-    local word_body
     local end_token1="${1:-''}"
     local end_token2="${2:-''}"
 
     while read_token token type word
     do
-        if [[ "$token" == "$end_token1" ]]; then return 1
-        elif [[ "$token" == "$end_token2" ]]; then return 2
-        fi
+        log "Processing $token"
+        [[ "$token" == "$end_token1" ]] && return 1
+        [[ "$token" == "$end_token2" ]] && return 2
 
-        log "$token"
         
         case "$type" in
             n) stack+=("$word") ;;
             w)
-                case "${word}" in
-                    '.s') op_print_stack ;;
-                    '+') op_add ;;
-                    '-') op_sub ;;
-                    '*') op_mul ;;
-                    '/') op_div ;;
-                    '=') op_eq ;;
-                    '.') op_pop ;;
-                    '!') op_store ;;
-                    '@') op_load ;;
-                    'allot') op_allot ;;
-                    'here') op_here ;;
-                    'constant') op_constant ;;
-                    'variable') op_variable ;;
-                    'depth') op_depth ;;
-                    '."') string_op='op_print_string' ;;
-                    'dup') op_dup ;;
-                    '0=') op_eq0 ;;
-                    'exit') op_exit ;;
-                    ':') eval_word_def ;;
-                    'if') eval_if ;;
-                    'bye') exit 0 ;;
-                    *) eval_udf "${word}" ;;
-                esac
+                [[ -v "words[$word]" ]] || die "Unknown word <$word>"
+                eval "${words[$word]}" || die "Could not eval token <${token}>"
                 ;;
-            s)
-                [[ -n "$string_op" ]] || die "Expected string op before string literal"
-                "$string_op" "$word"
-                string_op=''
+            m)
+                kill "$word"
+                ;;
+            *)
+                die "Unexpected token <$token>"
                 ;;
         esac	
     done
@@ -495,12 +681,25 @@ run_all_tests() {
 #endregion
 
 #region interactive mode
-run_repl() {
-    local line
+repl_teardown() {
+    history -w
+}
+
+repl_run() {
+    local line pid
+
+    history -r
+   
+    trap repl_teardown EXIT
 
     while read -rep '> ' line
     do
-        eval_next < <(token_stream <<< "$line")
+        history -s "$line"
+        token_stream <<< "$line" >&3
+        sleep 10 &
+        pid=$!
+        echo "m:$pid" >&3
+        wait $pid >/dev/null || true
     done
 }
 #endregion
@@ -508,15 +707,12 @@ run_repl() {
 main() {
     check_prerequisites
 
-    declare -ga stack=()
-    declare -ga mem=()
-    declare -gA udf
-    declare -gA consts
+    run_all_tests
 
     if [[ $# -eq 1 ]]; then
         eval_next < <(token_stream <"$1")
     elif [[ -t 0 ]]; then
-        run_repl
+        eval_next < <(repl_run 3>&1 1>&3 ) 3>&1
     else
         eval_next < <(token_stream)
     fi    

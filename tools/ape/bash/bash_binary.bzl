@@ -1,5 +1,5 @@
 _SCRIPT = """
-{bash} {runtime_args} {files} "$@"
+{bash} {runtime_args} {files} "$@" || exit 1
 """
 
 def _impl(ctx):

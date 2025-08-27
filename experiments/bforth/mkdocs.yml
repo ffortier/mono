@@ -1,0 +1,7 @@
+site_name: Bash Forth
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - Words Reference: words.md
+  - Implementation Notes: impl.md
+  - Tests: tests.md

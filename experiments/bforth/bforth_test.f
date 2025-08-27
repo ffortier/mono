@@ -1,13 +1,15 @@
-: asserteq = 0= if ." Assertion failed, values are not equal" 1 exit then ;
-: ASSERTEMPTY depth 0= if ." Assertion failed, stack is not empty" 1 exit then;
+( Unit tests )
 
-( test arithmetic )
+: asserteq = 0= if ." Assertion failed, values are not equal" 1 exit then ;
+: ASSERTEMPTY depth 0= if ." Assertion failed, stack is not empty" 1 exit then ;
+
+." test arithmetic"
 2 3 * 6 asserteq assertempty
 2 3 + 5 asserteq assertempty
 2 3 - -1 asserteq assertempty
 6 3 / 2 asserteq assertempty
 
-( test allot )
+." test allot"
 HERE 0 asserteq
 5 ALLOT
 here 5 asserteq
@@ -15,13 +17,19 @@ here 5 asserteq
 here 2 asserteq
 assertempty
 
-( test constant )
+." test constant"
 123 constant x123
 x123 123 ASSERTEQ
 assertempty
 
-( test variable )
+." test variable"
 variable v1
 1234 v1 !
 v1 @ 1234 asserteq 
 assertempty
+
+." test DO ... LOOP"
+0 10 0 do 2 + loop 20 asserteq assertempty
+
+." test BEGIN ... UNTIL"
+10 begin 1 - dup 0= until 0 asserteq assertempty
