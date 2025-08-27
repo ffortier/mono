@@ -412,6 +412,7 @@ op_store() {
 
     # bad shellcheck, not an issue
     # shellcheck disable=SC2004
+   (( addr < 0 || addr >= ${#mem[@]} )) && die "Invalid address <$addr>"
     mem[$addr]="$value"
 }
 
@@ -419,6 +420,7 @@ op_load() {
     check_stack_underflow 1
     local addr
     pop addr
+   (( addr < 0 || addr >= ${#mem[@]} )) && die "Invalid address <$addr>"
     push "${mem[$addr]}"
 }
 
