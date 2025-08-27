@@ -228,6 +228,7 @@ op_div() {
     (( b == 0 )) && die "Division by zero"
     push $((a/b))
 }
+
 op_eq() {
     check_stack_underflow 2
 
@@ -236,9 +237,9 @@ op_eq() {
     pop a
 
     if (( a == b)); then 
-        push 0 
-    else
         push -1
+    else
+        push 0
     fi
 }
 
@@ -250,9 +251,9 @@ op_gt() {
     pop a
 
     if (( a > b)); then 
-        push 0 
-    else
         push -1
+    else
+        push 0
     fi
 }
 
@@ -264,9 +265,9 @@ op_lt() {
     pop a
 
     if (( a < b)); then 
-        push 0 
-    else
         push -1
+    else
+        push 0
     fi
 }
 
@@ -278,9 +279,9 @@ op_ge() {
     pop a
 
     if (( a >= b)); then 
-        push 0 
-    else
         push -1
+    else
+        push 0
     fi
 }
 
@@ -292,9 +293,9 @@ op_le() {
     pop a
 
     if (( a <= b)); then 
-        push 0 
-    else
         push -1
+    else
+        push 0
     fi
 }
 
@@ -306,9 +307,9 @@ op_neq() {
     pop a
 
     if (( a != b)); then 
-        push 0 
-    else
         push -1
+    else
+        push 0
     fi
 }
 
@@ -554,7 +555,7 @@ op_if() {
     pop condition
 
     # condition is true
-    if [[ "$condition" -eq 0 ]]; then
+    if [[ "$condition" -ne 0 ]]; then
         eval_next "w:else" "w:then"
 
         eval_ret="$?"
@@ -617,7 +618,7 @@ eval_next() {
                 eval "${words[$word]}" || die "Could not eval token <${token}>"
                 ;;
             m)
-                kill "$word"
+                kill "$word" >&/dev/null || true
                 ;;
             *)
                 die "Unexpected token <$token>"
@@ -663,12 +664,12 @@ test_udf() {
 }
 
 test_if() {
-    [[ "$(token_stream <<< '0 if ." true" then' | eval_next)" == "true" && "$?" -eq 0 ]] || die "Failed simple if (true)"
-    [[ "$(token_stream <<< '0 if ." true" else ." false" then' | eval_next)" == "true" && "$?" -eq 0 ]] || die "Failed simple if-else (true)"
-    [[ -z "$(token_stream <<< '1 if ." true" then' | eval_next)" && "$?" -eq 0 ]] || die "Failed simple if (false)"
-    [[ "$(token_stream <<< '1 if ." true" else ." false" then' | eval_next)" == "false" && "$?" -eq 0 ]] || die "Failed simple if-else (false)"
-    [[ "$(token_stream <<< '0 if 3 3 - if ." true" then then' | eval_next)" == "true" && "$?" -eq 0 ]] || die "Failed nested if (true)"
-    [[ "$(token_stream <<< '0 if 1 if ." true" else ." false" then then' | eval_next)" == "false" && "$?" -eq 0 ]] || die "Failed nested if-else (false)"
+    [[ "$(token_stream <<< '-1 if ." true" then' | eval_next)" == "true" && "$?" -eq 0 ]] || die "Failed simple if (true)"
+    [[ "$(token_stream <<< '-1 if ." true" else ." false" then' | eval_next)" == "true" && "$?" -eq 0 ]] || die "Failed simple if-else (true)"
+    [[ -z "$(token_stream <<< '0 if ." true" then' | eval_next)" && "$?" -eq 0 ]] || die "Failed simple if (false)"
+    [[ "$(token_stream <<< '0 if ." true" else ." false" then' | eval_next)" == "false" && "$?" -eq 0 ]] || die "Failed simple if-else (false)"
+    [[ "$(token_stream <<< '-1 if 1 if ." true" then then' | eval_next)" == "true" && "$?" -eq 0 ]] || die "Failed nested if (true)"
+    [[ "$(token_stream <<< '-1 if 0 if ." true" else ." false" then then' | eval_next)" == "false" && "$?" -eq 0 ]] || die "Failed nested if-else (false)"
 }
 
 run_all_tests() {

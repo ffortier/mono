@@ -1,7 +1,7 @@
 ( Unit tests )
 
 : asserteq = 0= if ." Assertion failed, values are not equal" 1 exit then ;
-: ASSERTEMPTY depth 0= if ." Assertion failed, stack is not empty" 1 exit then ;
+: ASSERTEMPTY depth 0 > if ." Assertion failed, stack is not empty" 1 exit then ;
 
 ." test arithmetic"
 2 3 * 6 asserteq assertempty
