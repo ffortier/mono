@@ -20,6 +20,7 @@ py_console_script_binary(
     data = glob(["docs/**"]) + [
         "mkdocs.yml",
         "//docs/script",
+        "//experiments/bforth:docs",
         "//experiments/digital:docs",
         "//experiments/jasm:docs",
         "//experiments/nbmagic:docs",

@@ -1,5 +1,11 @@
 load("//tools/ape/bash:bash_binary.bzl", "bash_binary", "bash_test")
 
+filegroup(
+    name = "docs",
+    srcs = ["mkdocs.yml"] + glob(["docs/**"]),
+    visibility = ["//:__pkg__"],
+)
+
 bash_binary(
     name = "bforth",
     srcs = ["bforth.sh"],
