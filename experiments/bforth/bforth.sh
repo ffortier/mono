@@ -225,9 +225,9 @@ op_div() {
     local -i a b
     pop b
     pop a
+    (( b == 0 )) && die "Division by zero"
     push $((a/b))
 }
-
 op_eq() {
     check_stack_underflow 2
 
