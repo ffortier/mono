@@ -52,21 +52,21 @@ cc65.bootstrap_from_sources(
 )
 
 cc65.common_snapshot(
-    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/all/cc65-common_2.19.0.git.1753630199.6efe447d-0_all.deb"],
-    sha256 = "3819bc6ada2b43adcfa599ce866c89dd32cd71f7f5077ee3644763fa58c046c7",
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65-common_2.19.0.git.1756213875.357f64e4-0_all.deb"],
+    sha256 = "7f07bcbce6be19567b00f8bac747138d98420eac1dc3980fe277a2f037d12dfa",
     strip_prefix = "usr/share/cc65",
 )
 
 cc65.binary_snapshot(
     platform = "linux-x86_64",
-    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/amd64/cc65_2.19.0.git.1753630199.6efe447d-0_amd64.deb"],
-    sha256 = "af0ec3e4a0361485cba7cfa95cc7078ef49dd8f1d811dd9d8fdb5529b6062e54",
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65_2.19.0.git.1756213875.357f64e4-0_amd64.deb"],
+    sha256 = "f2f2e017923525a333187e2778bf1e270659001ba19b66a52cf5cd3f65611253",
     strip_prefix = "usr",
 )
 
 cc65.binary_snapshot(
     platform = "windows-x86_64",
-    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/728d0f5934c1e072d85bd3ac14554dc5c46b6568/cc65-snapshot-win32.tar.gz"],
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65-snapshot-win32.tar.gz"],
     sha256 = "29c27316692f7f4ea21d9be6be13717cbdecd37d7794c8eb3734159ca241a4bb",
     strip_prefix = "cc65-snapshot-win32",
 )
