@@ -618,7 +618,7 @@ eval_next() {
                 eval "${words[$word]}" || die "Could not eval token <${token}>"
                 ;;
             m)
-                kill "$word" >&/dev/null || true
+                kill "$word" 2>/dev/null || true
                 ;;
             *)
                 die "Unexpected token <$token>"
@@ -702,7 +702,7 @@ repl_run() {
         sleep 10 &
         pid=$!
         echo "m:$pid" >&3
-        wait $pid >/dev/null || true
+        wait $pid 2>/dev/null || true
     done
 }
 #endregion
