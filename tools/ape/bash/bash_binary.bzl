@@ -5,6 +5,9 @@ _SCRIPT = """
 def _impl(ctx):
     executable = ctx.actions.declare_file(ctx.label.name)
 
+    if len(ctx.files.srcs) != 1:
+        fail("Exactly one entry script is required; got %d" % len(ctx.files.srcs))
+
     bash_info = ctx.toolchains[":type"]
 
     ctx.actions.write(
