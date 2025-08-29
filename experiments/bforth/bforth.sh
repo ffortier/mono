@@ -122,7 +122,6 @@ encode_fp() {
     local pad_len
     
     IFS='.' read -r int_part frac_part <<< "$1"
-    log "before: int_part=$int_part, frac_part=$frac_part"
 
     pad_len=$(( FIXED_PLACES - ${#frac_part} ))
 
@@ -132,8 +131,6 @@ encode_fp() {
     else
         int_part="${int_part#"${int_part%%[!0]*}"}"
     fi
-
-    log "after: int_part=$int_part, frac_part=$frac_part"
 
     if (( pad_len > 0 )); then
         printf "%s%s%0*d" "$int_part" "$frac_part" $pad_len 0
