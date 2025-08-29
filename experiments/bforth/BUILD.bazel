@@ -1,3 +1,4 @@
+load("@rules_shellcheck//:def.bzl", "shellcheck_test")
 load("//tools/ape/bash:bash_binary.bzl", "bash_binary", "bash_test")
 
 filegroup(
@@ -23,4 +24,10 @@ bash_test(
     ],
     data = ["bforth_test.f"],
     runtime_args = ["-u"],
+)
+
+shellcheck_test(
+    name = "shellcheck",
+    data = ["bforth.sh"],
+    severity = "style",
 )

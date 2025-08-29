@@ -144,7 +144,7 @@ encode_fp() {
 fp_decimal_expansion() {
     local -i dividend="$1"
     local -i divisor="$2"
-    local -i result quotient i digit sign=1
+    local -i result quotient i digit remainder sign=1
 
     if (( dividend < 0 )); then dividend=$(( -dividend )); sign=$(( -sign )); fi
     if (( divisor  < 0 )); then divisor=$(( -divisor  )); sign=$(( -sign  )); fi
@@ -289,7 +289,7 @@ op_print_fp() {
     frac_part="${fp: -6}"
 
     local frac_trim="${frac_part%"${frac_part##*[!0]}"}"
-    
+
     if [[ -z "$frac_trim" ]]; then
         if [[ -z "$int_part" || "$int_part" == "-" ]]; then
             echo "0"
@@ -845,6 +845,7 @@ test_if() {
 }
 
 run_all_tests() {
+    local fn
     for fn in $(compgen -A function)
     do
         if [[ "$fn" == "test_"* ]]; then

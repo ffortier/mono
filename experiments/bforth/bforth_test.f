@@ -26,8 +26,12 @@ assertempty
 
 ." test variable"
 variable v1
+variable v2
+variable v3
 1234 v1 !
-v1 @ 1234 asserteq 
+100 v2 !
+1000 v3 !
+v1 @ v2 @ v3 @ + + 2334 asserteq 
 assertempty
 
 ." test DO ... LOOP"
