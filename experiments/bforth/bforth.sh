@@ -142,15 +142,17 @@ encode_fp() {
 }
 
 fp_decimal_expansion() {
-    local dividend="$1"
-    local divisor="$2"
-    local result quotient i digit mid
+    local -i dividend="$1"
+    local -i divisor="$2"
+    local -i result quotient i digit sign=1
+
+    if (( dividend < 0 )); then dividend=$(( -dividend )); sign=$(( -sign )); fi
+    if (( divisor  < 0 )); then divisor=$(( -divisor  )); sign=$(( -sign  )); fi
 
     (( divisor != 0 )) || die "Divide by zero"
 
     quotient=$(( dividend / divisor ))
     result=$(( quotient * 10 ))
-
     remainder=$(( dividend % divisor ))
 
     for (( i = 0; i < FIXED_PLACES - 1; i++ ));
@@ -166,11 +168,11 @@ fp_decimal_expansion() {
     result=$(( result + digit ))
     remainder=$(( remainder % divisor ))
     
-    mid=$(encode_fp "5.")
+    if (( remainder * 10 >= 5 * divisor )); then
+        result=$(( result + 1 ))
+    fi
 
-    (( remainder >= mid )) && result=$(( result + 1 ))
-
-    echo "$result"
+    echo $(( sign * result ))
 }
 #endregion
 
@@ -849,7 +851,7 @@ repl_run() {
 
     while read -rep '> ' line
     do
-        history -s "$line"
+        history -s -- "$line"
         token_stream <<< "$line" >&3
         sleep 10 &
         pid=$!
