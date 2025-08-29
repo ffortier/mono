@@ -283,7 +283,21 @@ op_print_fp() {
     int_part="${fp:0:-6}"
     frac_part="${fp: -6}"
 
-    echo "${int_part}.${frac_part%"${frac_part##*[!0]}"}"
+    # trim trailing zeros in fractional part
+    local frac_trim="${frac_part%"${frac_part##*[!0]}"}"
+    if [[ -z "$frac_trim" ]]; then
+        # integer (or zero) value
+        if [[ -z "$int_part" ]]; then
+            echo "0"
+        elif [[ "$int_part" == "-" ]]; then
+            echo "-0"
+        else
+            echo "$int_part"
+        fi
+    else
+        # fractional value; allow forms like ".1" and "-.1"
+        echo "${int_part}.${frac_trim}"
+    fi
 }
 
 op_add() {
