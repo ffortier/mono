@@ -4,6 +4,11 @@
 HISTFILE=~/.bforth_history
 HISTSIZE=1000
 HISTCONTROL=ignoredups:erasedups
+
+FIXED_FACTOR=1000000
+FIXED_PLACES=6
+
+RUN_TESTS=false
 #endregion
 
 #region globals
@@ -13,6 +18,8 @@ declare -A words=(
     ['.s']=op_print_stack
     ['dup']=op_dup
     ['depth']=op_depth
+    ['over']=op_over
+    ['drop']=op_drop
 
     # --- Arithmetic and Comparison ---
     ['+']=op_add
@@ -27,6 +34,11 @@ declare -A words=(
     ['<=']=op_le
     ['<>']=op_neq
 
+    ['f+']=op_add_fp
+    ['f-']=op_sub_fp
+    ['f*']=op_mul_fp
+    ['f/']=op_div_fp
+
     # --- Memory/Variables ---
     ['!']=op_store
     ['@']=op_load
@@ -37,6 +49,7 @@ declare -A words=(
 
     # --- Output ---
     ['."']=op_print_string
+    ['f.']=op_print_fp
 
     # --- Control flow ---
     ['begin']=op_begin
@@ -77,9 +90,7 @@ check_prerequisites() {
     # TODO: Should do feature detection instead
     [[ "${BASH_VERSINFO[0]}" -ge 4 ]] || die "Required bash 4 or more, got $BASH_VERSION"
 }
-#endregion
 
-#region private ops
 check_stack_underflow() {
     local -i n="${1:-1}"
 
@@ -105,6 +116,65 @@ pop() {
 push() {
     stack+=("$1")
 }
+
+encode_fp() {
+    local int_part frac_part
+    local pad_len
+    
+    IFS='.' read -r int_part frac_part <<< "$1"
+    log "before: int_part=$int_part, frac_part=$frac_part"
+
+    pad_len=$(( FIXED_PLACES - ${#frac_part} ))
+
+    if [[ "$int_part" == '-'* ]]; then
+        int_part="${int_part#-}"
+        int_part="-${int_part#"${int_part%%[!0]*}"}"
+    else
+        int_part="${int_part#"${int_part%%[!0]*}"}"
+    fi
+
+    log "after: int_part=$int_part, frac_part=$frac_part"
+
+    if (( pad_len > 0 )); then
+        printf "%s%s%0*d" "$int_part" "$frac_part" $pad_len 0
+    elif (( pad_len < 0 )); then
+        die "Too many decimals in $1, fixed places $FIXED_PLACES"
+    else
+        printf "%s%s" "$int_part" "$frac_part"
+    fi
+}
+
+fp_decimal_expansion() {
+    local dividend="$1"
+    local divisor="$2"
+    local result quotient i digit mid
+
+    (( divisor != 0 )) || die "Divide by zero"
+
+    quotient=$(( dividend / divisor ))
+    result=$(( quotient * 10 ))
+
+    remainder=$(( dividend % divisor ))
+
+    for (( i = 0; i < FIXED_PLACES - 1; i++ ));
+    do
+        remainder=$(( remainder * 10 ))
+        digit=$(( remainder / divisor ))
+        result=$(( (result + digit) * 10 ))
+        remainder=$(( remainder % divisor ))
+    done
+
+    remainder=$(( remainder * 10 ))
+    digit=$(( remainder / divisor ))
+    result=$(( result + digit ))
+    remainder=$(( remainder % divisor ))
+    
+    mid=$(encode_fp "5.")
+
+    (( remainder >= mid )) && result=$(( result + 1 ))
+
+    echo "$result"
+}
 #endregion
 
 #region lexer
@@ -121,7 +191,7 @@ token_stream() {
         log "Reading $line"
         len=${#line}
         word=''
-        type=n # n|s|w
+        type=n # n|s|w|f
         
         for (( i = 0; i < len; i++ ))
         do
@@ -156,7 +226,17 @@ token_stream() {
                         ((i++))
                         ;;
                     '-')
-                        [[ -z "$word" && "${line:i+1:1}" == [0-9] ]] || type=w
+                        [[ -z "$word" && "${line:i+1:1}" == [0-9.] ]] || type=w
+                        word+="${line:i:1}"
+                        ;;
+                    '.')
+                        if [[ "$type" == 'n' && -n "$word" ]]; then
+                            type=f
+                        elif [[ "$type" == 'n' && "${line:i+1:1}" == [0-9] ]]; then
+                            type=f
+                        else
+                            type=w
+                        fi
                         word+="${line:i:1}"
                         ;;
                     *)
@@ -190,6 +270,19 @@ op_print_string() {
     read_token token type word
     [[ $type == 's' ]] || die "Expected string but got <$token>"
     echo "$word"
+}
+
+op_print_fp() {
+    check_stack_underflow 1
+
+    local fp int_part frac_part
+
+    pop fp
+
+    int_part="${fp:0:-6}"
+    frac_part="${fp: -6}"
+
+    echo "${int_part}.${frac_part%"${frac_part##*[!0]}"}"
 }
 
 op_add() {
@@ -227,6 +320,43 @@ op_div() {
     pop a
     (( b == 0 )) && die "Division by zero"
     push $((a/b))
+}
+
+op_add_fp() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+    push $((a+b))
+}
+
+op_sub_fp() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+    push $((a-b))
+}
+
+op_mul_fp() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+    push $(( (a*b)/FIXED_FACTOR ))
+}
+
+op_div_fp() {
+    check_stack_underflow 2
+
+    local -i a b
+    pop b
+    pop a
+
+    push "$(fp_decimal_expansion "$a" "$b")"
 }
 
 op_eq() {
@@ -407,26 +537,37 @@ op_variable() {
 
 op_store() {
     check_stack_underflow 2
+
     local value addr
+    
     pop addr
     pop value
 
-    # bad shellcheck, not an issue
-    # shellcheck disable=SC2004
-   (( addr < 0 || addr >= ${#mem[@]} )) && die "Invalid address <$addr>"
-    mem[$addr]="$value"
+    (( addr < 0 || addr >= ${#mem[@]} )) && die "Invalid address <$addr>"
+    
+    mem[addr]="$value"
 }
 
 op_load() {
     check_stack_underflow 1
     local addr
     pop addr
-   (( addr < 0 || addr >= ${#mem[@]} )) && die "Invalid address <$addr>"
+    (( addr < 0 || addr >= ${#mem[@]} )) && die "Invalid address <$addr>"
     push "${mem[$addr]}"
 }
 
 op_depth() {
     push "${#stack[@]}"
+}
+
+op_over() {
+    check_stack_underflow 2
+
+    push "${stack[-2]}"
+}
+
+op_drop() {
+    op_pop >/dev/null
 }
 
 op_do() {
@@ -533,7 +674,7 @@ op_word_def() {
             ';')
                 is_word_defined "${word_name}" && die "Word already defined <$word_name>"
                 udf["${word_name}"]="$word_body"
-                words["${word_name}"]='eval_next < <(echo -n "''$''{udf['"${word_name}"']}")'
+                words["${word_name}"]="eval_udf '$word_name'"
                 return 0
                 ;;
             ':')
@@ -597,6 +738,10 @@ op_if() {
     fi
 }
 
+eval_udf() {
+    eval_next < <(echo -n "${udf["$1"]}")
+}
+
 eval_next() {
     local token
     local type
@@ -612,7 +757,12 @@ eval_next() {
 
         
         case "$type" in
-            n) stack+=("$word") ;;
+            n) 
+                push "$word" 
+                ;;
+            f) 
+                push "$(encode_fp "$word")" 
+                ;;
             w)
                 [[ -v "words[$word]" ]] || die "Unknown word <$word>"
                 eval "${words[$word]}" || die "Could not eval token <${token}>"
@@ -639,6 +789,11 @@ test_token_stream() {
         'w:."'
         's:bar baz'
         'n:-1'
+        'f:1.'
+        'f:.1'
+        'f:1.1'
+        'f:-1.1'
+        'w:.'
     )
 
     local i=0
@@ -647,7 +802,7 @@ test_token_stream() {
     do
         [[ "$token" == "${expected_tokens[$i]}" ]] || die "Unexpected value <$token>, expected <${expected_tokens[$i]}>"
         (( i++ ))
-    done < <(token_stream <<< 'hello   world 42 69'$'\n'' foo ." bar baz" -1')
+    done < <(token_stream <<< 'hello   world 42 69'$'\n'' foo ." bar baz" -1 1. .1 1.1 -1.1 .')
 
     [[ $i -eq ${#expected_tokens[@]} ]] || die "Expected values: " "${expected_tokens[@]:i}"
 }
@@ -707,10 +862,40 @@ repl_run() {
 }
 #endregion
 
+usage() {
+    echo "Usage: bforth.sh [options...] [input.f]"
+    echo -e "-h\tShow this help"
+    echo -e "-t\tRun sanity check on startup"
+}
+
+parse_args() {
+    local opt
+
+    while getopts "ht" opt
+    do
+        case "$opt" in
+            h)
+                usage
+                exit 0
+                ;;
+            t)
+                RUN_TESTS=true
+                ;;
+            *)
+                usage >&2
+                exit 1
+                ;;
+        esac
+    done
+}
+
 main() {
     check_prerequisites
 
-    run_all_tests
+    parse_args "$@"
+    shift $((OPTIND-1))
+
+    $RUN_TESTS && run_all_tests
 
     if [[ $# -eq 1 ]]; then
         eval_next < <(token_stream <"$1")

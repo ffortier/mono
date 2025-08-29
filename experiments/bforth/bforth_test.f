@@ -1,13 +1,15 @@
 ( Unit tests )
 
-: asserteq = 0= if ." Assertion failed, values are not equal" 1 exit then ;
-: ASSERTEMPTY depth 0 > if ." Assertion failed, stack is not empty" 1 exit then ;
+: asserteq over over = 0= if ." Assertion failed, values are not equal" . . 1 exit else drop drop then ;
+: fasserteq over over = 0= if ." Assertion failed, values are not equal" f. f. 1 exit else drop drop then ;
+: ASSERTEMPTY depth 0 > if ." Assertion failed, stack is not empty" .s 1 exit then ;
 
 ." test arithmetic"
-2 3 * 6 asserteq assertempty
-2 3 + 5 asserteq assertempty
-2 3 - -1 asserteq assertempty
-6 3 / 2 asserteq assertempty
+2 3 * 6 asserteq
+2 3 + 5 asserteq
+2 3 - -1 asserteq
+6 3 / 2 asserteq
+assertempty
 
 ." test allot"
 HERE 0 asserteq
@@ -29,7 +31,23 @@ v1 @ 1234 asserteq
 assertempty
 
 ." test DO ... LOOP"
-0 10 0 do 2 + loop 20 asserteq assertempty
+0 10 0 do 2 + loop 20 asserteq
+assertempty
 
 ." test BEGIN ... UNTIL"
-10 begin 1 - dup 0= until 0 asserteq assertempty
+10 begin 1 - dup 0= until 0 asserteq
+assertempty
+
+." test fixed-point"
+1.234 1234000 asserteq
+.234 234000 asserteq
+1. 1000000 asserteq
+99.123456 99123456 fasserteq
+1.22 2.11 f+ 3.33 fasserteq
+1.22 2.11 f- -0.89 fasserteq
+2. 2.5 f* 5. fasserteq
+10. 2. f/ 5. fasserteq
+10. 3. f/ 3.333333 fasserteq
+10. 8. f/ 1.25 fasserteq
+assertempty
+
