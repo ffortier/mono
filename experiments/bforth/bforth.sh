@@ -208,6 +208,7 @@ token_stream() {
             else
                 case "${line:i:1}" in
                     ' ')
+                        [[ "$type" == 'f' && "$word" == '-.' ]] && type=w
                         [[ "$type" == 'w' && "$word" == '(' ]] && comment=1
                         [[ -n "$word" && "$comment" -eq 0 ]] && echo "$type:${word,,}"
                         [[ "$type" == 'w' && "$word" == ')' ]] && comment=0
@@ -247,6 +248,7 @@ token_stream() {
         done
 
         [[ "$type" != 's' ]] || die "Unexpected end of line, unclosed string literal"
+        [[ "$type" == 'f' && "$word" == '-.' ]] && type=w
         [[ "$type" == 'w' && "$word" == '(' ]] && comment=1
         [[ -n "$word" && "$comment" -eq 0 ]] && echo "$type:${word,,}"
         [[ "$type" == 'w' && "$word" == ')' ]] && comment=0
@@ -793,6 +795,7 @@ test_token_stream() {
         'f:1.1'
         'f:-1.1'
         'w:.'
+        'w:-.'
     )
 
     local i=0
@@ -801,7 +804,7 @@ test_token_stream() {
     do
         [[ "$token" == "${expected_tokens[$i]}" ]] || die "Unexpected value <$token>, expected <${expected_tokens[$i]}>"
         (( i++ ))
-    done < <(token_stream <<< 'hello   world 42 69'$'\n'' foo ." bar baz" -1 1. .1 1.1 -1.1 .')
+    done < <(token_stream <<< 'hello   world 42 69'$'\n'' foo ." bar baz" -1 1. .1 1.1 -1.1 . -.')
 
     [[ $i -eq ${#expected_tokens[@]} ]] || die "Expected values: " "${expected_tokens[@]:i}"
 }
