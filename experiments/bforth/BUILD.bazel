@@ -9,6 +9,7 @@ filegroup(
 bash_binary(
     name = "bforth",
     srcs = ["bforth.sh"],
+    args = ["-t"],
     runtime_args = ["-u"],
 )
 
@@ -16,7 +17,10 @@ bash_test(
     name = "tests",
     size = "small",
     srcs = ["bforth.sh"],
-    args = ["$(rootpath bforth_test.f)"],
+    args = [
+        "-t",
+        "$(rootpath bforth_test.f)",
+    ],
     data = ["bforth_test.f"],
     runtime_args = ["-u"],
 )
