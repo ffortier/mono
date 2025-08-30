@@ -9,6 +9,9 @@ FIXED_FACTOR=1000000
 FIXED_PLACES=6
 
 RUN_TESTS=false
+
+trap "exit" INT TERM
+trap 'kill $(jobs -p) 2>/dev/null' EXIT
 #endregion
 
 #region globals
@@ -50,6 +53,7 @@ declare -A words=(
     # --- Output ---
     ['."']=op_print_string
     ['f.']=op_print_fp
+    ['cr']=op_cr
 
     # --- Control flow ---
     ['begin']=op_begin
@@ -264,13 +268,13 @@ op_unexpected() {
 op_print_stack() {
     local content
     content="$(printf "<%d> " "${stack[@]}")"
-    printf "(%d) %s\n" "${#stack[@]}" "$content"
+    printf "(%d) %s" "${#stack[@]}" "$content"
 }
 
 op_print_string() {
     read_token token type word
     [[ $type == 's' ]] || die "Expected string but got <$token>"
-    echo "$word"
+    echo -n "$word"
 }
 
 op_print_fp() {
@@ -297,8 +301,12 @@ op_print_fp() {
             echo "$int_part"
         fi
     else
-        echo "${int_part}.${frac_trim}"
+        echo -n "${int_part}.${frac_trim}"
     fi
+}
+
+op_cr() {
+    echo
 }
 
 op_add() {
@@ -470,7 +478,7 @@ op_pop() {
 
     local -i value
     pop value
-    echo "$value"
+    echo -n "$value"
 }
 
 op_eq0() {
@@ -857,26 +865,26 @@ run_all_tests() {
 #endregion
 
 #region interactive mode
-repl_teardown() {
-    history -w
-}
-
 repl_run() {
     local line pid
 
     history -r
-   
-    trap repl_teardown EXIT
 
     while read -rep '> ' line
     do
         history -s -- "$line"
+        history -w
         token_stream <<< "$line" >&3
         sleep 10 &
         pid=$!
         echo "m:$pid" >&3
         wait $pid 2>/dev/null || true
+        echo
     done
+}
+
+repl_eval_loop() {
+    eval_next < <(repl_run 3>&1 1>&4)
 }
 #endregion
 
@@ -918,7 +926,7 @@ main() {
     if [[ $# -eq 1 ]]; then
         eval_next < <(token_stream <"$1")
     elif [[ -t 0 ]]; then
-        eval_next < <(repl_run 3>&1 1>&3 ) 3>&1
+        repl_eval_loop 4>&1
     else
         eval_next < <(token_stream)
     fi    
