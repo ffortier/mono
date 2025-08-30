@@ -28,6 +28,7 @@ bash_test(
 
 shellcheck_test(
     name = "shellcheck",
+    size = "small",
     data = ["bforth.sh"],
     severity = "style",
 )
