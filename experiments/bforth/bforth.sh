@@ -285,7 +285,7 @@ op_print_fp() {
     pop fp
 
     if (( fp == 0 )); then
-        echo "0"
+        printf "0"
         return
     fi
 
@@ -296,12 +296,12 @@ op_print_fp() {
 
     if [[ -z "$frac_trim" ]]; then
         if [[ -z "$int_part" || "$int_part" == "-" ]]; then
-            echo "0"
+            printf "0"
         else
-            echo "$int_part"
+            printf "%s" "$int_part"
         fi
     else
-        echo -n "${int_part}.${frac_trim}"
+        printf "%s.%s" "$int_part" "$frac_trim"
     fi
 }
 
