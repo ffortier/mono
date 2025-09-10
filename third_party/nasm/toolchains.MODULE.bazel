@@ -1,1 +1,1 @@
-bazel_dep(name = "nasm", version = "2.16.03.bcr.1")
+bazel_dep(name = "nasm", version = "2.16.03.bcr.2")
