@@ -1,10 +1,10 @@
 {
   "name": "esbuild",
   "optionalDependencies": {
-    "@esbuild/linux-x64": "0.25.9",
-    "@esbuild/linux-arm64": "0.25.9",
-    "@esbuild/darwin-arm64": "0.25.9",
-    "@esbuild/win32-x64": "0.25.9",
+    "@esbuild/linux-x64": "0.25.10",
+    "@esbuild/linux-arm64": "0.25.10",
+    "@esbuild/darwin-arm64": "0.25.10",
+    "@esbuild/win32-x64": "0.25.10",
     "swipl-wasm": "5.1.3"
   }
 }
