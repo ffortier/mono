@@ -62,7 +62,7 @@ crate.spec(
 
 crate.spec(
     package = "scryer-prolog",
-    version = "=0.9.4",
+    version = "=0.10.0",
     default_features = False,
     features = ["repl", "hostname"],
 )
