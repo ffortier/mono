@@ -16,7 +16,7 @@ maven.install(
         "org.junit.jupiter:junit-jupiter-params:6.0.0",
         "info.picocli:picocli:4.7.7",
         "org.slf4j:slf4j-api:2.0.17",
-        "ch.qos.logback:logback-classic:1.5.18",
+        "ch.qos.logback:logback-classic:1.5.19",
     ],
     fetch_sources = True,
     fetch_javadoc = True,
