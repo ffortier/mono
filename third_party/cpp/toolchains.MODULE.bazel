@@ -1,6 +1,13 @@
 bazel_dep(name = "toolchains_llvm", version = "1.5.0")
 bazel_dep(name = "rules_cc", version = "0.2.9")
 
+# Fixes https://github.com/bazel-contrib/toolchains_llvm/issues/547
+git_override(
+    module_name = "toolchains_llvm",
+    remote = "https://github.com/bazel-contrib/toolchains_llvm",
+    commit = "96b08ffbfef897b6d93d451896cee40248a6a51d",
+)
+
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 
 llvm.toolchain(
