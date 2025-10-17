@@ -40,7 +40,7 @@ crate.spec(
 
 crate.spec(
     package = "rustls",
-    version = "=0.23.32",
+    version = "=0.23.33",
     default_features = False,
     features = ["logging", "tls12"],
 )
