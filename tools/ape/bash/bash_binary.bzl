@@ -1,5 +1,9 @@
 _SCRIPT = """
-{bash} {runtime_args} {files} "$@" || exit 1
+if [[ -f "{bash}" ]]; then
+    {bash} {runtime_args} {files} "$@" || exit 1
+else
+    {files}.runfiles/_main/{bash} {runtime_args} {files} "$@" || exit 1
+fi  
 """
 
 def _impl(ctx):

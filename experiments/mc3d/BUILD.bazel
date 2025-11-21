@@ -1,0 +1,131 @@
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+load("@rules_shell//shell:sh_library.bzl", "sh_library")
+load("@rules_shellcheck//:def.bzl", "shellcheck_test")
+load("//tools/ape/bash:bash_binary.bzl", "bash_binary", "bash_test")
+
+GEN = '''
+declare -r FIXED_POINT=1000
+
+:> $@
+printf "#!/usr/bin/env bash\n" >> $@
+printf "[[ -v 'TRIG_TABLES_SH' ]] && return 0\n" >> $@
+printf "TRIG_TABLES_SH=1\n" >> $@
+printf "declare -A COSTABLE\n" >> $@
+printf "declare -A SINTABLE\n" >> $@
+
+for angle in {0..359}; do
+    printf "COSTABLE[%d]=%.0f;\t" $$angle "$$(bc -l <<< "c($$angle * 0.0174532925) * $$FIXED_POINT")"
+    printf "SINTABLE[%d]=%.0f\n" $$angle "$$(bc -l <<< "s($$angle * 0.0174532925) * $$FIXED_POINT")"
+done >> $@
+'''
+
+genrule(
+    name = "trig_tables_gen",
+    outs = ["trig_tables.sh"],
+    cmd = GEN,
+)
+
+sh_library(
+    name = "trig_tables",
+    srcs = [":trig_tables_gen"],
+)
+
+sh_library(
+    name = "base",
+    srcs = ["base.sh"],
+)
+
+sh_library(
+    name = "player",
+    srcs = ["player.sh"],
+    deps = [
+        ":fp",
+        ":trig_tables",
+    ],
+)
+
+bash_test(
+    name = "player_test",
+    size = "small",
+    srcs = ["player_test.sh"],
+    data = [
+        ":base",
+        ":player",
+    ],
+)
+
+sh_library(
+    name = "fp",
+    srcs = ["fp.sh"],
+)
+
+bash_test(
+    name = "fp_test",
+    size = "small",
+    srcs = ["fp_test.sh"],
+    data = [
+        ":base",
+        ":fp",
+    ],
+)
+
+sh_library(
+    name = "dda",
+    srcs = ["dda.sh"],
+    deps = [
+        ":base",
+        ":fp",
+        ":trig_tables",
+    ],
+)
+
+bash_test(
+    name = "dda_test",
+    size = "small",
+    srcs = ["dda_test.sh"],
+    data = [
+        ":dda",
+    ],
+)
+
+sh_library(
+    name = "main",
+    srcs = ["main.sh"],
+    deps = [
+        ":base",
+        ":dda",
+        ":fp",
+        ":player",
+    ],
+)
+
+sh_binary(
+    name = "linker",
+    srcs = ["linker.sh"],
+)
+
+genrule(
+    name = "mc3d_gen",
+    srcs = [
+        ":main",
+        ":trig_tables",
+    ],
+    outs = ["mc3d.sh"],
+    cmd = "PACKAGE_NAME=%s GENDIR=$(GENDIR) $(location :linker) main.sh > $@" % package_name(),
+    executable = True,
+    tools = [":linker"],
+)
+
+bash_binary(
+    name = "mc3d",
+    srcs = [":mc3d_gen"],
+    runtime_args = ["-u"],
+)
+
+shellcheck_test(
+    name = "shellcheck",
+    size = "small",
+    data = glob(["*.sh"]),
+    severity = "style",
+    tags = ["manual"],  # Need to migrate to rules_lint
+)

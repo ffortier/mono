@@ -1,0 +1,2 @@
+external-sources=true
+source-path=../../bazel-bin/experiments/mc3d
