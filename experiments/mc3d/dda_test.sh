@@ -5,14 +5,14 @@ set -u
 . "${BASH_SOURCE[0]%/*}/dda.sh" || exit 1
 
 test_dda_steps() {
-    [[ "$(dda_steps 5 5 0)" == "1000 0" ]] || die "dda_steps 5 5 0 failed"
-    [[ "$(dda_steps 5 5 45)" == "1000 1000" ]] || die "dda_steps 5 5 45 failed"
-    [[ "$(dda_steps 5 5 90)" == "0 1000" ]] || die "dda_steps 5 5 90 failed"
-    [[ "$(dda_steps 5 5 135)" == "-1000 1000" ]] || die "dda_steps 5 5 135 failed"
-    [[ "$(dda_steps 5 5 180)" == "-1000 0" ]] || die "dda_steps 5 5 180 failed"
-    [[ "$(dda_steps 5 5 225)" == "-1000 -1000" ]] || die "dda_steps 5 5 225 failed"
-    [[ "$(dda_steps 5 5 270)" == "0 -1000" ]] || die "dda_steps 5 5 270 failed"
-    [[ "$(dda_steps 5 5 315)" == "1000 -1000" ]] || die "dda_steps 5 5 315 failed"
+    [[ "$(dda_steps 0)" == "10000 0" ]] || die "dda_steps 0 failed"
+    [[ "$(dda_steps 45)" == "10000 10000" ]] || die "dda_steps 45 failed"
+    [[ "$(dda_steps 90)" == "0 10000" ]] || die "dda_steps 90 failed"
+    [[ "$(dda_steps 135)" == "-10000 10000" ]] || die "dda_steps 135 failed"
+    [[ "$(dda_steps 180)" == "-10000 0" ]] || die "dda_steps 180 failed"
+    [[ "$(dda_steps 225)" == "-10000 -10000" ]] || die "dda_steps 225 failed"
+    [[ "$(dda_steps 270)" == "0 -10000" ]] || die "dda_steps 270 failed"
+    [[ "$(dda_steps 315)" == "10000 -10000" ]] || die "dda_steps 315 failed"
 }
 
 
@@ -21,6 +21,8 @@ main_test() {
         echo "Running $func"
         "$func"
     done
+
+    dda 35 35 45
 }
 
 main_test

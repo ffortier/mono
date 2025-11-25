@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+declare map=(
+    "####################"
+    "#..................#"
+    "#..................#"
+    "#..................#"
+    "#..................#"
+    "#..................#"
+    "####################"
+)
+
+declare -r MAP_WIDTH=${#map[0]}
+declare -r MAP_HEIGHT=${#map[@]}
 declare -r CELL_SIZE=10
 
 [[ -v "DDA_SH" ]] && return 0
@@ -10,10 +22,12 @@ DDA_SH=1
 . "${BASH_SOURCE[0]%/*}/fp.sh" || exit 1
 . "${BASH_SOURCE[0]%/*}/base.sh" || exit 1
 
+# Calculate the DDA steps (dx, dy) for a given angle to move one cell in the grid.
+# Echoes two fixed-point numbers: dx dy
+# Arguments:
+#   $1: angle in degrees (0-359)
 dda_steps() {
-    local -i x="$1"
-    local -i y="$2"
-    local -i angle="$3"
+    local -i angle="$1"
     local -i dx dy abs_tan
     local -i sin_sign cos_sign
 
@@ -39,23 +53,46 @@ dda_steps() {
         fi
     fi
 
-    printf '%d %d\n' "$dx" "$dy"
+    printf '%d %d\n' "$(fp_mult $dx $((FIXED_POINT * CELL_SIZE)) )" "$(fp_mult $dy $((FIXED_POINT * CELL_SIZE)) )"
 }
 
+# Perform DDA to find the distance to the nearest wall from (x1, y1) in the given angle.
+# Arguments:
+#   $1: x1 in world coordinates
+#   $2: y1 in world coordinates
+#   $3: angle in degrees (0-359)
 dda() {
-    local -i x="$1"
-    local -i y="$2"
-    local -i angle="$3"
-    local -i mx=$(( (x / CELL_SIZE) * FIXED_POINT ))
-    local -i my=$(( (y / CELL_SIZE) * FIXED_POINT ))
+    local -i x1=$(( $1 / CELL_SIZE * CELL_SIZE * FIXED_POINT ))
+    local -i y1=$(( $2 / CELL_SIZE * CELL_SIZE * FIXED_POINT ))
+    local -i angle=$(( ($3 + 360) % 360 ))
     local -i dx dy
+    local -i x2 y2
+    local -i line column
+    local -i step
 
-    read -r dx dy < <(dda_steps "$x" "$y" "$angle")
+    read -r dx dy < <(dda_steps "$angle")
+
+    x2=$x1
+    y2=$y1
+
+    step=$(fp_div $dx "${COSTABLE[$angle]}")
+    step=$(( step < 0 ? -step : step ))
+    
+    while true; do
+        x2=$(fp_add $x2 $dx )
+        y2=$(fp_add $y2 $dy )
+
+        line=$(( y2 / (CELL_SIZE * FIXED_POINT) ))
+        column=$(( x2 / (CELL_SIZE * FIXED_POINT) ))
+
+        if (( line < 0 || line >= MAP_HEIGHT || column < 0 || column >= MAP_WIDTH )); then
+            break
+        fi
+
+        if [[ "${map[$line]:$column:1}" == "#" ]]; then
+            break
+        fi
+    done
+
+    fp_div $(( x2 - x1 )) "${COSTABLE[$angle]}"
 }
-
-# tan(a) = dx / dy
-# => dx = tan(a) * dy
-# or
-# dy = dx / tan(a)
-# if dx == 1 => dy = 1 / tan(a)
-# if dy == 1 => dx = tan(a) * 1
