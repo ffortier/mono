@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "bazelbuild.vscode-bazel",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "rust-lang.rust-analyzer",
+        "timonwong.shellcheck",
+        "mkhl.direnv"
+    ]
+}
