@@ -4,9 +4,19 @@
         "*.asm": "nasm",
         "*.fs": "fsharp",
     },
-    "rust-analyzer.linkedProjects": [
-        "rust-project.json"
-    ],
+    "rust-analyzer.workspace.discoverConfig": {
+        "command": [
+            "${workspaceFolder}/third_party/rust/discover_bazel_rust_project.sh",
+            "{arg}"
+        ],
+        "progressLabel": "rust_analyzer",
+        "filesToWatch": [
+            "BUILD",
+            "BUILD.bazel",
+            "MODULE.bazel"
+        ]
+    },
+    "rust-analyzer.workspace.symbol.search.scope": "workspace_and_dependencies",
     "cmake.ignoreCMakeListsMissing": true,
     "java.project.referencedLibraries": [
         "external/rules_jvm_external++maven+*/file/**/*.jar"

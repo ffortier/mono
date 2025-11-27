@@ -1,0 +1,31 @@
+load("@rules_rust//rust:rust_binary.bzl", "rust_binary")
+load("@rules_rust//rust:rust_library.bzl", "rust_library")
+load("@rules_rust//rust:rust_test.bzl", "rust_test")
+
+rust_library(
+    name = "lib",
+    srcs = glob(
+        ["src/**/*.rs"],
+        exclude = ["src/main.rs"],
+    ),
+    crate_name = "scratch",
+    deps = [
+        "@crates//:peg",
+        "@crates//:thiserror",
+    ],
+)
+
+rust_test(
+    name = "lib_test",
+    crate = ":lib",
+)
+
+rust_binary(
+    name = "scratch",
+    srcs = ["src/main.rs"],
+    deps = [
+        ":lib",
+        "@crates//:anyhow",
+        "@crates//:clap",
+    ],
+)

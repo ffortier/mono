@@ -1,0 +1,7 @@
+(when green flag clicked
+    (greet ["world"])
+)
+
+(define greet [name]
+    (say [(join ["hello "] [name])] for [2] seconds)
+)

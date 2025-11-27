@@ -61,6 +61,11 @@ crate.spec(
 )
 
 crate.spec(
+    package = "peg",
+    version = "=0.8.5",
+)
+
+crate.spec(
     package = "scryer-prolog",
     version = "=0.10.0",
     default_features = False,
