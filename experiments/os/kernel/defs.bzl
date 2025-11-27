@@ -34,6 +34,7 @@ def _cc_binary_impl(name, **kwargs):
         features = (kwargs.pop("features") or []) + select({
             ":%s_kernel" % name: [
                 "-default_link_flags",
+                "-default_link_libs",
                 "-default_compile_flags",
                 "-macos_default_link_flags",
                 "-macos_minimum_os",
