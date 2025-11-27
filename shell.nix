@@ -4,12 +4,9 @@
       bash
       coreutils
       bazelisk 
-      bazel-watcher
-      bazel-buildtools 
       python313
       git
       qemu
-      deno
       vim
       dotnet-sdk_9
       wabt
