@@ -75,6 +75,13 @@ write_file(
 )
 
 write_file(
+    name = "bin/clangd",
+    is_executable = True,
+    out = "bin/clangd.sh",
+    content = ["exit 69"],
+)
+
+write_file(
     name = "bin/ld.lld",
     is_executable = True,
     out = "bin/ld.lld.sh",
