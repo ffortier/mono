@@ -59,9 +59,9 @@ sh_binary(
 py_binary(
     name = "update-toolchains",
     srcs = ["update-toolchains.py"],
-    data = ["//third_party/buildtools:buildifier_resolved"],
+    data = ["@buildifier_prebuilt//:buildifier"],
     env = {
-        "BUILDIFIER": "$(rootpath //third_party/buildtools:buildifier_resolved)",
+        "BUILDIFIER": "$(location @buildifier_prebuilt//:buildifier)",
     },
     tags = ["manual"],
 )
