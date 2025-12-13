@@ -1,7 +1,6 @@
 bazel_dep(name = "protobuf", version = "33.1")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
-
 maven.install(
     artifacts = [
         "org.ow2.asm:asm:9.9",
@@ -18,10 +17,13 @@ maven.install(
         "org.slf4j:slf4j-api:2.0.17",
         "ch.qos.logback:logback-classic:1.5.21",
     ],
-    fetch_sources = True,
-    fetch_javadoc = True,
     fail_if_repin_required = True,
+    fetch_javadoc = True,
+    fetch_sources = True,
+    known_contributing_modules = [
+        "",
+        "protobuf",
+    ],
     lock_file = "//third_party/java:maven_install.json",
 )
-
 use_repo(maven, "maven")

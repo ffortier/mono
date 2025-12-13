@@ -1,78 +1,74 @@
 crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
-
 crate.spec(
+    features = ["derive"],
     package = "clap",
     version = "=4.5.53",
-    features = ["derive"],
 )
-
 crate.spec(
+    default_features = False,
+    features = [
+        "blocking",
+        "rustls-tls",
+        "http2",
+        "charset",
+    ],
     package = "reqwest",
     version = "=0.12.24",
-    default_features = False,
-    features = ["blocking", "rustls-tls", "http2", "charset"],
 )
-
 crate.spec(
     package = "anyhow",
     version = "=1.0.100",
 )
-
 crate.spec(
     package = "sha2",
     version = "=0.10.9",
 )
-
 crate.spec(
     package = "hex",
     version = "=0.4.3",
 )
-
 crate.spec(
     package = "thiserror",
     version = "=2.0.17",
 )
-
 crate.spec(
     package = "termion",
     version = "=4.0.6",
 )
-
 crate.spec(
+    default_features = False,
+    features = [
+        "logging",
+        "tls12",
+    ],
     package = "rustls",
     version = "=0.23.35",
-    default_features = False,
-    features = ["logging", "tls12"],
 )
-
 crate.spec(
     package = "byteorder",
     version = "=1.5.0",
 )
-
 crate.spec(
     package = "flate2",
-    version = "=1.1.7",
+    version = "=1.1.5",
 )
-
 crate.spec(
     package = "tokio",
     version = "=1.48.0",
 )
-
 crate.spec(
+    default_features = False,
+    features = [
+        "repl",
+        "hostname",
+    ],
     package = "scryer-prolog",
     version = "=0.10.0",
-    default_features = False,
-    features = ["repl", "hostname"],
 )
-
 crate.annotation(
-    crate = "scryer-prolog",
     additive_build_file = "//third_party/rust:scryer-prolog.BUILD.bazel",
+    crate = "scryer-prolog",
     extra_aliased_targets = {"scryer_prolog_bin": "bin"},
 )
-
 crate.from_specs()
-
 use_repo(crate, "crates")
