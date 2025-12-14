@@ -1,5 +1,5 @@
 {
-  "lockFileVersion": 18,
+  "lockFileVersion": 24,
   "registryFileHashes": {
     "https://bcr.bazel.build/bazel_registry.json": "8a28e4aff06ee60aed2a8c281907fb8bcbf3b753c91fb5a5c57da3215d5b3497",
     "https://bcr.bazel.build/modules/abseil-cpp/20210324.2/MODULE.bazel": "7cd0312e064fde87c8d1cd79ba06c876bd23630c83466e9500321be55c96ace2",
@@ -277,58 +277,6 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
-    "//third_party/cpp:sysroots.bzl%sysroots": {
-      "general": {
-        "bzlTransitiveDigest": "41VCj8fzGxKTWS4eM6PfKuL5P5RtRS5dgsFaGhx6Zzk=",
-        "usagesDigest": "LTKJNd5gNxvyNX/J+LO66uaxoVMwB+xFB8tH9NU+5m8=",
-        "recordedFileInputs": {
-          "@@//third_party/cpp/sysroots.json": "54a898a19c5d4234b07e35502a52582b74b0fdc83c55338e4df77afdbaf7ea19"
-        },
-        "recordedDirentsInputs": {},
-        "envVariables": {},
-        "generatedRepoSpecs": {
-          "sysroot_darwin_universal": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob(\n        include = [\"**\"],\n        exclude = [\"**/*:*\"],\n    ),\n    visibility = [\"//visibility:public\"],\n)\n",
-              "sha256": "987d41a68008c59f1128d436ed75ac923db3040db46b668cafb6b4fbbcf47bf4",
-              "strip_prefix": "sdk-macos-13.3-1615cd09b3a42ae590e05e63251a0e9fbc47bab5/root",
-              "urls": [
-                "https://github.com/hexops-graveyard/sdk-macos-13.3/archive/1615cd09b3a42ae590e05e63251a0e9fbc47bab5.tar.gz"
-              ]
-            }
-          },
-          "sysroots_bullseye_amd64": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "url": "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/ec989b96c5f1e235182e5f2a5c9d23b3eb4101e0/debian_bullseye_amd64_sysroot.tar.xz",
-              "integrity": "sha1-7JiblsXx4jUYLl8qXJ0js+tBAeA=",
-              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
-            }
-          },
-          "sysroots_bullseye_arm64": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "url": "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/f65e4d81b81d19f4354ed1bb22afeb1f3949a446/debian_bullseye_arm64_sysroot.tar.xz",
-              "integrity": "sha1-9l5NgbgdGfQ1TtG7Iq/rHzlJpEY=",
-              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
-            }
-          }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "",
-            "aspect_bazel_lib",
-            "aspect_bazel_lib+"
-          ],
-          [
-            "",
-            "bazel_tools",
-            "bazel_tools"
-          ]
-        ]
-      }
-    },
     "//third_party/deno:extension.bzl%deno": {
       "general": {
         "bzlTransitiveDigest": "odpf3W/PXWFXa95ppF0P55Q1JRrStAoBW3W9ihy91gc=",
@@ -458,7 +406,7 @@
     },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
-        "bzlTransitiveDigest": "OlvsB0HsvxbR8ZN+J9Vf00X/+WVz/Y/5Xrq2LgcVfdo=",
+        "bzlTransitiveDigest": "rL/34P1aFDq2GqVC2zCFgQ8nTuOC6ziogocpvG50Qz8=",
         "usagesDigest": "QI2z8ZUR+mqtbwsf2fLqYdJAkPOHdOV+tF2yVAUgRzw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -522,7 +470,7 @@
     },
     "@@rules_python+//python/extensions:config.bzl%config": {
       "general": {
-        "bzlTransitiveDigest": "xaCns8Qt+8bJqVLy8r6nc/eL2AjEIX/vOdjqoh5xYac=",
+        "bzlTransitiveDigest": "W97kKxM+lW7l/kO0rQa7Jm31CA1j+W1bNHGKjwX5xMg=",
         "usagesDigest": "ZVSXMAGpD+xzVNPuvF1IoLBkty7TROO0+akMapt1pAg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -757,7 +705,7 @@
     },
     "@@rules_python+//python/uv:uv.bzl%uv": {
       "general": {
-        "bzlTransitiveDigest": "N8SCcKcL6KnzBLApxvY2jR9vhXjA2VCBZMLZfY3sDRA=",
+        "bzlTransitiveDigest": "zyNsrbgVKwpA0B3zI84imAfuC424VSzYNPgjr/HJy5M=",
         "usagesDigest": "BQO2AKueRw8k0eAIBIxBgVuxjKg20WcyO3TabWgtIl4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -929,7 +877,7 @@
     },
     "@@rules_rust+//crate_universe:extension.bzl%crate": {
       "general": {
-        "bzlTransitiveDigest": "ADrR9XbdVDxUOYRmL9bgXwHp5hhqfZdkEA3VR2PIoQg=",
+        "bzlTransitiveDigest": "dTlKbRqsBuDU75xorECikvyTZyJtS25UfD67JFzfEj4=",
         "usagesDigest": "C+3os/wS6g1uF7K1oUX2HnI8UQgbwk3ouLqcLXPnpyo=",
         "recordedFileInputs": {
           "@@//third_party/rust/scryer-prolog.BUILD.bazel": "fd0418b29e7b865157c068d26555602a37cb8e26b5f46571a8d2a7edd6b1161c"
@@ -6381,10 +6329,6 @@
             }
           }
         },
-        "moduleExtensionMetadata": {
-          "useAllRepos": "NO",
-          "reproducible": false
-        },
         "recordedRepoMappingEntries": [
           [
             "bazel_features+",
@@ -6446,7 +6390,7 @@
     },
     "@@rules_shellcheck+//internal:extensions.bzl%shellcheck_dependencies": {
       "general": {
-        "bzlTransitiveDigest": "KkVSqZZaJmtwcc7dPCVFpAHTQGgkwQNlyBe1dcjcxBI=",
+        "bzlTransitiveDigest": "kB1j7h0j6V6LoqeTFYORGyLwGPdsUtfQ1qS0wquQk0U=",
         "usagesDigest": "gZ5mts5iUwm7R4hu1lnRjiuIzjiK0+1e8NTxs0a4epE=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -6682,7 +6626,7 @@
     },
     "@@uxn+//:extension.bzl%uxn": {
       "general": {
-        "bzlTransitiveDigest": "JfH0vXTzkVB1rV5hbV5/qM8Zqg54THmIq98xRxDJAQU=",
+        "bzlTransitiveDigest": "NLUvN3X37NMXbXKB1Syx2VFOqqahw37sxkpqGKW91x0=",
         "usagesDigest": "mITr/jTD/jLOB7tSMnglBykqMSjicvxanX3ABmcJJRk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -6709,5 +6653,6 @@
         ]
       }
     }
-  }
+  },
+  "facts": {}
 }
