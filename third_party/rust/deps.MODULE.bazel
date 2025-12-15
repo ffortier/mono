@@ -13,7 +13,7 @@ crate.spec(
         "charset",
     ],
     package = "reqwest",
-    version = "=0.12.25",
+    version = "=0.12.26",
 )
 crate.spec(
     package = "anyhow",
