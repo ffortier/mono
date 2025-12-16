@@ -3,7 +3,7 @@ bazel_dep(name = "protobuf", version = "33.1")
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
-        "org.ow2.asm:asm:9.9",
+        "org.ow2.asm:asm:9.9.1",
         "org.ow2.asm:asm-util:9.9",
         "org.junit.platform:junit-platform-commons:6.0.1",
         "org.junit.platform:junit-platform-console:6.0.1",
