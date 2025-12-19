@@ -13,11 +13,9 @@ bazel_dep(name = "rules_shellcheck", version = "0.4.0")
 bazel_dep(name = "bazel_env.bzl", version = "0.5.0")
 bazel_dep(name = "rules_multitool", version = "1.11.1")
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.1.1")
-bazel_dep(name = "buildozer", version = "8.2.1")
 
 dotnet = use_extension("@rules_dotnet//dotnet:extensions.bzl", "dotnet")
 dotnet.toolchain(dotnet_version = "9.0.100")
-
 use_repo(dotnet, "dotnet_toolchains")
 
 register_toolchains("@dotnet_toolchains//:all")
@@ -38,7 +36,6 @@ register_toolchains("//:all")
 
 bazel_lib_toolchains = use_extension("@aspect_bazel_lib//lib:extensions.bzl", "toolchains")
 bazel_lib_toolchains.coreutils()
-
 use_repo(bazel_lib_toolchains, "coreutils_toolchains")
 
 register_toolchains("@coreutils_toolchains//:all")
@@ -49,36 +46,32 @@ local_path_override(
 )
 
 cc65 = use_extension("@toolchains_cc65//toolchains:extensions.bzl", "cc65")
-
 cc65.bootstrap_from_sources(
-    urls = ["https://github.com/cc65/cc65/archive/refs/tags/V2.19.tar.gz"],
     sha256 = "157b8051aed7f534e5093471e734e7a95e509c577324099c3c81324ed9d0de77",
     strip_prefix = "cc65-2.19",
+    urls = ["https://github.com/cc65/cc65/archive/refs/tags/V2.19.tar.gz"],
 )
-
 cc65.common_snapshot(
-    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65-common_2.19.0.git.1756213875.357f64e4-0_all.deb"],
     sha256 = "7f07bcbce6be19567b00f8bac747138d98420eac1dc3980fe277a2f037d12dfa",
     strip_prefix = "usr/share/cc65",
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65-common_2.19.0.git.1756213875.357f64e4-0_all.deb"],
 )
-
 cc65.binary_snapshot(
     platform = "linux-x86_64",
-    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65_2.19.0.git.1756213875.357f64e4-0_amd64.deb"],
     sha256 = "f2f2e017923525a333187e2778bf1e270659001ba19b66a52cf5cd3f65611253",
     strip_prefix = "usr",
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65_2.19.0.git.1756213875.357f64e4-0_amd64.deb"],
 )
-
 cc65.binary_snapshot(
     platform = "windows-x86_64",
-    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65-snapshot-win32.tar.gz"],
     sha256 = "29c27316692f7f4ea21d9be6be13717cbdecd37d7794c8eb3734159ca241a4bb",
     strip_prefix = "cc65-snapshot-win32",
+    urls = ["https://cdn.statically.io/gh/ffortier/prebuilt/a18aa60f78d2def357ae6033432b7b5c0d475a93/cc65-snapshot-win32.tar.gz"],
 )
-
 use_repo(cc65, "cc65")
 
 register_toolchains("@cc65//:all")
+
 register_toolchains("//tools/ape/bash:all")
 
 include("//third_party/rust:toolchains.MODULE.bazel")

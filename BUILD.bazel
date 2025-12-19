@@ -1,10 +1,10 @@
+load("@bazel_env.bzl", "bazel_env")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@multitool//:tools.bzl", MULTITOOL_TOOLS = "TOOLS")
 load("@pip//:requirements.bzl", "requirement")
 load("@python_versions//3.13:defs.bzl", "py_console_script_binary")
 load("@rules_prolog//:prolog_toolchain.bzl", "prolog_toolchain")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
-load("@bazel_env.bzl", "bazel_env")
 
 bazel_env(
     name = "bazel_env",
@@ -21,7 +21,7 @@ bazel_env(
         "rustc": "@rules_rust//tools/upstream_wrapper:rustc",
         "rustfmt": "@rules_rust//tools/upstream_wrapper:rustfmt",
         "buildifier": "@buildifier_prebuilt//:buildifier",
-        "buildozer": "@buildozer",
+        "buildozer": "@buildifier_prebuilt//:buildozer",
         "deno": "@resolved-deno",
     } | MULTITOOL_TOOLS,
 )
