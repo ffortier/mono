@@ -14,7 +14,7 @@ cc_feature(
 
 cc_args(
     name = "quote_include_paths_flags",
-    actions = ["@rules_cc//cc/toolchains/actions:compile_actions"],
+    actions = ["@rules_cc//cc/toolchains/actions:c_compile"],
     args = [
         "-I",
         "{quote_include_paths}",
@@ -25,7 +25,7 @@ cc_args(
 
 cc_args(
     name = "include_paths_flags",
-    actions = ["@rules_cc//cc/toolchains/actions:compile_actions"],
+    actions = ["@rules_cc//cc/toolchains/actions:c_compile"],
     args = [
         "-I",
         "{include_paths}",
@@ -36,7 +36,7 @@ cc_args(
 
 cc_args(
     name = "system_include_paths_flags",
-    actions = ["@rules_cc//cc/toolchains/actions:compile_actions"],
+    actions = ["@rules_cc//cc/toolchains/actions:c_compile"],
     args = [
         "-I",
         "{system_include_paths}",
