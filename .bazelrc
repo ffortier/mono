@@ -17,6 +17,9 @@ build:bb --remote_timeout=3600
 build:bb --remote_cache_compression
 build:bb --nolegacy_important_outputs
 build:bb --experimental_remote_cache_compression_threshold=100
+build:bb --noslim_profile
+build:bb --experimental_profile_include_target_label
+build:bb --experimental_profile_include_primary_output
 
 common --tool_java_language_version=21
 common --tool_java_runtime_version=remotejdk_21
