@@ -1,0 +1,28 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+
+rust_library(
+    name = "disquette_lib",
+    srcs = glob(
+        ["src/**/*.rs"],
+        exclude = ["src/main.rs"],
+    ),
+    crate_name = "disquette",
+    deps = [
+        "@crates//:petscii",
+        "@crates//:thiserror",
+    ],
+)
+
+rust_binary(
+    name = "disquette",
+    srcs = ["src/main.rs"],
+    args = ["$(rootpath samples/francis.d64)"],
+    data = [
+        "samples/francis.d64",
+    ],
+    deps = [
+        ":disquette_lib",
+        "@crates//:anyhow",
+        "@crates//:clap",
+    ],
+)
