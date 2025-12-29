@@ -1,66 +1,75 @@
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 http_archive(
     name = "walloc",
-    urls = ["https://github.com/wingo/walloc/archive/a93409f5ebd49c875514c5fee30d3b151f7b0882.zip"],
+    build_file = "//third_party/cpp:walloc.BUILD.bazel",
     sha256 = "857a904f5063b867e1699c9411475a2c155beb6c4b740c7367b20615c3f1531a",
     strip_prefix = "walloc-a93409f5ebd49c875514c5fee30d3b151f7b0882",
-    build_file = "//third_party/cpp:walloc.BUILD.bazel",
+    urls = ["https://github.com/wingo/walloc/archive/a93409f5ebd49c875514c5fee30d3b151f7b0882.zip"],
 )
 
 http_archive(
     name = "raylib",
-    urls = ["https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz"],
+    build_file = "//third_party/cpp:raylib.BUILD.bazel",
+    patch_args = ["-p1"],
+    patches = ["//third_party/cpp:raylib_glfw.patch"],
     sha256 = "aea98ecf5bc5c5e0b789a76de0083a21a70457050ea4cc2aec7566935f5e258e",
     strip_prefix = "raylib-5.5",
-    build_file = "//third_party/cpp:raylib.BUILD.bazel",
-    patches = ["//third_party/cpp:raylib_glfw.patch"],
-    patch_args = ["-p1"],
+    urls = ["https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz"],
 )
 
 http_archive(
     name = "stb",
-    urls = ["https://github.com/nothings/stb/archive/f1c79c02822848a9bed4315b12c8c8f3761e1296.zip"],
+    build_file = "//third_party/cpp:stb.BUILD.bazel",
     sha256 = "461ed3e66abb68187c5880554b60ae1e9e0a3112324c93d2453c6a2e65369120",
     strip_prefix = "stb-f1c79c02822848a9bed4315b12c8c8f3761e1296",
-    build_file = "//third_party/cpp:stb.BUILD.bazel",
+    urls = ["https://github.com/nothings/stb/archive/f1c79c02822848a9bed4315b12c8c8f3761e1296.zip"],
 )
 
 http_archive(
     name = "libdill",
-    urls = ["https://github.com/sustrik/libdill/archive/refs/tags/2.14.tar.gz"],
+    build_file = "//third_party/cpp:libdill.BUILD.bazel",
+    patch_args = ["-p1"],
+    patches = ["//third_party/cpp:libdill.patch"],
     sha256 = "ebba0e5b433ec123b74a57d49b89dfa673aa258e03e6a452959e556b4c4529b9",
     strip_prefix = "libdill-2.14",
-    build_file = "//third_party/cpp:libdill.BUILD.bazel",
-    patches = ["//third_party/cpp:libdill.patch"],
-    patch_args = ["-p1"],
+    urls = ["https://github.com/sustrik/libdill/archive/refs/tags/2.14.tar.gz"],
 )
 
 http_archive(
     name = "clay",
-    urls = ["https://github.com/nicbarker/clay/archive/refs/tags/v0.14.tar.gz"],
+    build_file = "//third_party/cpp:clay.BUILD.bazel",
     sha256 = "ee8f6477020dd72afe8cf6f8d3ab6855980028289a2b677a1423d17aab983585",
     strip_prefix = "clay-0.14",
-    build_file = "//third_party/cpp:clay.BUILD.bazel",
+    urls = ["https://github.com/nicbarker/clay/archive/refs/tags/v0.14.tar.gz"],
 )
 
 http_archive(
     name = "slog",
-    urls = ["https://github.com/kala13x/slog/archive/refs/tags/v1.8.48.tar.gz"],
+    build_file = "//third_party/cpp:slog.BUILD.bazel",
+    patch_args = ["-p1"],
+    patches = ["//third_party/cpp:slog_wasm32.patch"],
     sha256 = "22d06d8f67a7668b1344f6e8486cc58806d1e5f38b40c715cc80cb023e752f10",
     strip_prefix = "slog-1.8.48",
-    build_file = "//third_party/cpp:slog.BUILD.bazel",
-    patches = ["//third_party/cpp:slog_wasm32.patch"],
-    patch_args = ["-p1"],
+    urls = ["https://github.com/kala13x/slog/archive/refs/tags/v1.8.48.tar.gz"],
 )
 
 http_archive(
     name = "twr_wasm",
-    urls = ["https://github.com/twiddlingbits/twr-wasm/archive/refs/tags/v2.5.0.tar.gz"],
+    build_file = "//third_party/cpp:twr_wasm.BUILD.bazel",
     sha256 = "6d79df15c9d0339b5cc1987949971a4595c8e4cfa7af09e9bc003d0fed838038",
     strip_prefix = "twr-wasm-2.5.0",
-    build_file = "//third_party/cpp:twr_wasm.BUILD.bazel",
+    urls = ["https://github.com/twiddlingbits/twr-wasm/archive/refs/tags/v2.5.0.tar.gz"],
+)
+
+http_archive(
+    name = "vice",
+    build_file = "//third_party/cpp:vice.BUILD.bazel",
+    sha256 = "615ad564e5b77c8df13855ad243d68f3a84769e6e92cef74daa6e706e23a3799",
+    strip_prefix = "svn-mirror-3.10.0/vice",
+    urls = ["https://github.com/VICE-Team/svn-mirror/archive/refs/tags/3.10.0.tar.gz"],
 )
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")

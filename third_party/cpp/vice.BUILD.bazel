@@ -1,0 +1,26 @@
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+
+write_file(
+    name = "config",
+    out = "src/config.h",
+    content = [""],
+)
+
+write_file(
+    name = "version",
+    out = "src/version.h",
+    content = ["#define VERSION \"3.10.0\""],
+)
+
+cc_binary(
+    name = "petcat",
+    srcs = [
+        "src/tools/petcat/petcat.c",
+        "src/vice.h",
+        ":config",
+        ":version",
+    ],
+    includes = ["./src"],
+    visibility = ["//visibility:public"],
+)
