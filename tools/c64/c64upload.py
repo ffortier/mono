@@ -25,7 +25,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.host:
-        print("Error: Missing hos.")
+        print("Error: Missing host.")
         exit(1)
 
     source_path = Path(args.source)
