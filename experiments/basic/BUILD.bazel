@@ -1,0 +1,11 @@
+load("//tools/c64:basic_binary.bzl", "basic_binary")
+
+basic_binary(
+    name = "hello",
+    srcs = ["hello.bas"],
+)
+
+basic_binary(
+    name = "sprite",
+    srcs = ["sprite.bas"],
+)

@@ -1,0 +1,11 @@
+load("@pip//:requirements.bzl", "requirement")
+load("@rules_python//python:py_binary.bzl", "py_binary")
+
+py_binary(
+    name = "c64upload",
+    srcs = ["c64upload.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("requests"),
+    ],
+)

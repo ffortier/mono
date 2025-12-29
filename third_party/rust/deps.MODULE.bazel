@@ -70,5 +70,9 @@ crate.annotation(
     crate = "scryer-prolog",
     extra_aliased_targets = {"scryer_prolog_bin": "bin"},
 )
+crate.spec(
+    package = "petscii",
+    version = "=0.2.1",
+)
 crate.from_specs()
 use_repo(crate, "crates")
