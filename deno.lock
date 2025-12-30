@@ -9,7 +9,7 @@
     "jsr:@std/path@^1.0.6": "1.0.9",
     "npm:esbuild@0.27": "0.27.0",
     "npm:lit@^3.3.0": "3.3.0",
-    "npm:swipl-wasm@^5.0.11": "5.0.11"
+    "npm:swipl-wasm@6": "6.0.0"
   },
   "jsr": {
     "@luca/esbuild-deno-loader@0.11.1": {
@@ -179,8 +179,8 @@
         "@lit-labs/ssr-dom-shim"
       ]
     },
-    "@types/emscripten@1.40.1": {
-      "integrity": "sha512-sr53lnYkQNhjHNN0oJDdUm5564biioI5DuOpycufDVK7D3y+GR3oUswe2rlwY1nPNyusHbrJ9WoTyIHl4/Bpwg=="
+    "@types/emscripten@1.41.5": {
+      "integrity": "sha512-cMQm7pxu6BxtHyqJ7mQZ2kXWV5SLmugybFdHCBbJ5eHzOo6VhBckEgAT3//rP5FwPHNPeEiq4SmQ5ucBwsOo4Q=="
     },
     "@types/trusted-types@2.0.7": {
       "integrity": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw=="
@@ -240,8 +240,8 @@
         "lit-html"
       ]
     },
-    "swipl-wasm@5.0.11": {
-      "integrity": "sha512-Dv0bAh73Vv/UABJJWZOtrfr3sjlSsQ4mxlILEZ2c2OKBfRI+dvTuGi7VSbljm51BLKVV8lmObGoN7eeTyQTiZw==",
+    "swipl-wasm@6.0.0": {
+      "integrity": "sha512-0G95cxInIkgvRf3wIj8N1dAqkCy34EB1EXlHEmDJKja5Km0IHNps+mh2BNpNv+nVTf1ucE+C5g1O3W1E+5UTtA==",
       "dependencies": [
         "@types/emscripten"
       ],
@@ -254,7 +254,7 @@
       "jsr:@std/assert@^1.0.13",
       "npm:esbuild@0.27",
       "npm:lit@^3.3.0",
-      "npm:swipl-wasm@^5.0.11"
+      "npm:swipl-wasm@6"
     ]
   }
 }
