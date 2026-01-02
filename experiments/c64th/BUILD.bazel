@@ -1,0 +1,25 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@toolchains_cc65//cc65:cc65_binary.bzl", "cc65_binary")
+
+cc_library(
+    name = "char_stream",
+    srcs = ["char_stream.c"],
+    hdrs = ["char_stream.h"],
+)
+
+cc_library(
+    name = "lexer",
+    srcs = ["lexer.c"],
+    hdrs = ["lexer.h"],
+    deps = [":char_stream"],
+)
+
+cc65_binary(
+    name = "c64th",
+    srcs = ["c64th.c"],
+    target = "c64",
+    deps = [
+        ":char_stream",
+        ":lexer",
+    ],
+)
