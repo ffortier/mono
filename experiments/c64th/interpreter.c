@@ -8,7 +8,7 @@ void interpreter_init(Interpreter* interpreter, Lexer* lexer) {
 
 void interpreter_run(Interpreter* interpreter) {
   static int stack[256];
-  static int sp = -1;  // Stack pointer
+  int sp = -1;  // Stack pointer (reset each run)
 
   while (lexer_next(interpreter->lexer) != TOKEN_EOF) {
     Token* token = lexer_get_token(interpreter->lexer);
