@@ -13,6 +13,7 @@ typedef enum {
   TOKEN_MINUS,
   TOKEN_ASTERISK,
   TOKEN_SLASH,
+  TOKEN_DOT,
 } TokenKind;
 
 typedef struct {
