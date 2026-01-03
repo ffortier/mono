@@ -5,7 +5,7 @@ load("@toolchains_cc65//platforms:platforms.bzl", "find_platform_constraints")
 def cc65_binary(name = None, target = None, tags = [], visibility = [], target_compatible_with = [], **kwargs):
     cc_binary(
         name = "%s.prg" % name,
-        # target_compatible_with = find_platform_constraints(target),
+        target_compatible_with = find_platform_constraints(target),
         tags = tags,
         **kwargs
     )
