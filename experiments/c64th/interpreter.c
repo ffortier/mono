@@ -1,7 +1,7 @@
 #include "interpreter.h"
 
 #include "lexer.h"
-
+#include <stdio.h>
 void interpreter_init(Interpreter* interpreter, Lexer* lexer) {
   interpreter->lexer = lexer;
 }
