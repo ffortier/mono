@@ -14,12 +14,20 @@ cc_library(
     deps = [":char_stream"],
 )
 
+cc_library(
+    name = "interpreter",
+    srcs = ["interpreter.c"],
+    hdrs = ["interpreter.h"],
+    deps = [":lexer"],
+)
+
 cc65_binary(
     name = "c64th",
     srcs = ["c64th.c"],
     target = "c64",
     deps = [
         ":char_stream",
+        ":interpreter",
         ":lexer",
     ],
 )
