@@ -59,6 +59,7 @@ refresh_compile_commands(
     name = "refresh_compile_commands",
     targets = {
         "//experiments/digital": "",
+        "//experiments/c64th:c64th.prg": "--copt=-D__C64__ --copt=-D__CBM__ --copt=-isystem --copt=external/toolchains_cc65++cc65+cc65_linux_x86_64/include --copt=-iquote --copt=external/toolchains_cc65++cc65+cc65_linux_x86_64/include",  #--platforms=@toolchains_cc65//platforms:c64
     },
 )
 
