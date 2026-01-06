@@ -42,7 +42,7 @@ crate.spec(
         "tls12",
     ],
     package = "rustls",
-    version = "=0.23.35",
+    version = "=0.23.36",
 )
 crate.spec(
     package = "byteorder",
