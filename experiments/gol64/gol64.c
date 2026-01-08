@@ -10,42 +10,53 @@ char* mem = (char*)0x0400;
 #define CIRCLE 81
 
 void update_cells(void) {
-  int i = 0;
-  signed char x, y;
+  unsigned char x, y;
+  char* current_count;
+  char* current_mem;
 
   memset(&counts[0], 0, 1000);
 
+  current_mem = mem;
+  current_count = &counts[0];
+
   for (y = 0; y < 25; y++) {
     for (x = 0; x < 40; x++) {
-      if (mem[i] == CIRCLE) {
-        // counts[i] += 1;
+      if (*current_mem == CIRCLE) {
         if (x > 0) {
-          counts[i - 1] += 1;
-          if (y > 0) counts[i - 41] += 1;
-          if (y < 24) counts[i + 39] += 1;
+          *(current_count - 1) += 1;
+          if (y > 0) *(current_count - 41) += 1;
+          if (y < 24) *(current_count + 39) += 1;
         }
 
         if (x < 39) {
-          counts[i + 1] += 1;
-          if (y > 0) counts[i - 39] += 1;
-          if (y < 24) counts[i + 41] += 1;
+          *(current_count + 1) += 1;
+          if (y > 0) *(current_count - 39) += 1;
+          if (y < 24) *(current_count + 41) += 1;
         }
 
-        if (y > 0) counts[i - 40] += 1;
-        if (y < 24) counts[i + 40] += 1;
+        if (y > 0) *(current_count - 40) += 1;
+        if (y < 24) *(current_count + 40) += 1;
       }
-      i++;
+      current_mem++;
+      current_count++;
     }
   }
 
-  for (i = 0; i < 1000; i++) {
-    // mem[i] = '0' + counts[i];
-    if (mem[i] == CIRCLE) {
-      if (counts[i] != 2 && counts[i] != 3) mem[i] = SPACE;
-    } else {
-      if (counts[i] == 3) mem[i] = CIRCLE;
-    }
+  current_mem = mem;
+  current_count = &counts[0];
+
+#define X                                                                   \
+  for (x = 0; x < 250; x++, current_mem++, current_count++) {               \
+    if (*current_mem == CIRCLE) {                                           \
+      if (*current_count != 2 && *current_count != 3) *current_mem = SPACE; \
+    } else {                                                                \
+      if (*current_count == 3) *current_mem = CIRCLE;                       \
+    }                                                                       \
   }
+
+  X X X X
+
+#undef X
 }
 
 int main() {
@@ -77,5 +88,4 @@ int main() {
     waitvsync();
     update_cells();
   }
-  return 0;
 }

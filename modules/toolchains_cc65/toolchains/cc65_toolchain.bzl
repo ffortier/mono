@@ -71,7 +71,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
     cc_args(
         name = "%s_compiler_backend" % name,
         actions = [
-            "@rules_cc//cc/toolchains/actions:compile_actions",
+            "@rules_cc//cc/toolchains/actions:c_compile",
         ],
         args = [
             "--compiler-backend",
@@ -82,7 +82,7 @@ def cc65_toolchain(*, name, repo_name, exec_compatible_with, **kwargs):
     cc_args(
         name = "%s_assembler_backend" % name,
         actions = [
-            "@rules_cc//cc/toolchains/actions:compile_actions",
+            "@rules_cc//cc/toolchains/actions:c_compile",
         ],
         args = [
             "--assembler-backend",

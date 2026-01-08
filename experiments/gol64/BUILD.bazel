@@ -2,6 +2,9 @@ load("@toolchains_cc65//cc65:cc65_binary.bzl", "cc65_binary")
 
 cc65_binary(
     name = "gol64",
-    srcs = ["gol64.c"],
+    srcs = [
+        "gol64.c",
+    ],
+    copts = ["-O"],
     target = "c64",
 )
