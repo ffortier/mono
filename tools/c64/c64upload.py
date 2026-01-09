@@ -29,7 +29,7 @@ if __name__ == "__main__":
         exit(1)
 
     source_path = Path(args.source)
-    target_path = PosixPath("SD") / source_path.name
+    target_path = PosixPath("Temp") / source_path.name
 
     print(f"Deploying {source_path} to C64 host {args.host}...")
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     with open(source_path, "rb") as f:
         ftp.storbinary(f"STOR {target_path}", f)
 
-    ftp.dir("SD")
+    ftp.dir("Temp")
     ftp.quit()
     print("Deployment complete.")
 

@@ -19,27 +19,87 @@ void update_cells(void) {
   current_mem = mem;
   current_count = &counts[0];
 
-  for (y = 0; y < 25; y++) {
-    for (x = 0; x < 40; x++) {
+  // x = 0, y = 0
+  if (*current_mem == CIRCLE) {
+    *(current_count + 1) += 1;
+    *(current_count + 40) += 1;
+    *(current_count + 41) += 1;
+  }
+
+  current_mem++;
+  current_count++;
+
+  // bluk of the first row
+  for (x = 1; x < 39; x++) {
+    if (*current_mem == CIRCLE) {
+      *(current_count - 1) += 1;
+      *(current_count + 1) += 1;
+      *(current_count + 40) += 1;
+      *(current_count + 39) += 1;
+      *(current_count + 41) += 1;
+    }
+    current_mem++;
+    current_count++;
+  }
+
+  // x = 39, y = 0
+  if (*current_mem == CIRCLE) {
+    *(current_count - 1) += 1;
+    *(current_count + 40) += 1;
+    *(current_count + 39) += 1;
+  }
+
+  current_mem++;
+  current_count++;
+
+  // every row in between
+  for (y = 1; y < 24; y++) {
+    for (x = 1; x < 39; x++) {
       if (*current_mem == CIRCLE) {
-        if (x > 0) {
-          *(current_count - 1) += 1;
-          if (y > 0) *(current_count - 41) += 1;
-          if (y < 24) *(current_count + 39) += 1;
-        }
-
-        if (x < 39) {
-          *(current_count + 1) += 1;
-          if (y > 0) *(current_count - 39) += 1;
-          if (y < 24) *(current_count + 41) += 1;
-        }
-
-        if (y > 0) *(current_count - 40) += 1;
-        if (y < 24) *(current_count + 40) += 1;
+        *(current_count - 1) += 1;
+        *(current_count + 1) += 1;
+        *(current_count - 40) += 1;
+        *(current_count + 40) += 1;
+        *(current_count - 41) += 1;
+        *(current_count - 39) += 1;
+        *(current_count + 39) += 1;
+        *(current_count + 41) += 1;
       }
       current_mem++;
       current_count++;
     }
+    current_mem += 2;
+    current_count += 2;
+  }
+
+  // x = 0, y = 24
+  if (*current_mem == CIRCLE) {
+    *(current_count + 1) += 1;
+    *(current_count - 40) += 1;
+    *(current_count - 39) += 1;
+  }
+
+  current_mem++;
+  current_count++;
+
+  // bluk of the last row
+  for (x = 1; x < 39; x++) {
+    if (*current_mem == CIRCLE) {
+      *(current_count - 1) += 1;
+      *(current_count + 1) += 1;
+      *(current_count - 40) += 1;
+      *(current_count - 39) += 1;
+      *(current_count - 41) += 1;
+    }
+    current_mem++;
+    current_count++;
+  }
+
+  // x = 39, y = 24
+  if (*current_mem == CIRCLE) {
+    *(current_count - 1) += 1;
+    *(current_count - 40) += 1;
+    *(current_count - 41) += 1;
   }
 
   current_mem = mem;
@@ -59,8 +119,23 @@ void update_cells(void) {
 #undef X
 }
 
+char* glider_gun[] = {
+    "                        #",
+    "                      # #",
+    "            ##      ##            ##",
+    "           #   #    ##            ##",
+    "##        #     #   ##",
+    "##        #   # ##    # #",
+    "          #     #       #",
+    "           #   #",
+    "            ##",
+};
+
 int main() {
   int i;
+  char x, y;
+  char* input_row;
+  char* output_row;
 
   POKE(53272, 21);  // Enable uppercase + graphics mode
 
@@ -68,21 +143,29 @@ int main() {
     mem[i] = SPACE;
   }
 
-  mem[42] = CIRCLE;
-  mem[83] = CIRCLE;
-  mem[121] = CIRCLE;
-  mem[122] = CIRCLE;
-  mem[123] = CIRCLE;
+  x = 0;
+  y = 0;
 
-  mem[52] = CIRCLE;
-  mem[93] = CIRCLE;
-  mem[131] = CIRCLE;
-  mem[132] = CIRCLE;
-  mem[133] = CIRCLE;
+  for (i = 0; i < sizeof(glider_gun) / sizeof(glider_gun[0]); i++) {
+    input_row = glider_gun[i];
+    output_row = &mem[y * 40 + x];
 
-  mem[320] = CIRCLE;
-  mem[321] = CIRCLE;
-  mem[322] = CIRCLE;
+    while (*input_row) {
+      switch (*input_row) {
+        case ' ':
+          *output_row = SPACE;
+          break;
+        case '#':
+          *output_row = CIRCLE;
+          break;
+      }
+
+      input_row++;
+      output_row++;
+    }
+
+    y++;
+  }
 
   while (1) {
     waitvsync();
