@@ -1,4 +1,4 @@
-bazel_dep(name = "protobuf", version = "33.2")
+bazel_dep(name = "protobuf", version = "33.3.bcr.1")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
