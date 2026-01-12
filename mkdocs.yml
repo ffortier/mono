@@ -13,6 +13,7 @@ extra_javascript:
   - script/hello.js
   - script/nb.js
   - script/digital.js
+  - script/gol64.js
 
 extra_css:
   - styles/nb.css

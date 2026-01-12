@@ -1,7 +1,11 @@
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load("@bazel_skylib//rules:select_file.bzl", "select_file")
+
 filegroup(
     name = "script",
     srcs = [
         ":digital",
+        ":gol64",
         ":hello",
         ":nb",
         ":swipl",
@@ -51,4 +55,30 @@ genrule(
     ],
     cmd = "$(COREUTILS_BIN) cp $(SRCS) $(RULEDIR)",
     toolchains = ["@coreutils_toolchains//:resolved_toolchain"],
+)
+
+select_file(
+    name = "_gol64_wasm",
+    srcs = "//experiments/gol64:wasm",
+    subpath = "gol64",
+)
+
+copy_file(
+    name = "gol64wasm",
+    src = "_gol64_wasm",
+    out = "gol64.wasm",
+)
+
+copy_file(
+    name = "gol64js",
+    src = "//experiments/gol64:gol64.js",
+    out = "gol64.js",
+)
+
+filegroup(
+    name = "gol64",
+    srcs = [
+        ":gol64js",
+        ":gol64wasm",
+    ],
 )

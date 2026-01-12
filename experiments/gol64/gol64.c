@@ -1,10 +1,11 @@
-#include <stdint.h>
 #if defined(__clang__)
 // ignore for clangd
 #define __fastcall__
 #endif
 
 #include <stddef.h>
+#include <string.h>
+
 #if defined(__C64__)
 #include <cbm.h>
 #include <peekpoke.h>
@@ -13,25 +14,31 @@
 #include <stdio.h>
 #endif
 
-#include <string.h>
-
 char counts[1000] = {0};
 
 #if defined(__C64__)
 char* mem = (char*)0x0400;
-#elif defined(__SIM6502__)
+#elif defined(__SIM6502__) || defined(__wasm32__)
 char mem[1000];  // for sim65
 #endif
 
 #define SPACE 32
 #define CIRCLE 81
 
+#if defined(__wasm32__)
+// Using global variables for wasm32 since no zp segment
+unsigned char x;
+unsigned char y;
+char* current_count;
+char* current_mem;
+#else
 // Using zp outside of the ZEROPAGE segment for cc65 because I'm too lazy to
 // override the config
 #define x (*(unsigned char*)0x20)
 #define y (*(unsigned char*)0x21)
 #define current_count (*(char**)0x22)
 #define current_mem (*(char**)0x24)
+#endif
 
 void update_cells(void) {
   memset(&counts[0], 0, 1000);
@@ -216,7 +223,6 @@ static void print_current_counters(void) {
   printf("\n");
 }
 
-static uint8_t res;
 int main(void) {
   init_mem(&glider_gun[0], sizeof(glider_gun) / sizeof(glider_gun[0]));
 

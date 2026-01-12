@@ -48,6 +48,7 @@ py_console_script_binary(
         "//docs/script",
         "//experiments/bforth:docs",
         "//experiments/digital:docs",
+        "//experiments/gol64:docs",
         "//experiments/jasm:docs",
         "//experiments/nbmagic:docs",
         "//experiments/typescript-fun:docs",

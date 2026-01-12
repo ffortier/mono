@@ -7,7 +7,24 @@ cc_binary(
     srcs = [
         "gol64.c",
     ],
+    linkopts = select({
+        "@platforms//cpu:wasm32": [
+            "-Wl,--no-entry",
+            "-Wl,--import-memory",
+            "-Wl,--export=mem",
+            "-Wl,--export=glider_gun",
+            "-Wl,--export=init_mem",
+            "-Wl,--export=update_cells",
+        ],
+        "//conditions:default": [],
+    }),
     tags = ["manual"],
+    deps = select({
+        "@platforms//cpu:wasm32": [
+            "@twr_wasm//:twr_headers_only",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 platform_transition_binary(
@@ -20,6 +37,13 @@ platform_transition_binary(
     name = "sim6502",
     binary = ":gol64",
     target_platform = "@toolchains_cc65//platforms:sim6502",
+)
+
+platform_transition_binary(
+    name = "wasm",
+    binary = ":gol64",
+    target_platform = "//platforms:wasm32",
+    visibility = ["//docs/script:__pkg__"],
 )
 
 refresh_compile_commands(
@@ -35,3 +59,18 @@ refresh_compile_commands(
         ":gol64": "--copt=-D__SIM6502__ --copt=-Iexternal/toolchains_cc65++cc65+cc65_linux_x86_64/include",
     },
 )
+
+refresh_compile_commands(
+    name = "refresh_wasm",
+    targets = {
+        ":gol64": "--platforms=//platforms:wasm32",
+    },
+)
+
+filegroup(
+    name = "docs",
+    srcs = ["mkdocs.yml"] + glob(["docs/**"]),
+    visibility = ["//:__pkg__"],
+)
+
+exports_files(["gol64.js"])
