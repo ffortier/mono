@@ -27,6 +27,7 @@ def _impl(rctx):
         url = rctx.attr.urls,
         strip_prefix = rctx.attr.strip_prefix,
         sha256 = rctx.attr.sha256,
+        type = rctx.attr.type,
     )
 
     rctx.report_progress("Building cc65")
@@ -52,5 +53,6 @@ cc65_sources = repository_rule(
         urls = attr.string_list(mandatory = True),
         strip_prefix = attr.string(mandatory = True),
         sha256 = attr.string(mandatory = True),
+        type = attr.string(),
     ),
 )

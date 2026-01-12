@@ -47,9 +47,11 @@ local_path_override(
 
 cc65 = use_extension("@toolchains_cc65//toolchains:extensions.bzl", "cc65")
 cc65.bootstrap_from_sources(
-    sha256 = "157b8051aed7f534e5093471e734e7a95e509c577324099c3c81324ed9d0de77",
-    strip_prefix = "cc65-2.19",
-    urls = ["https://github.com/cc65/cc65/archive/refs/tags/V2.19.tar.gz"],
+    sha256 = "e9c6479e9a6d6b737f4f92341fbc6815e95c2579abd102be9940cb5c36601cef",
+    strip_prefix = "cc65-357f64e4e3c733d54b82bc155afc841fd8d9ee8d",
+    type = "zip",
+    # Make sure to use the same commit as used in the binary snapshots below.
+    urls = ["https://codeload.github.com/cc65/cc65/zip/357f64e4e3c733d54b82bc155afc841fd8d9ee8d"],
 )
 cc65.common_snapshot(
     sha256 = "7f07bcbce6be19567b00f8bac747138d98420eac1dc3980fe277a2f037d12dfa",
@@ -84,15 +86,25 @@ register_toolchains("@cc65//:all")
 register_toolchains("//tools/ape/bash:all")
 
 include("//third_party/rust:toolchains.MODULE.bazel")
+
 include("//third_party/rust:deps.MODULE.bazel")
+
 include("//third_party/python:toolchains.MODULE.bazel")
+
 include("//third_party/deno:toolchains.MODULE.bazel")
+
 include("//third_party/cpp:toolchains.MODULE.bazel")
+
 include("//third_party/cpp:deps.MODULE.bazel")
+
 include("//third_party/java:toolchains.MODULE.bazel")
+
 include("//third_party/java:deps.MODULE.bazel")
+
 include("//third_party/dotnet:deps.MODULE.bazel")
+
 include("//third_party/nasm:toolchains.MODULE.bazel")
+
 include("//third_party/esbuild:toolchains.MODULE.bazel")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")

@@ -8,6 +8,7 @@ _bootstrap_from_sources = tag_class(
         urls = attr.string_list(),
         sha256 = attr.string(default = ""),
         strip_prefix = attr.string(default = ""),
+        type = attr.string(),
     ),
 )
 
@@ -87,6 +88,7 @@ def _impl(mctx):
             urls = attrs.urls,
             sha256 = attrs.sha256,
             strip_prefix = attrs.strip_prefix,
+            type = attrs.type,
         )
 
         toolchain_repos.append("cc65_sources")

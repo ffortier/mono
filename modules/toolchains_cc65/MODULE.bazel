@@ -7,32 +7,32 @@ bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "aspect_bazel_lib", version = "2.22.4")
 
 cc65 = use_extension("//toolchains:extensions.bzl", "cc65", dev_dependency = True)
-
 cc65.bootstrap_from_sources(
-    urls = ["https://github.com/cc65/cc65/archive/refs/tags/V2.19.tar.gz"],
-    sha256 = "157b8051aed7f534e5093471e734e7a95e509c577324099c3c81324ed9d0de77",
-    strip_prefix = "cc65-2.19",
+    sha256 = "e92bf5a4beeb9eb6b7874596e9639b0fb7bd975f3f5e95d3fcf08334040ef5d2",
+    strip_prefix = "cc65-6efe447d14a31e98cb14e8a3d45621e844c89ebe",
+    type = "zip",
+    # Make sure to use the same commit as used in the binary snapshots below.
+    urls = ["https://codeload.github.com/cc65/cc65/zip/6efe447d14a31e98cb14e8a3d45621e844c89ebe"],
 )
-
 cc65.common_snapshot(
-    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/all/cc65-common_2.19.0.git.1753630199.6efe447d-0_all.deb"],
     sha256 = "3819bc6ada2b43adcfa599ce866c89dd32cd71f7f5077ee3644763fa58c046c7",
     strip_prefix = "usr/share/cc65",
+    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/all/cc65-common_2.19.0.git.1753630199.6efe447d-0_all.deb"],
 )
-
 cc65.binary_snapshot(
     platform = "linux-x86_64",
-    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/amd64/cc65_2.19.0.git.1753630199.6efe447d-0_amd64.deb"],
     sha256 = "af0ec3e4a0361485cba7cfa95cc7078ef49dd8f1d811dd9d8fdb5529b6062e54",
     strip_prefix = "usr",
+    urls = ["https://download.opensuse.org/repositories/home:/strik/Debian_12/amd64/cc65_2.19.0.git.1753630199.6efe447d-0_amd64.deb"],
 )
-
 cc65.binary_snapshot(
     platform = "windows-x86_64",
-    urls = ["https://versaweb.dl.sourceforge.net/project/cc65/cc65-snapshot-win32.zip"],
     sha256 = "a6fd44c9ddd20ff81db0743488d05fa51bd08d7e9be265c5092f9c663d071c04",
+    urls = ["https://versaweb.dl.sourceforge.net/project/cc65/cc65-snapshot-win32.zip"],
 )
-
 use_repo(cc65, "cc65")
 
-register_toolchains("@cc65//:all", dev_dependency = True)
+register_toolchains(
+    "@cc65//:all",
+    dev_dependency = True,
+)
