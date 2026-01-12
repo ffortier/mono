@@ -1,21 +1,40 @@
+#include <stdint.h>
+#if defined(__clang__)
+// ignore for clangd
+#define __fastcall__
+#endif
+
+#include <stddef.h>
+#if defined(__C64__)
 #include <cbm.h>
 #include <peekpoke.h>
+#elif defined(__SIM6502__)
+#include <sim65.h>
 #include <stdio.h>
+#endif
+
 #include <string.h>
 
 char counts[1000] = {0};
+
+#if defined(__C64__)
 char* mem = (char*)0x0400;
+#elif defined(__SIM6502__)
+char mem[1000];  // for sim65
+#endif
 
 #define SPACE 32
 #define CIRCLE 81
 
+// Using zp outside of the ZEROPAGE segment for cc65 because I'm too lazy to
+// override the config
+#define x (*(unsigned char*)0x20)
+#define y (*(unsigned char*)0x21)
+#define current_count (*(char**)0x22)
+#define current_mem (*(char**)0x24)
+
 void update_cells(void) {
-  unsigned char x, y;
-  char* current_count;
-  char* current_mem;
-
   memset(&counts[0], 0, 1000);
-
   current_mem = mem;
   current_count = &counts[0];
 
@@ -114,7 +133,7 @@ void update_cells(void) {
     }                                                                       \
   }
 
-  X X X X
+  X X X X;
 
 #undef X
 }
@@ -131,13 +150,11 @@ char* glider_gun[] = {
     "            ##",
 };
 
-int main() {
+void init_mem(char** pattern, size_t len) {
   int i;
-  char x, y;
+  // unsigned char _x, _y;
   char* input_row;
   char* output_row;
-
-  POKE(53272, 21);  // Enable uppercase + graphics mode
 
   for (i = 0; i < 1000; i++) {
     mem[i] = SPACE;
@@ -146,8 +163,8 @@ int main() {
   x = 0;
   y = 0;
 
-  for (i = 0; i < sizeof(glider_gun) / sizeof(glider_gun[0]); i++) {
-    input_row = glider_gun[i];
+  for (i = 0; i < len; i++) {
+    input_row = pattern[i];
     output_row = &mem[y * 40 + x];
 
     while (*input_row) {
@@ -166,9 +183,46 @@ int main() {
 
     y++;
   }
+}
+
+#if defined(__C64__)
+int main(void) {
+  POKE(53272, 21);  // Enable uppercase + graphics mode
+
+  init_mem(&glider_gun[0], sizeof(glider_gun) / sizeof(glider_gun[0]));
 
   while (1) {
     waitvsync();
     update_cells();
   }
 }
+#elif defined(__SIM6502__)
+
+static void print_current_counters(void) {
+  peripherals.counter.latch = 0; /* latch values */
+
+  peripherals.counter.select = COUNTER_SELECT_CLOCKCYCLE_COUNTER;
+  printf("clock cycles ............... : %08lx %08lx\n",
+         peripherals.counter.value32[1], peripherals.counter.value32[0]);
+  peripherals.counter.select = COUNTER_SELECT_INSTRUCTION_COUNTER;
+  printf("instructions ............... : %08lx %08lx\n",
+         peripherals.counter.value32[1], peripherals.counter.value32[0]);
+  peripherals.counter.select = COUNTER_SELECT_WALLCLOCK_TIME;
+  printf("wallclock time ............. : %08lx %08lx\n",
+         peripherals.counter.value32[1], peripherals.counter.value32[0]);
+  peripherals.counter.select = COUNTER_SELECT_WALLCLOCK_TIME_SPLIT;
+  printf("wallclock time, split ...... : %08lx %08lx\n",
+         peripherals.counter.value32[1], peripherals.counter.value32[0]);
+  printf("\n");
+}
+
+static uint8_t res;
+int main(void) {
+  init_mem(&glider_gun[0], sizeof(glider_gun) / sizeof(glider_gun[0]));
+
+  print_current_counters();
+  update_cells();
+  print_current_counters();
+  return 0;
+}
+#endif
