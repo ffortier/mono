@@ -1,4 +1,6 @@
 site_name: ffortier's github page
+site_url: https://ffortier.github.io/mono
+repo_url: https://github.com/ffortier/mono
 nav:
   - Intro: index.md
   - Experiments: "*include ./experiments/*/mkdocs.yml"

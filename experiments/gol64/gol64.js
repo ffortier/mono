@@ -14,7 +14,7 @@ class Gol64CanvasElement extends HTMLElement {
         root.innerHTML = `<canvas width="${8 * 40}" height="${8 * 25}"></canvas>`;
 
         if (!Gol64CanvasElement.wasmModule) {
-            Gol64CanvasElement.wasmModule = fetch('/script/gol64.wasm')
+            Gol64CanvasElement.wasmModule = fetch('/mono/script/gol64.wasm')
                 .then(response => response.arrayBuffer())
                 .then(bytes => WebAssembly.compile(bytes, {}))
                 .then(results => Gol64CanvasElement.wasmModule = results);
@@ -63,7 +63,7 @@ class Gol64CanvasElement extends HTMLElement {
                     ctx.beginPath();
 
                     switch (cell) {
-                        case 81: ctx.arc(x * 8 + 4, y * 8 + 4, 4, 0, 2 * Math.PI); break;
+                        case 81: ctx.arc(x * 8 + 4, y * 8 + 4, 3, 0, 2 * Math.PI); break;
                         case 32: break;
                         default: throw new Error(`Unknown cell value: ${cell}`);
                     }
