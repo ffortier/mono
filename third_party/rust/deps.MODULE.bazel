@@ -8,12 +8,12 @@ crate.spec(
     default_features = False,
     features = [
         "blocking",
-        "rustls-tls",
+        "rustls",
         "http2",
         "charset",
     ],
     package = "reqwest",
-    version = "=0.12.28",
+    version = "=0.13.1",
 )
 crate.spec(
     package = "anyhow",
