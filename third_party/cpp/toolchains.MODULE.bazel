@@ -5,7 +5,7 @@ bazel_dep(name = "rules_cc", version = "0.2.16")
 git_override(
     module_name = "toolchains_llvm",
     remote = "https://github.com/bazel-contrib/toolchains_llvm",
-    commit = "da3033afbd0655dc90c35d8213b69a5e5a549070",
+    commit = "80a885d35da3cd037d1625414d5527dd40603885",
 )
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
