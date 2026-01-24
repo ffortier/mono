@@ -251,9 +251,10 @@ video_row_mem = VIDEO_MEM + (ROW - 1) * COL
     cmp #ALIVE
     bne @end
 
-    ldy #COL - 2
+    ldy #(COL - 2)
     inc_indirect_y ptr1                             ; Update previous row
     inc_indirect_y ptr2                             ; Update current row
+    inc_indirect_y ptr3
     iny
     inc_indirect_y ptr1                             ; Update previous row
     inc_indirect_y ptr3                             ; Update next row
