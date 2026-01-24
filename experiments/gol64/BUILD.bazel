@@ -4,9 +4,21 @@ load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 
 cc_binary(
     name = "gol64",
-    srcs = [
-        "gol64.c",
-    ],
+    srcs = select({
+        "@platforms//cpu:wasm32": [
+            "gol64.c",
+        ],
+        "//conditions:default": [
+            "gol64.c",
+            "update_cells.s",
+        ],
+    }),
+    defines = select({
+        "@platforms//cpu:wasm32": [
+            "C_IMPL",
+        ],
+        "//conditions:default": [],
+    }),
     linkopts = select({
         "@platforms//cpu:wasm32": [
             "-Wl,--no-entry",
@@ -74,3 +86,6 @@ filegroup(
 )
 
 exports_files(["gol64.js"])
+
+# 494235
+# 195203

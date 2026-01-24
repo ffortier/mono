@@ -1,3 +1,4 @@
+#include <stdint.h>
 #if defined(__clang__)
 // ignore for clangd
 #define __fastcall__
@@ -40,6 +41,7 @@ char* current_mem;
 #define current_mem (*(char**)0x24)
 #endif
 
+#if defined(C_IMPL)
 void update_cells(void) {
   memset(&counts[0], 0, 1000);
   current_mem = mem;
@@ -144,6 +146,9 @@ void update_cells(void) {
 
 #undef X
 }
+#else
+extern void update_cells(void);
+#endif
 
 char* glider_gun[] = {
     "                        #",
