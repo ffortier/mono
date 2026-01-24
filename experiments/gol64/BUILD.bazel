@@ -86,6 +86,4 @@ filegroup(
 )
 
 exports_files(["gol64.js"])
-
-# 494235
-# 195203
+exports_files(["gol64.js"])
