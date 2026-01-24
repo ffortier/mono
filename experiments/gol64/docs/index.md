@@ -19,13 +19,39 @@ This implementation runs on the C64's 40×25 character display (1000 cells), usi
 
 ## Implementation Details
 
-The `update_cells()` function handles edge cases explicitly to avoid boundary checks in the main loop. The 40×25 grid is processed in segments:
+The core `update_cells()` function is implemented in 6502 assembly for maximum performance, running at approximately 5Hz on real C64 hardware.
 
-- Top/bottom row edges (x=0, x=39)
-- Left/right column edges (y=0, y=24)
-- Interior bulk processing (optimized inner loop)
+### Algorithm Overview
 
-Neighbor counts are accumulated in a separate buffer, then cells are updated in a single pass using Game of Life rules (survive: 2-3 neighbors, birth: 3 neighbors).
+The implementation follows a two-phase approach:
+
+1. **Count Phase**: Count live neighbors for each cell in a separate buffer
+2. **Render Phase**: Apply Game of Life rules and update the screen
+
+### Edge Handling
+
+The 40×25 grid is processed in three sections to handle boundaries efficiently:
+
+- **First Row** (`count_first_row`): Special handling for y=0 with reduced neighbor checks
+- **Middle Rows** (`count_middle_rows`): Bulk processing with full 8-neighbor checks, using self-modifying code
+- **Last Row** (`count_last_row`): Special handling for y=24 with reduced neighbor checks
+
+Each section handles the leftmost (x=0) and rightmost (x=39) columns separately from the interior cells.
+
+### Assembly Optimizations
+
+- **Self-modifying code**: Updates instruction operands to iterate through video memory without index overhead
+- **Indirect indexed addressing**: Uses zero-page pointers (`ptr1`, `ptr2`, `ptr3`) with Y-register indexing for efficient neighbor counting
+- **Macro-based code generation**: Unrolls loops and generates specialized code blocks
+- **Direct video memory access**: Writes directly to `$0400` (screen memory)
+
+The neighbor count buffer (`count_mem`) is a 1024-byte array in BSS, processed in 250-byte chunks for efficient rendering.
+
+### Game of Life Rules
+
+- **Survive**: Live cells with 2 or 3 neighbors stay alive
+- **Birth**: Dead cells with exactly 3 neighbors become alive
+- **Death**: All other cases result in dead cells
 
 ## Building
 
