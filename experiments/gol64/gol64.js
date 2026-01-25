@@ -75,11 +75,11 @@ class Gol64CanvasElement extends HTMLElement {
 
 
             if (this.isConnected) {
-                this.animationFrameId = setTimeout(frame, 500);
+                this.animationFrameId = setTimeout(frame, 100);
             }
         }
 
-        this.animationFrameId = setTimeout(frame, 500);
+        this.animationFrameId = setTimeout(frame, 100);
     }
 }
 

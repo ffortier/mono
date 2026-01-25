@@ -17,7 +17,9 @@ cc_binary(
         "@platforms//cpu:wasm32": [
             "C_IMPL",
         ],
-        "//conditions:default": [],
+        "//conditions:default": [
+            "COLORIZE",
+        ],
     }),
     linkopts = select({
         "@platforms//cpu:wasm32": [
@@ -86,4 +88,5 @@ filegroup(
 )
 
 exports_files(["gol64.js"])
+
 exports_files(["gol64.js"])

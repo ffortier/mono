@@ -7,20 +7,23 @@ DEAD  = 32
 COL   = 40
 ROW   = 25
 VIDEO_MEM = $0400
+COLOR_MEM = $d800
 
 ;; Renders a block in the video_mem using the count_mem
 .macro render offset, size
 .scope
-@render_begin:
     ldx #0
 
-@render_loop:
+@loop:
     lda VIDEO_MEM + offset, x                       ; if (VIDEO_MEM + offset)[x] == ALIVE
     cmp #ALIVE
     bne @dead
 
 @alive:
     lda count_mem + offset, x                       ;   if (count_mem + offset)[x] != 2 &&  (count_mem + offset)[x] != 3
+.if .defined(COLORIZE)
+    sta COLOR_MEM + offset, x
+.endif
     cmp #2
     beq @touched
     cmp #3
@@ -31,6 +34,9 @@ VIDEO_MEM = $0400
 
 @dead:                                              ; else is dead
     lda count_mem + offset, x
+.if .defined(COLORIZE)
+    sta COLOR_MEM + offset, x
+.endif
     cmp #3                                          ;   if (count_mem + offset)[x] == 3
     bne @touched
     lda #ALIVE
@@ -39,15 +45,14 @@ VIDEO_MEM = $0400
 @touched:
 .if .defined(DEBUG)
     lda count_mem + offset, x
+    clc
     adc #'0'
     sta VIDEO_MEM + offset, x
 .endif
 
     inx
     cpx #size
-    beq @render_end
-    jmp @render_loop
-@render_end:
+    bne @loop
 .endscope
 .endmacro
 
