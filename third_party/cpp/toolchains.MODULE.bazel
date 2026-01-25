@@ -101,6 +101,6 @@ use_repo(sysroots, "sysroot_darwin_universal", "sysroots_bullseye_amd64", "sysro
 bazel_dep(name = "hedron_compile_commands")
 git_override(
     module_name = "hedron_compile_commands",
-    commit = "61f2d8f97cfcdcbf2f4ad504c1a093fbbe92ece2",
+    commit = "abb61a688167623088f8768cc9264798df6a9d10",
     remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
 )
