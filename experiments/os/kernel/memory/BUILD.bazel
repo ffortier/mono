@@ -1,3 +1,4 @@
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load("//experiments/os/kernel:defs.bzl", "cc_library")
 load("//third_party/nasm:defs.bzl", "nasm_library")
 
