@@ -4,20 +4,12 @@ bazel_dep(name = "rules_cc", version = "0.2.16")
 # Fixes https://github.com/bazel-contrib/toolchains_llvm/issues/547
 git_override(
     module_name = "toolchains_llvm",
-    remote = "https://github.com/bazel-contrib/toolchains_llvm",
     commit = "80a885d35da3cd037d1625414d5527dd40603885",
+    remote = "https://github.com/bazel-contrib/toolchains_llvm",
 )
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
-
 llvm.toolchain(
-    llvm_version = "20.1.1",
-    stdlib = {
-        "wasm32": "none",
-    },
-    cxx_standard = {
-        "": "c++20",
-    },
     compile_flags = {
         "wasm32": [
             "--target=wasm32-unknown-unknown",
@@ -29,40 +21,35 @@ llvm.toolchain(
             "-Wself-assign",
         ],
     },
+    cxx_standard = {
+        "": "c++20",
+    },
+    llvm_version = "20.1.1",
+    stdlib = {
+        "wasm32": "none",
+    },
 )
-
 llvm.sysroot(
     label = "@sysroots_bullseye_amd64//:sysroot",
     targets = ["linux-x86_64"],
 )
-
 llvm.sysroot(
     label = "@sysroots_bullseye_arm64//:sysroot",
     targets = ["linux-aarch64"],
 )
-
 llvm.sysroot(
     label = "@sysroot_darwin_universal//:sysroot",
-    targets = ["darwin-x86_64", "darwin-aarch64"],
+    targets = [
+        "darwin-x86_64",
+        "darwin-aarch64",
+    ],
 )
-
 llvm.sysroot(
     label = "@//third_party/cpp/empty",
     targets = ["wasm32"],
 )
-
 llvm.toolchain(
     name = "llvm_rbe_linux_amd64",
-    exec_os = "linux",
-    exec_arch = "amd64",
-    distribution = "LLVM-20.1.1-Linux-X64.tar.xz",
-    llvm_version = "20.1.1",
-    stdlib = {
-        "wasm32": "none",
-    },
-    cxx_standard = {
-        "": "c++20",
-    },
     compile_flags = {
         "wasm32": [
             "--target=wasm32-unknown-unknown",
@@ -74,36 +61,46 @@ llvm.toolchain(
             "-Wself-assign",
         ],
     },
+    cxx_standard = {
+        "": "c++20",
+    },
+    distribution = "LLVM-20.1.1-Linux-X64.tar.xz",
+    exec_arch = "amd64",
+    exec_os = "linux",
+    llvm_version = "20.1.1",
+    stdlib = {
+        "wasm32": "none",
+    },
 )
-
 llvm.sysroot(
     name = "llvm_rbe_linux_amd64",
     label = "@sysroots_bullseye_amd64//:sysroot",
     targets = ["linux-x86_64"],
 )
-
 llvm.sysroot(
     name = "llvm_rbe_linux_amd64",
     label = "@//third_party/cpp/empty",
-    targets = ["wasm32", "wasm64"],
+    targets = [
+        "wasm32",
+        "wasm64",
+    ],
 )
-
-use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm", "llvm_rbe_linux_amd64", "llvm_rbe_linux_amd64_llvm")
+use_repo(llvm, "llvm_rbe_linux_amd64", "llvm_rbe_linux_amd64_llvm", "llvm_toolchain", "llvm_toolchain_llvm")
 
 register_toolchains("@llvm_toolchain//:all", "//third_party/cpp:all")
 
 sysroots = use_extension("//third_party/cpp:sysroots.bzl", "sysroots")
-
 sysroots.install(
-    targets = ["bullseye_amd64", "bullseye_arm64"],
+    targets = [
+        "bullseye_amd64",
+        "bullseye_arm64",
+    ],
 )
-
-use_repo(sysroots, "sysroots_bullseye_amd64", "sysroots_bullseye_arm64", "sysroot_darwin_universal")
+use_repo(sysroots, "sysroot_darwin_universal", "sysroots_bullseye_amd64", "sysroots_bullseye_arm64")
 
 bazel_dep(name = "hedron_compile_commands")
-
 git_override(
     module_name = "hedron_compile_commands",
+    commit = "61f2d8f97cfcdcbf2f4ad504c1a093fbbe92ece2",
     remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
-    commit = "abb61a688167623088f8768cc9264798df6a9d10",
 )
