@@ -5,12 +5,12 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(name = "empty")
 
-cc_toolchain_config(name = "linux_x86_64_toolchain_config")
+#cc_toolchain_config(name = "linux_x86_64_toolchain_config")
 
 cc_toolchain(
     name = "cc-clang-x86_64-linux",
     toolchain_identifier = "cc-clang-x86_64-linux",
-    toolchain_config = ":linux_x86_64_toolchain_config",
+   # toolchain_config = ":linux_x86_64_toolchain_config",
     all_files = ":empty",
     compiler_files = ":empty",
     dwp_files = ":empty",
