@@ -1,16 +1,17 @@
 _MOCK_TOOLCHAIN = """
 load(":cc.bzl", "cc_toolchain_config")
+load("@rules_cc//cc/toolchains:cc_toolchain.bzl", "cc_toolchain")
 
 package(default_visibility = ["//visibility:public"])
 
 filegroup(name = "empty")
 
-#cc_toolchain_config(name = "linux_x86_64_toolchain_config")
+cc_toolchain_config(name = "linux_x86_64_toolchain_config")
 
 cc_toolchain(
     name = "cc-clang-x86_64-linux",
     toolchain_identifier = "cc-clang-x86_64-linux",
-   # toolchain_config = ":linux_x86_64_toolchain_config",
+    toolchain_config = ":linux_x86_64_toolchain_config",
     all_files = ":empty",
     compiler_files = ":empty",
     dwp_files = ":empty",
@@ -28,6 +29,9 @@ toolchain(
 """
 
 _MOCK_TOOLCHAIN_CONFIG = """
+load("@rules_cc//cc/toolchains:cc_toolchain_config_info.bzl", "CcToolchainConfigInfo")
+load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
+
 def _impl(ctx):
     return cc_common.create_cc_toolchain_config_info(
         ctx = ctx,
