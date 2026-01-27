@@ -30,15 +30,15 @@ llvm.toolchain(
     },
 )
 llvm.sysroot(
-    label = "@sysroots_bullseye_amd64//:sysroot",
+    label = "@sysroots_bullseye_amd64//sysroot",
     targets = ["linux-x86_64"],
 )
 llvm.sysroot(
-    label = "@sysroots_bullseye_arm64//:sysroot",
+    label = "@sysroots_bullseye_arm64//sysroot",
     targets = ["linux-aarch64"],
 )
 llvm.sysroot(
-    label = "@sysroot_darwin_universal//:sysroot",
+    label = "@sysroot_darwin_universal//sysroot",
     targets = [
         "darwin-x86_64",
         "darwin-aarch64",
@@ -74,7 +74,7 @@ llvm.toolchain(
 )
 llvm.sysroot(
     name = "llvm_rbe_linux_amd64",
-    label = "@sysroots_bullseye_amd64//:sysroot",
+    label = "@sysroots_bullseye_amd64//sysroot",
     targets = ["linux-x86_64"],
 )
 llvm.sysroot(

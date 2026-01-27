@@ -1,6 +1,7 @@
 load("@aspect_bazel_lib//lib:base64.bzl", "base64")
 load("@aspect_bazel_lib//lib/private:strings.bzl", "INT_TO_CHAR")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@toolchains_llvm//toolchain:sysroot.bzl", "sysroot")
 
 _HEX_CHARS = "0123456789abcdef"
 
@@ -40,11 +41,10 @@ def _impl(module_ctx):
         if not mod.is_root:
             fail("Only the root module can use the 'sysroots' extension")
 
-        http_archive(
+        sysroot(
             name = "sysroot_darwin_universal",
-            build_file_content = _SYSROOT_DARWIN_BUILD_FILE,
             sha256 = "987d41a68008c59f1128d436ed75ac923db3040db46b668cafb6b4fbbcf47bf4",
-            strip_prefix = "sdk-macos-13.3-1615cd09b3a42ae590e05e63251a0e9fbc47bab5/root",
+            strip_components = 2,
             urls = ["https://github.com/hexops-graveyard/sdk-macos-13.3/archive/1615cd09b3a42ae590e05e63251a0e9fbc47bab5.tar.gz"],
         )
 
@@ -57,11 +57,10 @@ def _impl(module_ctx):
                 tarball = sysroots[target]["Tarball"]
                 url = base_url + "/" + sha1sum + "/" + tarball
 
-                http_archive(
+                sysroot(
                     name = install.name + "_" + target,
                     url = url,
                     integrity = "sha1-" + base64.encode(_hex_to_bytes(sha1sum)),
-                    build_file_content = _SYSROOT_BUILD_FILE,
                 )
 
 sysroots = module_extension(
