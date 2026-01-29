@@ -28,5 +28,12 @@
     "[typescript]": {
         "editor.defaultFormatter": "denoland.vscode-deno"
     },
-    "C_Cpp.clang_format_style": "file"
+    "C_Cpp.clang_format_style": "file",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+    },
+    "black-formatter.interpreter": [
+        "bazel-out/bazel_env-opt/bin/bazel_env/bin/python"
+    ]
 }

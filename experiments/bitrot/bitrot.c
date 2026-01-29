@@ -1,6 +1,12 @@
 #include <stdint.h>
 
-extern void update_screen(void);
+#include "map.h"
+
+extern void update_screen(char* map_data);
+extern void screen_move_up(void);
+extern void screen_move_down(void);
+extern void screen_move_left(void);
+extern void screen_move_right(void);
 
 #if defined(__SIM6502__)
 #include <sim65.h>
@@ -24,21 +30,29 @@ static uint32_t counter_values[2];
   } while (0)
 
 int main(void) {
-  MEASURE_CLOCKCYCLE(update_screen());
+  MEASURE_CLOCKCYCLE(update_screen(map_data));
+  MEASURE_CLOCKCYCLE(screen_move_up());
+  MEASURE_CLOCKCYCLE(screen_move_down());
+  MEASURE_CLOCKCYCLE(screen_move_left());
+  MEASURE_CLOCKCYCLE(screen_move_right());
 
   return 0;
 }
 #elif defined(__C64__)
 #include <c64.h>
 #include <cbm.h>
+#include <conio.h>
 #include <peekpoke.h>
 
 int main(void) {
   POKE(53272, 21);  // Enable uppercase + graphics mode
 
-  while (1) {
-    waitvsync();
-    update_screen();
-  }
+  clrscr();
+
+  // while (1) {
+  waitvsync();
+  update_screen(map_data);
+  screen_move_left();
+  // }
 }
 #endif
