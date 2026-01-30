@@ -7,41 +7,57 @@ cc_library(
     name = "map",
     srcs = ["map.c"],
     hdrs = ["map.h"],
+    tags = ["manual"],
+)
+
+cc_library(
+    name = "screen",
+    srcs = ["screen.s"],
+    hdrs = ["screen.h"],
+    tags = ["manual"],
 )
 
 cc_binary(
     name = "bitrot",
-    srcs = [
-        "bitrot.c",
-        "screen_move.s",
-        "update.s",
-    ],
+    srcs = ["bitrot.c"],
     tags = ["manual"],
-    deps = [":map"],
+    deps = [
+        ":map",
+        ":screen",
+    ],
+)
+
+cc_binary(
+    name = "metrics",
+    srcs = ["metrics.c"],
+    tags = ["manual"],
+    deps = [
+        ":screen",
+    ],
 )
 
 platform_transition_binary(
-    name = "c64",
+    name = "bitrot-c64",
     binary = ":bitrot",
     target_platform = "@toolchains_cc65//platforms:c64",
 )
 
 platform_transition_binary(
-    name = "sim6502",
-    binary = ":bitrot",
+    name = "metrics-sim65",
+    binary = ":metrics",
     target_platform = "@toolchains_cc65//platforms:sim6502",
 )
 
 refresh_compile_commands(
-    name = "refresh_sim6502",
+    name = "sim65_refresh",
     targets = {
-        ":bitrot": "--copt=-D__SIM6502__ --copt=-D__fastcall__= --copt=-Iexternal/toolchains_cc65++cc65+cc65_linux_x86_64/include",
+        ":metrics": "--copt=-D__SIM6502__ --copt=-D__fastcall__= --copt=-Iexternal/toolchains_cc65++cc65+cc65_linux_x86_64/include",
     },
 )
 
 refresh_compile_commands(
-    name = "refresh_c64",
+    name = "c64_refresh",
     targets = {
-        ":bitrot": "--copt=-D__C64__ --copt=-D__fastcall__= --copt=-Iexternal/toolchains_cc65++cc65+cc65_linux_x86_64/include",
+        ":bitrot": "--copt=-D__C64__ --copt=-D__CBM__ --copt=-D__fastcall__= --copt=-Iexternal/toolchains_cc65++cc65+cc65_linux_x86_64/include",
     },
 )

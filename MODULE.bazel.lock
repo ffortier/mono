@@ -5392,7 +5392,7 @@
     },
     "@@toolchains_cc65+//toolchains:extensions.bzl%cc65": {
       "general": {
-        "bzlTransitiveDigest": "KS1vocpk7IMRGvkkmpz0sW+7+pzWsNA3JzKzAI93Kro=",
+        "bzlTransitiveDigest": "2hPO9RJbfmuNEWrA7P9xHPzztkuHfGkZKh4EtJeqhpI=",
         "usagesDigest": "stLb+9h2sE2GrI5oD/enaRGxhFx5/2gC+ITPVse4snE=",
         "recordedInputs": [
           "REPO_MAPPING:platforms,host_platform platforms+host_platform+host_platform",

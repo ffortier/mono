@@ -47,6 +47,11 @@ def _impl(rctx):
 
     rctx.file("toolchain_info.bzl", "toolchain_info = struct(constraint_values = %r)" % HOST_CONSTRAINTS)
 
+    result = rctx.execute([rctx.path(rctx.attr._patch_void_arrays)])
+
+    if result.return_code != 0:
+        fail("Failed to patch void arrays: {}".format(result.stderr))
+
 cc65_sources = repository_rule(
     implementation = _impl,
     attrs = dict(
@@ -54,5 +59,6 @@ cc65_sources = repository_rule(
         strip_prefix = attr.string(mandatory = True),
         sha256 = attr.string(mandatory = True),
         type = attr.string(),
+        _patch_void_arrays = attr.label(allow_single_file = True, default = "//toolchains/private:patch_void_arrays.py"),
     ),
 )
