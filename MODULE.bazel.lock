@@ -49,7 +49,9 @@
     "https://bcr.bazel.build/modules/bazel_features/1.31.0/MODULE.bazel": "eca40770b202b2161c1e20be7f1c323c8836dc959ae48dcf02ee7a051ffe4e8e",
     "https://bcr.bazel.build/modules/bazel_features/1.32.0/MODULE.bazel": "095d67022a58cb20f7e20e1aefecfa65257a222c18a938e2914fd257b5f1ccdc",
     "https://bcr.bazel.build/modules/bazel_features/1.33.0/MODULE.bazel": "8b8dc9d2a4c88609409c3191165bccec0e4cb044cd7a72ccbe826583303459f6",
-    "https://bcr.bazel.build/modules/bazel_features/1.33.0/source.json": "13617db3930328c2cd2807a0f13d52ca870ac05f96db9668655113265147b2a6",
+    "https://bcr.bazel.build/modules/bazel_features/1.34.0/MODULE.bazel": "e8475ad7c8965542e0c7aac8af68eb48c4af904be3d614b6aa6274c092c2ea1e",
+    "https://bcr.bazel.build/modules/bazel_features/1.38.0/MODULE.bazel": "f9b8a9c890ebd216b4049fd12a31d3c2602e3403c7af636b04fbbd7453edc9c9",
+    "https://bcr.bazel.build/modules/bazel_features/1.38.0/source.json": "31ba776c122b54a2885e23651642e32f087a87bf025465f8040751894b571277",
     "https://bcr.bazel.build/modules/bazel_features/1.4.1/MODULE.bazel": "e45b6bb2350aff3e442ae1111c555e27eac1d915e77775f6fdc4b351b758b5d7",
     "https://bcr.bazel.build/modules/bazel_features/1.9.0/MODULE.bazel": "885151d58d90d8d9c811eb75e3288c11f850e1d6b481a8c9f766adee4712358b",
     "https://bcr.bazel.build/modules/bazel_features/1.9.1/MODULE.bazel": "8f679097876a9b609ad1f60249c49d68bfab783dd9be012faf9d82547b14815a",
@@ -96,6 +98,8 @@
     "https://bcr.bazel.build/modules/googletest/1.17.0.bcr.2/MODULE.bazel": "827f54f492a3ce549c940106d73de332c2b30cebd0c20c0bc5d786aba7f116cb",
     "https://bcr.bazel.build/modules/googletest/1.17.0.bcr.2/source.json": "3664514073a819992320ffbce5825e4238459df344d8b01748af2208f8d2e1eb",
     "https://bcr.bazel.build/modules/googletest/1.17.0/MODULE.bazel": "dbec758171594a705933a29fcf69293d2468c49ec1f2ebca65c36f504d72df46",
+    "https://bcr.bazel.build/modules/helly25_bzl/0.3.1/MODULE.bazel": "3a4be20f6fc13be32ad44643b8252ef5af09eee936f1d943cd4fd7867fa92826",
+    "https://bcr.bazel.build/modules/helly25_bzl/0.3.1/source.json": "b129ab1828492de2c163785bbeb4065c166de52d932524b4317beb5b7f917994",
     "https://bcr.bazel.build/modules/jq.bzl/0.1.0/MODULE.bazel": "2ce69b1af49952cd4121a9c3055faa679e748ce774c7f1fda9657f936cae902f",
     "https://bcr.bazel.build/modules/jq.bzl/0.1.0/source.json": "746bf13cac0860f091df5e4911d0c593971cd8796b5ad4e809b2f8e133eee3d5",
     "https://bcr.bazel.build/modules/jsoncpp/1.9.5/MODULE.bazel": "31271aedc59e815656f5736f282bb7509a97c7ecb43e927ac1a37966e0578075",
@@ -275,7 +279,8 @@
     "https://bcr.bazel.build/modules/swift_argument_parser/1.3.1.2/source.json": "5fba48bbe0ba48761f9e9f75f92876cafb5d07c0ce059cc7a8027416de94a05b",
     "https://bcr.bazel.build/modules/tar.bzl/0.2.1/MODULE.bazel": "52d1c00a80a8cc67acbd01649e83d8dd6a9dc426a6c0b754a04fe8c219c76468",
     "https://bcr.bazel.build/modules/tar.bzl/0.5.1/MODULE.bazel": "7c2eb3dcfc53b0f3d6f9acdfd911ca803eaf92aadf54f8ca6e4c1f3aee288351",
-    "https://bcr.bazel.build/modules/tar.bzl/0.5.1/source.json": "deed3094f7cc779ed1d37a68403847b0e38d9dd9d931e03cb90825f3368b515f",
+    "https://bcr.bazel.build/modules/tar.bzl/0.6.0/MODULE.bazel": "a3584b4edcfafcabd9b0ef9819808f05b372957bbdff41601429d5fd0aac2e7c",
+    "https://bcr.bazel.build/modules/tar.bzl/0.6.0/source.json": "4a620381df075a16cb3a7ed57bd1d05f7480222394c64a20fa51bdb636fda658",
     "https://bcr.bazel.build/modules/toolchain_utils/1.0.2/MODULE.bazel": "9b8be503a4fcfd3b8b952525bff0869177a5234d5c35dc3e566b9f5ca2f755a1",
     "https://bcr.bazel.build/modules/toolchain_utils/1.3.0/MODULE.bazel": "9bba59453a7baa6f0770495ce0b00cb64dab4360456f5ea033c9ca09e5dd1550",
     "https://bcr.bazel.build/modules/toolchain_utils/1.3.0/source.json": "83692dc93f2a583e469766f8ed3856f260d7dfc1783160aecb30f237b2ee524b",
@@ -292,39 +297,39 @@
   "moduleExtensions": {
     "//third_party/cpp:sysroots.bzl%sysroots": {
       "general": {
-        "bzlTransitiveDigest": "ApTnmsXfiS5oiZG5/l9M8spAKYXLx5XJNEytpL7uUIo=",
+        "bzlTransitiveDigest": "QQQOvvBN1aTQTiujvX3JCtIWD6Fu7gNoW8acJnyJBQs=",
         "usagesDigest": "LTKJNd5gNxvyNX/J+LO66uaxoVMwB+xFB8tH9NU+5m8=",
         "recordedInputs": [
           "REPO_MAPPING:,aspect_bazel_lib aspect_bazel_lib+",
           "REPO_MAPPING:,bazel_tools bazel_tools",
-          "REPO_MAPPING:,toolchains_llvm toolchains_llvm+",
-          "REPO_MAPPING:toolchains_llvm+,aspect_bazel_lib aspect_bazel_lib+",
-          "REPO_MAPPING:toolchains_llvm+,bazel_tools bazel_tools",
           "FILE:@@//third_party/cpp/sysroots.json 54a898a19c5d4234b07e35502a52582b74b0fdc83c55338e4df77afdbaf7ea19"
         ],
         "generatedRepoSpecs": {
           "sysroot_darwin_universal": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain:sysroot.bzl%sysroot",
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
+              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob(\n        include = [\"**\"],\n        exclude = [\"**/*:*\"],\n    ),\n    visibility = [\"//visibility:public\"],\n)\n",
               "sha256": "987d41a68008c59f1128d436ed75ac923db3040db46b668cafb6b4fbbcf47bf4",
-              "strip_components": 2,
+              "strip_prefix": "sdk-macos-13.3-1615cd09b3a42ae590e05e63251a0e9fbc47bab5/root",
               "urls": [
                 "https://github.com/hexops-graveyard/sdk-macos-13.3/archive/1615cd09b3a42ae590e05e63251a0e9fbc47bab5.tar.gz"
               ]
             }
           },
           "sysroots_bullseye_amd64": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain:sysroot.bzl%sysroot",
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
               "url": "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/ec989b96c5f1e235182e5f2a5c9d23b3eb4101e0/debian_bullseye_amd64_sysroot.tar.xz",
-              "integrity": "sha1-7JiblsXx4jUYLl8qXJ0js+tBAeA="
+              "integrity": "sha1-7JiblsXx4jUYLl8qXJ0js+tBAeA=",
+              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
             }
           },
           "sysroots_bullseye_arm64": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain:sysroot.bzl%sysroot",
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
               "url": "https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/f65e4d81b81d19f4354ed1bb22afeb1f3949a446/debian_bullseye_arm64_sysroot.tar.xz",
-              "integrity": "sha1-9l5NgbgdGfQ1TtG7Iq/rHzlJpEY="
+              "integrity": "sha1-9l5NgbgdGfQ1TtG7Iq/rHzlJpEY=",
+              "build_file_content": "\nfilegroup(\n    name = \"sysroot\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
             }
           }
         }
@@ -5389,60 +5394,9 @@
         }
       }
     },
-    "@@tar.bzl+//tar:extensions.bzl%toolchains": {
-      "general": {
-        "bzlTransitiveDigest": "/2afh6fPjq/rcyE/jztQDK3ierehmFFngfvmqyRv72M=",
-        "usagesDigest": "maF8qsAIqeH1ey8pxP0gNZbvJt34kLZvTFeQ0ntrJVA=",
-        "recordedInputs": [],
-        "generatedRepoSpecs": {
-          "bsd_tar_toolchains": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:toolchain.bzl%tar_toolchains_repo",
-            "attributes": {
-              "user_repository_name": "bsd_tar_toolchains"
-            }
-          },
-          "bsd_tar_toolchains_darwin_amd64": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:platforms.bzl%bsdtar_binary_repo",
-            "attributes": {
-              "platform": "darwin_amd64"
-            }
-          },
-          "bsd_tar_toolchains_darwin_arm64": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:platforms.bzl%bsdtar_binary_repo",
-            "attributes": {
-              "platform": "darwin_arm64"
-            }
-          },
-          "bsd_tar_toolchains_linux_amd64": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:platforms.bzl%bsdtar_binary_repo",
-            "attributes": {
-              "platform": "linux_amd64"
-            }
-          },
-          "bsd_tar_toolchains_linux_arm64": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:platforms.bzl%bsdtar_binary_repo",
-            "attributes": {
-              "platform": "linux_arm64"
-            }
-          },
-          "bsd_tar_toolchains_windows_amd64": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:platforms.bzl%bsdtar_binary_repo",
-            "attributes": {
-              "platform": "windows_amd64"
-            }
-          },
-          "bsd_tar_toolchains_windows_arm64": {
-            "repoRuleId": "@@tar.bzl+//tar/toolchain:platforms.bzl%bsdtar_binary_repo",
-            "attributes": {
-              "platform": "windows_arm64"
-            }
-          }
-        }
-      }
-    },
     "@@toolchains_cc65+//toolchains:extensions.bzl%cc65": {
       "general": {
-        "bzlTransitiveDigest": "4Jf8KPlWba7DMV3W2tWQ0s2i1XWTc5duxUwD42R1/rs=",
+        "bzlTransitiveDigest": "KS1vocpk7IMRGvkkmpz0sW+7+pzWsNA3JzKzAI93Kro=",
         "usagesDigest": "stLb+9h2sE2GrI5oD/enaRGxhFx5/2gC+ITPVse4snE=",
         "recordedInputs": [
           "REPO_MAPPING:platforms,host_platform platforms+host_platform+host_platform",
@@ -5482,39 +5436,26 @@
               "exec_arch": "x86_64"
             }
           },
+          "cc65_sources": {
+            "repoRuleId": "@@toolchains_cc65+//toolchains/private:cc65_sources.bzl%cc65_sources",
+            "attributes": {
+              "urls": [
+                "https://codeload.github.com/cc65/cc65/zip/357f64e4e3c733d54b82bc155afc841fd8d9ee8d"
+              ],
+              "sha256": "e9c6479e9a6d6b737f4f92341fbc6815e95c2579abd102be9940cb5c36601cef",
+              "strip_prefix": "cc65-357f64e4e3c733d54b82bc155afc841fd8d9ee8d",
+              "type": "zip"
+            }
+          },
           "cc65": {
             "repoRuleId": "@@toolchains_cc65+//toolchains/private:cc65_repo.bzl%cc65_repo",
             "attributes": {
               "toolchain_repos": [
                 "cc65_linux_x86_64",
-                "cc65_windows_x86_64"
+                "cc65_windows_x86_64",
+                "cc65_sources"
               ]
             }
-          }
-        }
-      }
-    },
-    "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
-      "general": {
-        "bzlTransitiveDigest": "eZpLq0AJXEq+criREEwjIxLyeUejcjmNLwvjxvoCjOg=",
-        "usagesDigest": "SEre323O84dtXhgTCHaWGZQf0JxMnDWSxgveigV70Bw=",
-        "recordedInputs": [],
-        "generatedRepoSpecs": {
-          "llvm_toolchain": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_toolchain",
-            "attributes": {}
-          },
-          "llvm_toolchain_llvm": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_tools",
-            "attributes": {}
-          },
-          "llvm_rbe_linux_amd64": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_toolchain",
-            "attributes": {}
-          },
-          "llvm_rbe_linux_amd64_llvm": {
-            "repoRuleId": "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%_mock_tools",
-            "attributes": {}
           }
         }
       }

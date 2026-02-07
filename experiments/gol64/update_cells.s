@@ -56,14 +56,17 @@ COLOR_MEM = $d800
 .endscope
 .endmacro
 
-.macro init_counts offset, size
+.macro init_counts
 .scope
 
     lda #0
-    ldx #size 
+    ldx #250
 @loop:
     dex
-    sta count_mem + offset, x
+    sta count_mem + 0, x
+    sta count_mem + 250, x
+    sta count_mem + 500, x
+    sta count_mem + 750, x
     bne @loop
 
 .endscope
@@ -281,10 +284,7 @@ video_row_mem = VIDEO_MEM + (ROW - 1) * COL
 
 .proc _update_cells
 
-    init_counts 0, 250
-    init_counts 250, 250
-    init_counts 500, 250
-    init_counts 750, 250
+    init_counts
 
     count_first_row
     count_middle_rows
