@@ -10,29 +10,29 @@ filegroup(
 
 http_archive(
     name = "deno_darwin_aarch64",
-    urls = ["https://github.com/denoland/deno/releases/download/v2.6.9/deno-aarch64-apple-darwin.zip"],
-    sha256 = "81f8da15540aa7cdcb1e37c13ee15e919b2aa26b65157c2aa69fed7c037dbfa5",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.6.10/deno-aarch64-apple-darwin.zip"],
+    sha256 = "cdc880f43913f105de02a484005e5a5ed030c905e5a67e288f9ecadde6a86f62",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_darwin_aarch64", deno = "deno"),
 )
 
 http_archive(
     name = "deno_linux_x86_64",
-    urls = ["https://github.com/denoland/deno/releases/download/v2.6.9/deno-x86_64-unknown-linux-gnu.zip"],
-    sha256 = "8a677a4b0cea1a25aaecfc70d6c6a288f9ad69af0a92e9e9d513cabaaf3c688f",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.6.10/deno-x86_64-unknown-linux-gnu.zip"],
+    sha256 = "a7c9d5c1f93bfaabe03c3c0583a8c88caf695db3cec4dea2938440038609f225",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_linux_x86_64", deno = "deno"),
 )
 
 http_archive(
     name = "deno_linux_aarch64",
-    urls = ["https://github.com/denoland/deno/releases/download/v2.6.9/deno-aarch64-unknown-linux-gnu.zip"],
-    sha256 = "d1cd2f5f08abdc22156b67fc1cd9e8dcd2e8e3ab5caffe1da603992c8b1b5d67",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.6.10/deno-aarch64-unknown-linux-gnu.zip"],
+    sha256 = "ad4031b16b193997cd40d2bf68c9af8b5148e0f39c1e975cfbb6d60ecec19496",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_linux_aarch64", deno = "deno"),
 )
 
 http_archive(
     name = "deno_windows_x86_64",
-    urls = ["https://github.com/denoland/deno/releases/download/v2.6.9/deno-x86_64-pc-windows-msvc.zip"],
-    sha256 = "2d2feaed5aa9ac55c2207adcbe45fc0773632c2fac8cf5f3d41b691fe2246ed3",
+    urls = ["https://github.com/denoland/deno/releases/download/v2.6.10/deno-x86_64-pc-windows-msvc.zip"],
+    sha256 = "6b26d272c2107ca63474c5702c824132a4a3e4469463edf0f327b9b5a5f5f854",
     build_file_content = BUILD_FILE_CONTENT.format(repo_name = "deno_windows_x86_64", deno = "deno.exe"),
 )
 
