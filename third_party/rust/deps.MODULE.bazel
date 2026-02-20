@@ -17,7 +17,7 @@ crate.spec(
 )
 crate.spec(
     package = "anyhow",
-    version = "=1.0.101",
+    version = "=1.0.102",
 )
 crate.spec(
     package = "sha2",
