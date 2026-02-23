@@ -5,7 +5,7 @@ group main
 
 
     nuget FSharp.Core 10.0.103
-    nuget FSharp.Data 6.7.0
+    nuget FSharp.Data 7.0.1
     nuget Microsoft.CodeAnalysis.Common 5.0.0
     nuget Microsoft.CodeAnalysis.Analyzers 4.14.0
     nuget Microsoft.CodeAnalysis.CSharp 5.0.0
