@@ -74,5 +74,5 @@ http_archive(
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "glog", version = "0.7.1.bcr.1")
-bazel_dep(name = "curl", version = "8.11.0.bcr.4")
+bazel_dep(name = "curl", version = "8.11.0.bcr.5")
 bazel_dep(name = "openssl", version = "3.5.5.bcr.0")
