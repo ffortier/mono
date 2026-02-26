@@ -1,4 +1,4 @@
-bazel_dep(name = "rules_rust", version = "0.68.1")
+bazel_dep(name = "rules_rust", version = "0.69.0")
 
 RUST_EDITION = "2024"
 
