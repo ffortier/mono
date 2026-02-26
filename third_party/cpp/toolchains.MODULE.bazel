@@ -4,7 +4,7 @@ bazel_dep(name = "rules_cc", version = "0.2.17")
 # Fixes https://github.com/bazel-contrib/toolchains_llvm/issues/547
 git_override(
     module_name = "toolchains_llvm",
-    commit = "8fa06ea04497fe3273e959be5df8bd4ec93a2431",
+    commit = "e33786db4e31f5705295a7cb5a7e4f4d7760ca01",
     remote = "https://github.com/bazel-contrib/toolchains_llvm",
 )
 
