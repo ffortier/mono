@@ -11,42 +11,36 @@ VIDEO_MEM = sim65_video_mem
 VIDEO_MEM = $0400
 .endif
 
-.macro move_up offset
-.scope
+.proc _screen_move_up
     ldx #0
 @loop:
-    lda VIDEO_MEM + offset + 40, x
-    sta VIDEO_MEM + offset, x
+    lda VIDEO_MEM + 720 + 40, x
+    sta VIDEO_MEM + 720, x
+    lda VIDEO_MEM + 480 + 40, x
+    sta VIDEO_MEM + 480, x
+    lda VIDEO_MEM + 240 + 40, x
+    sta VIDEO_MEM + 240, x
+    lda VIDEO_MEM + 0 + 40, x
+    sta VIDEO_MEM + 0, x
     inx
     cpx #240
     bne @loop
-.endscope
-.endmacro
-
-.macro move_down offset
-.scope
-    ldx #240
-@loop:
-    lda VIDEO_MEM + offset, x
-    sta VIDEO_MEM + offset + 40, x
-    dex
-    bne @loop
-.endscope
-.endmacro
-
-.proc _screen_move_up
-    move_up 0
-    move_up 240
-    move_up 480
-    move_up 720
     rts
 .endproc
 
 .proc _screen_move_down
-    move_down 720
-    move_down 480
-    move_down 240
-    move_down 0
+    ldx #240
+@loop:
+    lda VIDEO_MEM + 720, x
+    sta VIDEO_MEM + 720 + 40, x
+    lda VIDEO_MEM + 480, x
+    sta VIDEO_MEM + 480 + 40, x
+    lda VIDEO_MEM + 240, x
+    sta VIDEO_MEM + 240 + 40, x
+    lda VIDEO_MEM + 0, x
+    sta VIDEO_MEM + 0 + 40, x
+    dex
+    bne @loop
     rts
 .endproc
 
@@ -66,6 +60,23 @@ VIDEO_MEM = $0400
     lda #>(addr)
     sta ptr + 1
 .endmacro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pluto123
+
 
 .proc _screen_move_left
     resetmem @innerloop + 1, VIDEO_MEM + 1

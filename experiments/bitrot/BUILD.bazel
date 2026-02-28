@@ -36,6 +36,11 @@ cc_binary(
     ],
 )
 
+alias(
+    name = "c64",
+    actual = ":bitrot-c64",
+)
+
 platform_transition_binary(
     name = "bitrot-c64",
     binary = ":bitrot",

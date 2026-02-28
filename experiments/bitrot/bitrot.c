@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "screen.h"
 typedef struct {
   char* text;
   uint8_t pos;
@@ -26,20 +27,42 @@ void dispatch(void) {
   printf("Unreacheable!\n");
 }
 
+char c(void) {
+  asm("jmp $ffe4");
+  return 0;
+}
+
 int main(void) {
-  int i;
-  //  POKE(53272, 21);  // Enable uppercase + graphics mode
-
-  STATE = &first;
-
-  clrscr();
-
-  text.text = "hellorld";
-
   while (1) {
-    waitvsync();
-    dispatch();
+    switch (c()) {
+      case 'w':
+        screen_move_up();
+        break;
+      case 's':
+        screen_move_down();
+        break;
+      case 'a':
+        screen_move_left();
+        break;
+      case 'd':
+        screen_move_right();
+        break;
+    }
   }
+  // int i;
+  // //  POKE(53272, 21);  // Enable uppercase + graphics mode
+  // getchar()
+
+  //     STATE = &first;
+
+  // clrscr();
+
+  // text.text = "hellorld";
+
+  // while (1) {
+  //   waitvsync();
+  //   dispatch();
+  // }
 }
 
 void first(void) {
