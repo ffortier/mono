@@ -1,0 +1,22 @@
+# TODO: Should create the following rules
+# lean_library: Generate olean and ilean with option c sources with output groups
+# lean_binary: Standalone lean binary
+# lean_cc_library: Bridge lean sources with cc_library for linking with llvm
+
+genrule(
+    name = "hello_source",
+    srcs = ["Hello.lean"],
+    outs = ["Hello.c"],
+    # TODO: Lean don't like symlinks. When building the actual rules, we will need to create a proper source root with hardlinks or copies.
+    cmd = "mkdir $(RULEDIR)/src && cp $(SRCS) $(RULEDIR)/src && $(LEAN) -c $@ $(RULEDIR)/src/*",
+    toolchains = ["//third_party/lean:resolved"],
+)
+
+genrule(
+    name = "hello",
+    srcs = [":hello_source"],
+    outs = ["hello.exe"],
+    cmd = "$(LEANC) -o $@ $(SRCS)",
+    executable = True,
+    toolchains = ["//third_party/lean:resolved"],
+)
