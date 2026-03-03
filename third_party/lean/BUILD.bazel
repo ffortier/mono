@@ -1,0 +1,26 @@
+load(":lean_toolchain.bzl", "default_lean_toolchain")
+load(":resolved_toolchain.bzl", "resolved_toolchain")
+
+package(default_visibility = ["//visibility:public"])
+
+platforms = [
+    ("linux", "x86_64", "lean_linux_x86_64"),
+    ("linux", "aarch64", "lean_linux_aarch64"),
+    ("macos", "aarch64", "lean_darwin_aarch64"),
+]
+
+toolchain_type(name = "toolchain_type")
+
+[
+    default_lean_toolchain(
+        name = repo_name + "_toolchain",
+        arch = arch,
+        os = os,
+        repo_name = repo_name,
+    )
+    for os, arch, repo_name in platforms
+]
+
+resolved_toolchain(name = "resolved")
+
+# TODO: Add runtime lib for selected target platform
