@@ -1,0 +1,21 @@
+load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
+
+native_binary(
+    name = "lean",
+    src = "bin/lean",
+    visibility = ["//visibility:public"],
+)
+
+native_binary(
+    name = "leanc",
+    src = "bin/leanc",
+    visibility = ["//visibility:public"],
+)
+
+native_binary(
+    name = "leanchecker",
+    src = "bin/leanchecker",
+    visibility = ["//visibility:public"],
+)
+
+# TODO: Add cc_library for lean runtime

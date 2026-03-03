@@ -6,6 +6,7 @@ bazel_env(
     toolchains = {
         "jdk": "@rules_java//toolchains:current_host_java_runtime",
         "python": "@rules_python//python:current_py_toolchain",
+        "lean": "//third_party/lean:resolved",
     },
     tools = {
         "clangd": "@llvm_toolchain_llvm//:bin/clangd",
@@ -22,6 +23,9 @@ bazel_env(
         "ca65": "@cc65//:ca65",
         "ld65": "@cc65//:ld65",
         "sim65": "@cc65//:sim65",
-        "pl": "@crates//:scryer_prolog_bin"
+        "pl": "@crates//:scryer_prolog_bin",
+        "lean": "$(LEAN)",
+        "leanc": "$(LEANC)",
+        "leanchecker": "$(LEANCHECKER)",
     } | MULTITOOL_TOOLS,
 )

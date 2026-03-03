@@ -1,3 +1,4 @@
+load("@bazel_env.bzl", "bazel_env")
 load("@pip//:requirements.bzl", "requirement")
 load("@python_versions//3.13:defs.bzl", "py_console_script_binary")
 load("@rules_prolog//:prolog_toolchain.bzl", "prolog_toolchain")

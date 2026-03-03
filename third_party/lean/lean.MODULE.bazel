@@ -1,0 +1,31 @@
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "lean_linux_x86_64",
+    sha256 = "ceb3a3f844f7aebf63245e2b51c28d5b0ed38942c19f93cf3febd520302160bd",
+    strip_prefix = "lean-4.28.0-linux",
+    urls = ["https://github.com/leanprover/lean4/releases/download/v4.28.0/lean-4.28.0-linux.tar.zst"],
+    build_file = "@//third_party/lean:lean.BUILD.bazel",
+)
+
+http_archive(
+    name = "lean_linux_aarch64",
+    sha256 = "c865801261c747d4f15d08beca9abc20aca907904abbb284de25a37f4b4558bc",
+    strip_prefix = "lean-4.28.0-linux_aarch64",
+    urls = ["https://github.com/leanprover/lean4/releases/download/v4.28.0/lean-4.28.0-linux_aarch64.tar.zst"],
+    build_file = "@//third_party/lean:lean.BUILD.bazel",
+)
+
+http_archive(
+    name = "lean_darwin_aarch64",
+    sha256 = "61942f9d1907db918020154a517c87fb64841e48cebb0032fc0909df8d189a05",
+    strip_prefix = "lean-4.28.0-darwin_aarch64",
+    urls = ["https://github.com/leanprover/lean4/releases/download/v4.28.0/lean-4.28.0-darwin_aarch64.tar.zst"],
+    build_file = "@//third_party/lean:lean.BUILD.bazel",
+)
+
+register_toolchains(
+    "//third_party/lean:lean_linux_x86_64_toolchain",
+    "//third_party/lean:lean_linux_aarch64_toolchain",
+    "//third_party/lean:lean_darwin_aarch64_toolchain",
+)
