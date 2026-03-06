@@ -1,4 +1,6 @@
 load("@bazel_skylib//rules:native_binary.bzl", "native_binary")
+load("@rules_cc//cc:cc_import.bzl", "cc_import")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 native_binary(
     name = "lean",
@@ -15,6 +17,34 @@ native_binary(
 native_binary(
     name = "leanchecker",
     src = "bin/leanchecker",
+    visibility = ["//visibility:public"],
+)
+
+cc_import(
+    name = "libgmp",
+    static_library = "lib/libgmp.a",
+)
+
+cc_import(
+    name = "libuv",
+    static_library = "lib/libuv.a",
+)
+
+cc_import(
+    name = "libleanrt",
+    static_library = "lib/lean/libleanrt.a",
+)
+
+cc_import(
+    name = "libInit",
+    static_library = "lib/lean/libInit.a",
+)
+
+cc_library(
+    name = "leanrt",
+    hdrs = glob(["include/lean/*.h"]),
+    includes = ["include"],
+    deps = [":libleanrt", ":libgmp", ":libInit", ":libuv"],
     visibility = ["//visibility:public"],
 )
 
