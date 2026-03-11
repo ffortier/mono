@@ -1,0 +1,27 @@
+load("@bazel_env.bzl", "bazel_env")
+load("@multitool//:tools.bzl", MULTITOOL_TOOLS = "TOOLS")
+
+bazel_env(
+    name = "env",
+    toolchains = {
+        "jdk": "@rules_java//toolchains:current_host_java_runtime",
+        "python": "@rules_python//python:current_py_toolchain",
+    },
+    tools = {
+        "clangd": "@llvm_toolchain_llvm//:bin/clangd",
+        "jar": "$(JAVABASE)/bin/jar",
+        "java": "$(JAVA)",
+        "python": "$(PYTHON3)",
+        "cargo": "@rules_rust//tools/upstream_wrapper:cargo",
+        "rustc": "@rules_rust//tools/upstream_wrapper:rustc",
+        "rustfmt": "@rules_rust//tools/upstream_wrapper:rustfmt",
+        "buildifier": "@buildifier_prebuilt//:buildifier",
+        "buildozer": "@buildifier_prebuilt//:buildozer",
+        "deno": "@resolved-deno",
+        "cc65": "@cc65//:cc65",
+        "ca65": "@cc65//:ca65",
+        "ld65": "@cc65//:ld65",
+        "sim65": "@cc65//:sim65",
+        "pl": "@crates//:scryer_prolog_bin"
+    } | MULTITOOL_TOOLS,
+)
