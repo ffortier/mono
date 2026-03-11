@@ -1,0 +1,6 @@
+load("//third_party/lean:lean_binary.bzl", "lean_binary")
+
+lean_binary(
+    name = "hello",
+    srcs = ["Hello.lean"],
+)
