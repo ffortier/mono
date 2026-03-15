@@ -4,8 +4,8 @@ group main
     source https://api.nuget.org/v3/index.json
 
 
-    nuget FSharp.Core 10.0.103
+    nuget FSharp.Core 10.1.201
     nuget FSharp.Data 8.1.1
-    nuget Microsoft.CodeAnalysis.Common 5.0.0
+    nuget Microsoft.CodeAnalysis.Common 5.3.0
     nuget Microsoft.CodeAnalysis.Analyzers 4.14.0
-    nuget Microsoft.CodeAnalysis.CSharp 5.0.0
+    nuget Microsoft.CodeAnalysis.CSharp 5.3.0
