@@ -134,5 +134,6 @@
             "depTypeTemplate": "dependencies",
             "registryUrlTemplate": "https://registry.npmjs.org"
         }
-    ]
+    ],
+    "ignorePaths":["third_party/python/requirements_lock.txt"]
 }
