@@ -21,7 +21,7 @@ crate.spec(
 )
 crate.spec(
     package = "sha2",
-    version = "=0.10.9",
+    version = "=0.11.0",
 )
 crate.spec(
     package = "hex",
