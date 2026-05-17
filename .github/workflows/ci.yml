@@ -34,7 +34,7 @@ jobs:
         path: site/
 
   build-darwin-aarch64:
-    runs-on: macos-15
+    runs-on: macos-26
     permissions: read-all
     steps:
     - uses: actions/checkout@v6
