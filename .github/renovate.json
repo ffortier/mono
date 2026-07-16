@@ -4,6 +4,7 @@
         "config:recommended"
     ],
     "commitMessagePrefix": "deps: ",
+    "prConcurrentLimit": 0,
     "postUpgradeTasks": {
         "commands": [
             "./.github/renovate/post-upgrade.sh"
