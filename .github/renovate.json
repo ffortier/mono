@@ -136,6 +136,5 @@
             "registryUrlTemplate": "https://registry.npmjs.org"
         }
     ],
-    "ignorePaths":["third_party/python/requirements_lock.txt"],
-    "ignoreLocks": ["deno.lock"]
+    "ignorePaths":["third_party/python/requirements_lock.txt","deno.lock","deno.jsonc"]
 }
