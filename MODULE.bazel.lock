@@ -181,8 +181,8 @@
     "https://bcr.bazel.build/modules/rules_cc/0.2.9/MODULE.bazel": "34263f1dca62ea664265438cef714d7db124c03e1ed55ebb4f1dc860164308d1",
     "https://bcr.bazel.build/modules/rules_coreutils/1.0.2/MODULE.bazel": "c45b821160529a2d6b8738e818164bb6e09a4e88156e7a18d3a53c8043c7f2c4",
     "https://bcr.bazel.build/modules/rules_coreutils/1.0.2/source.json": "db722bcfc5ee205332176e22952861f6ca83695614ffe365d038ef98a2bc1f1b",
-    "https://bcr.bazel.build/modules/rules_dotnet/0.21.5/MODULE.bazel": "a4c0775561057593dd851c7f59f334336d73eb291eb9726e805d0466570bb0d7",
-    "https://bcr.bazel.build/modules/rules_dotnet/0.21.5/source.json": "f7a44e6aacb939042b8c0e3e9819d745a05228a283db369299ecf714cbac5608",
+    "https://bcr.bazel.build/modules/rules_dotnet/0.22.1/MODULE.bazel": "0faeb8532d178e34ad0e461d7ec1a9d08f3e5c6c81b8791d5fff5aee356adcb2",
+    "https://bcr.bazel.build/modules/rules_dotnet/0.22.1/source.json": "a1d2ad8cd886f716d7707925f3628178830c7df644a47fce711732d9e03fde0c",
     "https://bcr.bazel.build/modules/rules_foreign_cc/0.9.0/MODULE.bazel": "c9e8c682bf75b0e7c704166d79b599f93b72cfca5ad7477df596947891feeef6",
     "https://bcr.bazel.build/modules/rules_fuzzing/0.5.2/MODULE.bazel": "40c97d1144356f52905566c55811f13b299453a14ac7769dfba2ac38192337a8",
     "https://bcr.bazel.build/modules/rules_java/4.0.0/MODULE.bazel": "5a78a7ae82cd1a33cef56dc578c7d2a46ed0dca12643ee45edbb8417899e6f74",
@@ -404,8 +404,8 @@
     },
     "@@rules_dotnet+//dotnet:extensions.bzl%dotnet": {
       "general": {
-        "bzlTransitiveDigest": "3NFH9+PfsEdlRhZtq3iPX8FRGmmgowYZvWUuTyxUYdw=",
-        "usagesDigest": "xoYf7S8mAxNeUP+OUbgj9z3i+5z0KlB506Q0hPSKuCo=",
+        "bzlTransitiveDigest": "Xc5yZNHGGYkICbCqyHpLoWDUwtfzxzvK6ftc5Mby6G0=",
+        "usagesDigest": "AzUMokOp2PN5spcvLg8fVmvVT7a9JdSsDrcmAs4UI1s=",
         "recordedInputs": [],
         "generatedRepoSpecs": {
           "dotnet_x86_64-apple-darwin": {
@@ -460,42 +460,42 @@
             "repoRuleId": "@@rules_dotnet+//dotnet:repositories.bzl%dotnet_repositories",
             "attributes": {
               "platform": "x86_64-apple-darwin",
-              "dotnet_version": "10.0.100"
+              "dotnet_version": "10.0.201"
             }
           },
           "dotnet_apphost_aarch64-apple-darwin": {
             "repoRuleId": "@@rules_dotnet+//dotnet:repositories.bzl%dotnet_repositories",
             "attributes": {
               "platform": "aarch64-apple-darwin",
-              "dotnet_version": "10.0.100"
+              "dotnet_version": "10.0.201"
             }
           },
           "dotnet_apphost_x86_64-unknown-linux-gnu": {
             "repoRuleId": "@@rules_dotnet+//dotnet:repositories.bzl%dotnet_repositories",
             "attributes": {
               "platform": "x86_64-unknown-linux-gnu",
-              "dotnet_version": "10.0.100"
+              "dotnet_version": "10.0.201"
             }
           },
           "dotnet_apphost_arm64-unknown-linux-gnu": {
             "repoRuleId": "@@rules_dotnet+//dotnet:repositories.bzl%dotnet_repositories",
             "attributes": {
               "platform": "arm64-unknown-linux-gnu",
-              "dotnet_version": "10.0.100"
+              "dotnet_version": "10.0.201"
             }
           },
           "dotnet_apphost_x86_64-pc-windows-msvc": {
             "repoRuleId": "@@rules_dotnet+//dotnet:repositories.bzl%dotnet_repositories",
             "attributes": {
               "platform": "x86_64-pc-windows-msvc",
-              "dotnet_version": "10.0.100"
+              "dotnet_version": "10.0.201"
             }
           },
           "dotnet_apphost_arm64-pc-windows-msvc": {
             "repoRuleId": "@@rules_dotnet+//dotnet:repositories.bzl%dotnet_repositories",
             "attributes": {
               "platform": "arm64-pc-windows-msvc",
-              "dotnet_version": "10.0.100"
+              "dotnet_version": "10.0.201"
             }
           },
           "dotnet_apphost_toolchains": {
