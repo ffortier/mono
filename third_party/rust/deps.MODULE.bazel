@@ -29,7 +29,7 @@ crate.spec(
 )
 crate.spec(
     package = "thiserror",
-    version = "=2.0.19",
+    version = "=2.0.20",
 )
 crate.spec(
     package = "termion",
