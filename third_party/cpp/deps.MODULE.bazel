@@ -51,9 +51,9 @@ http_archive(
     build_file = "//third_party/cpp:slog.BUILD.bazel",
     patch_args = ["-p1"],
     patches = ["//third_party/cpp:slog_wasm32.patch"],
-    sha256 = "22d06d8f67a7668b1344f6e8486cc58806d1e5f38b40c715cc80cb023e752f10",
-    strip_prefix = "slog-1.8.48",
-    urls = ["https://github.com/kala13x/slog/archive/refs/tags/v1.8.48.tar.gz"],
+    sha256 = "345b413967544651bd1734f283d7f65a9db2d1b9a4593e9477dc1b34aaf353da",
+    strip_prefix = "slog-1.8.49",
+    urls = ["https://github.com/kala13x/slog/archive/refs/tags/v1.8.49.tar.gz"],
 )
 
 http_archive(
