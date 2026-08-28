@@ -15,9 +15,9 @@ http_archive(
     build_file = "//third_party/cpp:raylib.BUILD.bazel",
     patch_args = ["-p1"],
     patches = ["//third_party/cpp:raylib_glfw.patch"],
-    sha256 = "aea98ecf5bc5c5e0b789a76de0083a21a70457050ea4cc2aec7566935f5e258e",
-    strip_prefix = "raylib-5.5",
-    urls = ["https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz"],
+    sha256 = "2b3ee1e2120c7a0796b33062c7e9a694dd8a8caa56a96319ac8c8ecf54a90d0b",
+    strip_prefix = "raylib-6.0",
+    urls = ["https://github.com/raysan5/raylib/archive/refs/tags/6.0.tar.gz"],
 )
 
 http_archive(
