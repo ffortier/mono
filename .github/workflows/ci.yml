@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-linux-x86_64:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions: read-all
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -72,7 +72,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{steps.deployment.outputs.page_url}}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: build-linux-x86_64
     if: github.ref == 'refs/heads/main'
     steps:
